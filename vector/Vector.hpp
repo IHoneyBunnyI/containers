@@ -5,13 +5,16 @@
 
 namespace ft
 {
-	class vector
-	{
-		private:
 
-		public:
-			vector();
-	};
+template<typename T>
+class vector
+{
+	private:
+
+	public:
+		vector(){};
+};
+
 }
 
 #endif
