@@ -4,7 +4,6 @@
 
 int main()
 {
-	std::vector<int> vector;
-	std::cout << "AAA!" << std::endl;
-	std::cout << &vector << std::endl;
+	ft::vector<int> vec;
+	ft::vector<int>::iterator it = vec.begin();
 }
