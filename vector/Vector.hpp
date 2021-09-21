@@ -30,50 +30,51 @@ class vector
 		typedef ConstReverseRandomAccessIterator<value_type>	const_reverse_iterator;
 
 	private:
-		T* first;
-		T* last;
 		value_type* arr;
+		value_type* first;
+		value_type* last;
 		size_type capacity;
 		size_type length;
 		Allocator allocator;
 
-	public:
+	public: //Construcors
+		vector(); //1
+		explicit vector(const Allocator& alloc); //2
+		explicit vector(size_type count, const T& value = T(), const Allocator& alloc = Allocator()); //3
+		template<class InputIt>
+		vector(InputIt first, InputIt last, const Allocator& alloc = Allocator());//4
+		vector(const vector& other);//5
 
-		vector() : first(0), last(0), capacity(0), length(0) {}
 
-
-		const_iterator begin() const
-		{
-			return const_iterator(first);
-		}
-		iterator begin()
-		{
-			return iterator(first);
-		}
-
-		void push_back(const value_type& value);
-
+	public: //member functions
+		const_iterator begin() const;
+		iterator begin();
 };
 
 template <class T, class Allocator>
-void ft::vector<T, Allocator>::push_back(const value_type& value)
+ft::vector<T, Allocator>::vector() : arr(0), first(0), last(0), capacity(0), length(0), allocator(allocator_type()) {}
+
+template <class T, class Allocator>
+ft::vector<T, Allocator>::vector(const Allocator& alloc) : arr(0), first(0), last(0), capacity(0), length(0), allocator(alloc) {}
+
+
+template <class T, class Allocator>
+ft::vector<T, Allocator>::vector(ft::vector<T, Allocator>::size_type count, const T& value, const Allocator& alloc)
 {
-	if (capacity == 0 && length == 0)
-	{
-		capacity++;
-		length++;
-		arr = allocator.allocate(sizeof(value_type));
-		arr[0] = value;
-		first = &arr[0];
-	}
-	//if (++length >= capacity)
-	//{
-
-		//allocator.dealocate(arr);
-	//}
-	
-}
 
 }
 
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::const_iterator ft::vector<T, Allocator>::begin() const
+{
+	return const_iterator(ft::vector<T>::first);
+}
+
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::begin()
+{
+	return iterator(ft::vector<T>::first);
+}
+
+}
 #endif

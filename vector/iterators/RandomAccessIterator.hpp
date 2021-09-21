@@ -16,7 +16,7 @@ class RandomAccessIterator
 		typedef T&									reference;
 		typedef std::random_access_iterator_tag		iterator_category;
 
-		const T* ptr;
+		T* ptr;
 
 		RandomAccessIterator();
 		~RandomAccessIterator();
@@ -81,7 +81,7 @@ RandomAccessIterator<T>::RandomAccessIterator(const RandomAccessIterator &src)
 template <class T>
 T& RandomAccessIterator<T>::operator * () const
 {
-	return *ptr;
+	return *(this->ptr);
 }
 
 template <class T>
