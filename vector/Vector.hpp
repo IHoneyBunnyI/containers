@@ -6,6 +6,9 @@
 #include "ConstRandomAccessIterator.hpp"
 #include "ReverseRandomAccessIterator.hpp"
 #include "ConstReverseRandomAccessIterator.hpp"
+#include "enable_if.hpp"
+#include "is_integral.hpp"
+#include "remove_const.hpp"
 
 
 namespace ft
@@ -42,7 +45,7 @@ class vector
 		explicit vector(const Allocator& alloc); //2
 		explicit vector(size_type count, const T& value = T(), const Allocator& alloc = Allocator()); //3
 		template<class InputIt>
-		vector(InputIt first, InputIt last, const Allocator& alloc = Allocator());//4
+		vector(InputIt first, typename ft::enable_if<!is_integral_const<InputIt>::value, InputIt>::type last, const Allocator& alloc = Allocator());//4
 		vector(const vector& other);//5
 
 
@@ -61,7 +64,7 @@ ft::vector<T, Allocator>::vector(const Allocator& alloc) : arr(0), first(0), las
 template <class T, class Allocator>
 ft::vector<T, Allocator>::vector(ft::vector<T, Allocator>::size_type count, const T& value, const Allocator& alloc)
 {
-
+	std::cout << "AAAAAAAA";
 }
 
 template <class T, class Allocator>
