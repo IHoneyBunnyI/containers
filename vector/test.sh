@@ -1,18 +1,18 @@
 #!/bin/zsh
 
 clear
-clang++ -Wall -Wextra -Werror main.cpp -Iiterators/ -o vector
+clang++ -Wall -Wextra -Werror -Iiterators/ -I../utils/ main.cpp -o vector
 if grep "ft::vector" ./main.cpp > /dev/null
 then
 	./vector > ft_output
 	sed -i '' "s/ft::vector/std::vector/g" ./main.cpp
-	clang++ -Wall -Wextra -Werror -Iiterators/ main.cpp -o vector
+	clang++ -Wall -Wextra -Werror -Iiterators/ -I../utils/ main.cpp -o vector
 	./vector > std_output
 	sed -i '' "s/std::vector/ft::vector/g" ./main.cpp
 else
 	./vector > std_output
 	sed -i '' "s/std::vector/ft::vector/g" ./main.cpp
-	clang++ -Wall -Wextra -Werror main.cpp -Iiterators/ -o vector
+	clang++ -Wall -Wextra -Werror -Iiterators/ -I../utils/ main.cpp -o vector
 	./vector > ft_output
 	sed -i '' "s/ft::vector/std::vector/g" ./main.cpp
 fi
@@ -30,6 +30,7 @@ then
 	rm ft_output
 	rm std_output
 	rm a.out
+	rm vector
 	rm -rf a.out.dSYM
 	echo "\033[38;5;412mDelete output files\033[0m"
 fi

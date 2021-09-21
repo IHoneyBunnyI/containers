@@ -64,8 +64,18 @@ ft::vector<T, Allocator>::vector(const Allocator& alloc) : arr(0), first(0), las
 template <class T, class Allocator>
 ft::vector<T, Allocator>::vector(ft::vector<T, Allocator>::size_type count, const T& value, const Allocator& alloc)
 {
-	std::cout << "AAAAAAAA";
+	(void)count;
+	(void)value;
+	(void)alloc;
 }
+
+template <class T, class Allocator>
+template <class InputIt>
+ft::vector<T, Allocator>::vector(InputIt first, typename ft::enable_if<!is_integral_const<InputIt>::value, InputIt>::type last, const Allocator& alloc)
+{
+
+}
+
 
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::const_iterator ft::vector<T, Allocator>::begin() const
