@@ -1,7 +1,11 @@
 #ifndef RANDOMACCESSITERATOR_HPP
 #define RANDOMACCESSITERATOR_HPP
 
+#include "enable_if.hpp"
 #include <iostream>
+#include "enable_if.hpp"
+#include "is_integral.hpp"
+#include "remove_const.hpp"
 
 namespace ft
 {
@@ -28,18 +32,19 @@ class RandomAccessIterator
 		T& operator*() const;
 		T* operator->() const;
 
-		bool operator < (const RandomAccessIterator& ref);
-		bool operator <= (const RandomAccessIterator& ref);
-		bool operator > (const RandomAccessIterator& ref);
-		bool operator >= (const RandomAccessIterator& ref);
-		bool operator == (const RandomAccessIterator& ref) const;
-		bool operator != (const RandomAccessIterator& ref) const;
+		bool operator < (const RandomAccessIterator<T>& ref);
+		bool operator <= (const RandomAccessIterator<T>& ref);
+		bool operator > (const RandomAccessIterator<T>& ref);
+		bool operator >= (const RandomAccessIterator<T>& ref);
+		bool operator == (const RandomAccessIterator<T>& ref) const;
+		bool operator != (const RandomAccessIterator<T>& ref) const;
 
 		RandomAccessIterator& operator += (difference_type);
 		RandomAccessIterator& operator -= (difference_type);
 
 		RandomAccessIterator operator + (difference_type) const;
 		RandomAccessIterator operator - (difference_type) const;
+		difference_type operator - (const RandomAccessIterator<T>& n) const;
 		RandomAccessIterator& operator ++ ();
 		RandomAccessIterator& operator -- ();
 		RandomAccessIterator operator ++ (int);
@@ -151,8 +156,13 @@ template <class T>
 RandomAccessIterator<T> RandomAccessIterator<T>::operator - (difference_type n) const
 {
 	RandomAccessIterator<T> tmp = *this;
-	tmp -= n;
-	return (tmp);
+	return tmp -= n;
+}
+
+template <class T>
+typename RandomAccessIterator<T>::difference_type RandomAccessIterator<T>::operator - (const RandomAccessIterator<T>& ref) const
+{
+	return this->ptr - ref.ptr;
 }
 
 template <class T>

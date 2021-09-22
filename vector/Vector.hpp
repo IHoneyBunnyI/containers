@@ -70,7 +70,7 @@ ft::vector<T, Allocator>::vector(ft::vector<T, Allocator>::size_type count, cons
 	this->length = count;
 	for (size_type i = 0; i < count; i++)
 		allocator.construct(first + i, value);
-	this->last = this->first + this->length - 1;
+	this->last = this->first + this->length;
 }
 
 template <class T, class Allocator>
@@ -82,7 +82,7 @@ ft::vector<T, Allocator>::vector(InputIt first, typename ft::enable_if<!is_integ
 	this->first = allocator.allocate(this->capacity);
 	for (size_type i = 0; i < this->length; i++)
 		allocator.construct(this->first + i, *(first + i));
-	this->last = this->first + this->length - 1;
+	this->last = this->first + this->length;
 }
 
 template <class T, class Allocator>
