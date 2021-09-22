@@ -44,5 +44,6 @@ then
 	rm -rf a.out
 	rm -rf vector
 	rm -rf a.out.dSYM
+	rm -rf vector.dSYM
 	echo "\033[38;5;412mDelete output files\033[0m"
 fi

@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include "RandomAccessIterator.hpp"
+#include "enable_if.hpp"
+#include "is_integral.hpp"
+#include "remove_const.hpp"
 
 namespace ft
 {
@@ -42,6 +45,7 @@ class ConstRandomAccessIterator
 
 		ConstRandomAccessIterator operator + (difference_type) const;
 		ConstRandomAccessIterator operator - (difference_type) const;
+		difference_type operator - (const ConstRandomAccessIterator<T>& n) const;
 		ConstRandomAccessIterator& operator ++ ();
 		ConstRandomAccessIterator& operator -- ();
 		ConstRandomAccessIterator operator ++ (int);
@@ -161,6 +165,12 @@ ConstRandomAccessIterator<T> ConstRandomAccessIterator<T>::operator - (differenc
 	ConstRandomAccessIterator<T> tmp = *this;
 	tmp -= n;
 	return (tmp);
+}
+
+template <class T>
+typename ConstRandomAccessIterator<T>::difference_type ConstRandomAccessIterator<T>::operator - (const ConstRandomAccessIterator<T>& n) const
+{
+	return this->ptr - n.ptr;
 }
 
 template <class T>

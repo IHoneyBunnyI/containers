@@ -35,42 +35,49 @@ class vector
 	private:
 		value_type* first;
 		value_type* last;
-		size_type capacity;
+		size_type Capacity;
 		size_type length;
 		Allocator allocator;
 
 	public: //Construcors
-		vector(); //1
-		explicit vector(const Allocator& alloc); //2
-		explicit vector(size_type count, const T& value = T(), const Allocator& alloc = Allocator()); //3
+		vector();
+		explicit vector(const Allocator& alloc);
+		explicit vector(size_type count, const T& value = T(), const Allocator& alloc = Allocator());
 		template<class InputIt>
-		vector(InputIt first, typename ft::enable_if<!is_integral_const<InputIt>::value, InputIt>::type last, const Allocator& alloc = Allocator());//4
-		vector(const vector& other);//5
-
+		vector(InputIt first, typename ft::enable_if<!is_integral_const<InputIt>::value, InputIt>::type last, const Allocator& alloc = Allocator());
+		vector(const vector& other);
+	public:
+		~vector();
 
 	public: //member functions
 		const_iterator begin() const;
 		iterator begin();
 		const_iterator end() const;
 		iterator end();
+		bool empty() const;
+		size_type size() const;
+		size_type max_size() const;
+		void reserve(size_type new_cap);
+		size_type capacity() const;
 	
 	public: //operators
 		reference operator[](size_type pos);
 		const_reference operator[](size_type pos) const;
 };
 
+//=========================Constructors=================================
 template <class T, class Allocator>
-ft::vector<T, Allocator>::vector() : first(0), last(0), capacity(0), length(0), allocator(allocator_type()) {}
+ft::vector<T, Allocator>::vector() : first(0), last(0), Capacity(0), length(0), allocator(allocator_type()) {}
 
 template <class T, class Allocator>
-ft::vector<T, Allocator>::vector(const Allocator& alloc) : first(0), last(0), capacity(0), length(0), allocator(alloc) {}
+ft::vector<T, Allocator>::vector(const Allocator& alloc) : first(0), last(0), Capacity(0), length(0), allocator(alloc) {}
 
 
 template <class T, class Allocator>
 ft::vector<T, Allocator>::vector(ft::vector<T, Allocator>::size_type count, const T& value, const Allocator& alloc) : allocator(alloc)
 {
 	first = allocator.allocate(count);
-	this->capacity = count;
+	this->Capacity = count;
 	this->length = count;
 	for (size_type i = 0; i < count; i++)
 		allocator.construct(first + i, value);
@@ -82,8 +89,8 @@ template <class InputIt>
 ft::vector<T, Allocator>::vector(InputIt first, typename ft::enable_if<!is_integral_const<InputIt>::value, InputIt>::type last, const Allocator& alloc) : allocator(alloc)
 {
 	this->length = std::distance(first, last);
-	this->capacity = std::distance(first, last);
-	this->first = allocator.allocate(this->capacity);
+	this->Capacity = std::distance(first, last);
+	this->first = allocator.allocate(this->Capacity);
 	for (size_type i = 0; i < this->length; i++)
 		allocator.construct(this->first + i, *(first + i));
 	this->last = this->first + this->length;
@@ -93,13 +100,26 @@ template <class T, class Allocator>
 ft::vector<T, Allocator>::vector(const vector& other): allocator(other.allocator)
 {
 	this->length = other.length;
-	this->capacity = other.capacity;
-	this->first = allocator.allocate(this->capacity);
+	this->Capacity = other.Capacity;
+	this->first = allocator.allocate(this->Capacity);
 	for (size_type i = 0; i < this->length; i++)
 		allocator.construct(this->first + i, *(other.first + i));
 	this->last = this->first + this->length;
 }
 
+//=========================Destructor=================================
+template <class T, class Allocator>
+ft::vector<T, Allocator>::~vector()
+{
+	if (first != 0)
+	{
+		for (size_type i = 0; first + i != last; i++)
+			allocator.destroy(first + i);
+		allocator.deallocate(first, this->Capacity);
+	}
+}
+
+//=========================Member functions=================================
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::const_iterator ft::vector<T, Allocator>::begin() const
 {
@@ -124,6 +144,33 @@ typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::end()
 	return iterator(this->last);
 }
 
+template <class T, class Allocator>
+bool ft::vector<T, Allocator>::empty() const
+{
+	if (this->length == 0)
+		return true;
+	return false;
+}
+
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::size_type ft::vector<T, Allocator>::size() const
+{
+	return this->length;
+}
+
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::size_type ft::vector<T, Allocator>::max_size() const
+{
+	return allocator.max_size() / 2; //////////ПОЛНЫЙ БРЕД
+}
+
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::size_type ft::vector<T, Allocator>::capacity() const
+{
+	return this->Capacity;
+}
+
+//=========================Operators=================================
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::reference ft::vector<T,Allocator>::operator [] (typename ft::vector<T, Allocator>::size_type pos)
 {
