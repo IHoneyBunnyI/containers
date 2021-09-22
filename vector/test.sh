@@ -1,4 +1,16 @@
 #!/bin/zsh
+if [ 'convert' = "$1" ]
+then
+	if grep "ft::vector" ./main.cpp > /dev/null
+	then
+		sed -i '' "s/ft::vector/std::vector/g" ./main.cpp
+		echo "\033[38;5;224;1mft has been successfully replaced with std\033[0m"
+	else
+		sed -i '' "s/std::vector/ft::vector/g" ./main.cpp
+		echo "\033[38;5;224;1mstd has been successfully replaced with ft\033[0m"
+	fi
+	return
+fi
 
 clear
 clang++ -Wall -Wextra -Werror -Iiterators/ -I../utils/ main.cpp -o vector
@@ -24,13 +36,13 @@ then
 else
 	echo "\033[31mDiff != 0 ERROR\033[0m"
 fi
-rm vector
+rm -rf vector
 if [ 'clear' = "$1" ]
 then
-	rm ft_output
-	rm std_output
-	rm a.out
-	rm vector
+	rm -rf ft_output
+	rm -rf std_output
+	rm -rf a.out
+	rm -rf vector
 	rm -rf a.out.dSYM
 	echo "\033[38;5;412mDelete output files\033[0m"
 fi

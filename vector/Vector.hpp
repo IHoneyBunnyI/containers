@@ -53,6 +53,10 @@ class vector
 		iterator begin();
 		const_iterator end() const;
 		iterator end();
+	
+	public: //operators
+		reference operator[](size_type pos);
+		const_reference operator[](size_type pos) const;
 };
 
 template <class T, class Allocator>
@@ -86,6 +90,17 @@ ft::vector<T, Allocator>::vector(InputIt first, typename ft::enable_if<!is_integ
 }
 
 template <class T, class Allocator>
+ft::vector<T, Allocator>::vector(const vector& other): allocator(other.allocator)
+{
+	this->length = other.length;
+	this->capacity = other.capacity;
+	this->first = allocator.allocate(this->capacity);
+	for (size_type i = 0; i < this->length; i++)
+		allocator.construct(this->first + i, *(other.first + i));
+	this->last = this->first + this->length;
+}
+
+template <class T, class Allocator>
 typename ft::vector<T, Allocator>::const_iterator ft::vector<T, Allocator>::begin() const
 {
 	return const_iterator(this->first);
@@ -107,6 +122,18 @@ template <class T, class Allocator>
 typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::end()
 {
 	return iterator(this->last);
+}
+
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::reference ft::vector<T,Allocator>::operator [] (typename ft::vector<T, Allocator>::size_type pos)
+{
+	return (*(this->first + pos));
+}
+
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::const_reference ft::vector<T,Allocator>::operator [] (typename ft::vector<T, Allocator>::size_type pos) const
+{
+	return (*(this->first + pos));
 }
 
 }
