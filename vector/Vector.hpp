@@ -33,7 +33,6 @@ class vector
 		typedef ConstReverseRandomAccessIterator<value_type>	const_reverse_iterator;
 
 	private:
-		value_type* arr;
 		value_type* first;
 		value_type* last;
 		size_type capacity;
@@ -55,27 +54,30 @@ class vector
 };
 
 template <class T, class Allocator>
-ft::vector<T, Allocator>::vector() : arr(0), first(0), last(0), capacity(0), length(0), allocator(allocator_type()) {}
+ft::vector<T, Allocator>::vector() : first(0), last(0), capacity(0), length(0), allocator(allocator_type()) {}
 
 template <class T, class Allocator>
-ft::vector<T, Allocator>::vector(const Allocator& alloc) : arr(0), first(0), last(0), capacity(0), length(0), allocator(alloc) {}
+ft::vector<T, Allocator>::vector(const Allocator& alloc) : first(0), last(0), capacity(0), length(0), allocator(alloc) {}
 
 
 template <class T, class Allocator>
-ft::vector<T, Allocator>::vector(ft::vector<T, Allocator>::size_type count, const T& value, const Allocator& alloc)
+ft::vector<T, Allocator>::vector(ft::vector<T, Allocator>::size_type count, const T& value, const Allocator& alloc) : allocator(alloc)
 {
-	(void)count;
-	(void)value;
-	(void)alloc;
+	first = allocator.allocate(count);
+	this->capacity = count;
+	this->length = count;
+	for (size_type i = 0; i < count; i++)
+		allocator.construct(first + i, value);
+
 }
 
 template <class T, class Allocator>
 template <class InputIt>
-ft::vector<T, Allocator>::vector(InputIt first, typename ft::enable_if<!is_integral_const<InputIt>::value, InputIt>::type last, const Allocator& alloc)
+ft::vector<T, Allocator>::vector(InputIt first, typename ft::enable_if<!is_integral_const<InputIt>::value, InputIt>::type last, const Allocator& alloc) : allocator(alloc)
 {
-
+	(void)first;
+	(void)last;
 }
-
 
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::const_iterator ft::vector<T, Allocator>::begin() const

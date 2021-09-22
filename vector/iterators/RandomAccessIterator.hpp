@@ -67,7 +67,7 @@ RandomAccessIterator<T>& RandomAccessIterator<T>::operator = (const RandomAccess
 {
 	if (this != &ref)
 	{
-		*this = ref;
+		this->ptr = ref.ptr;
 	}
 	return (*this);
 }

@@ -71,6 +71,12 @@ ConstRandomAccessIterator<T>::ConstRandomAccessIterator(const RandomAccessIterat
 };
 
 template <class T>
+ConstRandomAccessIterator<T>::ConstRandomAccessIterator(const ConstRandomAccessIterator<T> &src)
+{
+	this->ptr = src.ptr;
+};
+
+template <class T>
 ConstRandomAccessIterator<T>& ConstRandomAccessIterator<T>::operator = (const ConstRandomAccessIterator<T>& ref)
 {
 	if (this != &ref)

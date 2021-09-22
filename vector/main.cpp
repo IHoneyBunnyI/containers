@@ -4,9 +4,9 @@
 
 int main()
 {
-	ft::vector<int> vec1(10, 110);
-	std::vector<int> v(4, 10);
-	std::vector<int>::iterator begin = v.begin();
-	std::vector<int>::iterator end = v.end();
-	ft::vector<int> aaaa(begin, end);
+	ft::vector<int> vec(2, 110);
+	ft::vector<int>::iterator it = vec.begin();
+	std::cout << *it << std::endl;
+	*it = 10;
+	std::cout << *it << std::endl;
 }
