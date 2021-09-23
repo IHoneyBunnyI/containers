@@ -13,6 +13,8 @@ namespace ft
 template <class T>
 class RandomAccessIterator
 {
+	private:
+		T* ptr;
 	public:
 		typedef T									value_type;
 		typedef std::ptrdiff_t						difference_type;
@@ -20,7 +22,6 @@ class RandomAccessIterator
 		typedef T&									reference;
 		typedef std::random_access_iterator_tag		iterator_category;
 
-		T* ptr;
 
 		RandomAccessIterator();
 		~RandomAccessIterator();
@@ -49,7 +50,8 @@ class RandomAccessIterator
 		RandomAccessIterator& operator -- ();
 		RandomAccessIterator operator ++ (int);
 		RandomAccessIterator operator -- (int);
-
+		template <class type>
+		friend RandomAccessIterator<type> operator + (typename RandomAccessIterator<type>::difference_type n, const RandomAccessIterator<type>& ref);
 };
 
 template <class T>
@@ -193,6 +195,12 @@ RandomAccessIterator<T> RandomAccessIterator<T>::operator -- (int)
 	RandomAccessIterator<T> tmp = *this;
 	--(this->ptr);
 	return tmp;
+}
+
+template <class type>
+RandomAccessIterator<type> operator + (typename RandomAccessIterator<type>::difference_type n, const RandomAccessIterator<type>& ref)
+{
+	return (ref.ptr + n);
 }
 
 }
