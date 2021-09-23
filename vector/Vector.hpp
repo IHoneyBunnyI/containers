@@ -59,7 +59,12 @@ class vector
 		size_type max_size() const;
 		void reserve(size_type new_cap);
 		size_type capacity() const;
-	
+		void assign(size_type count, const T& value);
+		void clear();
+
+		template<class InputIt>
+		void assign(InputIt first, InputIt last);
+
 	public: //operators
 		reference operator[](size_type pos);
 		const_reference operator[](size_type pos) const;
@@ -168,6 +173,15 @@ template <class T, class Allocator>
 typename ft::vector<T, Allocator>::size_type ft::vector<T, Allocator>::capacity() const
 {
 	return this->Capacity;
+}
+
+template <class T, class Allocator>
+void vector<T, Allocator>::clear()
+{
+	pointer end = this->first + this->size();
+	for (pointer tmp = this->first; tmp < end; tmp++)
+		allocator.destroy(tmp);
+	this->length = 0;
 }
 
 //=========================Operators=================================
