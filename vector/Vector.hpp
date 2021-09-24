@@ -61,6 +61,7 @@ class vector
 		size_type capacity() const;
 		void assign(size_type count, const T& value);
 		void clear();
+		void push_back(const T& value);
 
 		template<class InputIt>
 		void assign(InputIt first, InputIt last);
@@ -182,6 +183,31 @@ void vector<T, Allocator>::clear()
 	for (pointer tmp = this->first; tmp < end; tmp++)
 		allocator.destroy(tmp);
 	this->length = 0;
+}
+
+template <class T, class Allocator>
+void ft::vector<T, Allocator>::push_back(const T& value)
+{
+	if (this->Capacity == 0)
+		this->Capacity = 1;
+	if (++length > this->Capacity)
+	{
+		this->Capacity *= 2;
+		pointer tmp = allocator.allocate(this->Capacity);
+		for (size_type i = 0; i < length - 1; i++)
+			allocator.construct(tmp + i, *(this->first + i));
+		for (pointer it = this->first; it != this->last; it++)
+			allocator.destroy(it);
+		allocator.deallocate(this->first, length - 1);
+		this->first = tmp;
+		*(this->first + length - 1) = value;
+		this->last = this->first + length;
+	}
+	else
+	{
+		*(this->last) = value;
+		this->last = this->first + length;
+	}
 }
 
 //=========================Operators=================================

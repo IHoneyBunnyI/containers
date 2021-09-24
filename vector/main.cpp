@@ -16,10 +16,22 @@ class B
 };
 
 
+template <class T>
+void print_vector(ft::vector<T> &v)
+{
+	typename ft::vector<T>::iterator begin = v.begin();
+	typename ft::vector<T>::iterator end = v.end();
+	std::cout << "capacity=\t" << v.capacity() << std::endl;
+	std::cout << "size=\t\t" << v.size() << std::endl;
+	for (; begin != end; begin++)
+		std::cout << "\033[38;5;46m" <<*begin << "\033[0m ";
+	std::cout << std::endl;
+}
+
+
 int main()
 {
-	//Test Iterators
-	std::vector<int> a(4, 10);
+	ft::vector<int> a(4, 10);
 	std::cout << a.size() << std::endl;
 	std::cout << a.capacity() << std::endl;
 	std::cout << a[0] << " " << a[1] << " "  << a[2] << " " << a[3] << std::endl;
@@ -27,4 +39,16 @@ int main()
 	std::cout << a.size() << std::endl;
 	std::cout << a.capacity() << std::endl;
 	std::cout << a[0] << " " << a[1] << " "  << a[2] << " " << a[3] << std::endl;
+	{
+		ft::vector<int> a(5, 4);
+		a.push_back(10);
+		print_vector(a);
+		a.push_back(11);
+		print_vector(a);
+		a.push_back(12);
+		print_vector(a);
+		a.push_back(10);
+		print_vector(a);
+	}
+	while (1);
 }
