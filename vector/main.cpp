@@ -234,6 +234,19 @@ void test_back()
 	std::cout << "back = \033[38;5;57m" << a_c.back() << "\033[0m" <<std::endl;
 }
 
+void test_erase()
+{
+	std::vector<int> a;
+	for (int i = 0; i < 10; i++)
+		a.push_back(i);
+	print_vector(a);
+	a.erase(a.begin() + 1);
+	print_vector(a);
+	a.erase(a.begin() + 3);
+	print_vector(a);
+	print_vector(a);
+}
+
 int main()
 {
 	//test_iterators();
@@ -241,6 +254,7 @@ int main()
 	//test_million_push_back();
 	//test_assign();
 	//test_at();
-	test_back();
+	//test_back();
+	test_erase();
 	//while (1);
 }

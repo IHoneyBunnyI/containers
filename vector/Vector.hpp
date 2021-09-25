@@ -296,6 +296,18 @@ typename ft::vector<T, Allocator>::const_reference ft::vector<T, Allocator>::bac
 	return (*(this->first + (this->length - 1)));
 }
 
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::erase (iterator position)
+{
+	(void)position;
+}
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::iterator ft::vector<T,Allocator>::erase (iterator first, iterator last)
+{
+	(void)first;
+	(void)last;
+}
+
 //=========================Operators=================================
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::reference ft::vector<T,Allocator>::operator [] (typename ft::vector<T, Allocator>::size_type pos)
