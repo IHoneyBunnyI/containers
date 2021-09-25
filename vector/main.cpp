@@ -239,11 +239,13 @@ void test_erase()
 	std::vector<int> a;
 	for (int i = 0; i < 10; i++)
 		a.push_back(i);
+	std::cout << &a << std::endl;
 	print_vector(a);
 	a.erase(a.begin() + 1);
+	std::cout << &a << std::endl;
 	print_vector(a);
 	a.erase(a.begin() + 3);
-	print_vector(a);
+	std::cout << &a << std::endl;
 	print_vector(a);
 }
 
