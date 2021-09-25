@@ -1,5 +1,5 @@
 #!/bin/zsh
-if [ 'convert' = "$1" ]
+if [ 'c' = "$1" ]
 then
 	if grep "ft::vector" ./main.cpp > /dev/null
 	then
@@ -9,6 +9,21 @@ then
 		sed -i '' "s/std::vector/ft::vector/g" ./main.cpp
 		echo "\033[38;5;224;1mstd has been successfully replaced with ft\033[0m"
 	fi
+	return
+fi
+
+if [ 'clean' = "$1" ]
+then
+	rm -rf std_vector
+	rm -rf ft_vector
+	rm -rf ft_output
+	rm -rf std_output
+	rm -rf a.out
+	rm -rf ft_vector
+	rm -rf std_vector
+	rm -rf a.out.dSYM
+	rm -rf vector.dSYM
+	echo "\033[38;5;412mDelete output files\033[0m"
 	return
 fi
 
@@ -32,15 +47,15 @@ fi
 if diff -E ft_output std_output
 then
 	echo "\033[32mDiff 0 OK!\033[0m"
-	rm std_output
-	rm ft_output
+	#rm std_output
+	#rm ft_output
 else
 	echo "\033[31mDiff != 0 ERROR\033[0m"
 fi
-rm -rf std_vector
-rm -rf ft_vector
 if [ 'clear' = "$1" ]
 then
+	rm -rf std_vector
+	rm -rf ft_vector
 	rm -rf ft_output
 	rm -rf std_output
 	rm -rf a.out
