@@ -59,7 +59,7 @@ then
 	rm -rf ft_output
 	rm -rf std_output
 	rm -rf a.out
-	rm -rf ft_vector
+	rm -rf vector
 	rm -rf std_vector
 	rm -rf a.out.dSYM
 	rm -rf vector.dSYM

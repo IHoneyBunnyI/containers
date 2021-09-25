@@ -16,10 +16,10 @@ template <class T>
 class ConstRandomAccessIterator
 {
 	public:
-		typedef T									value_type;
+		typedef const T									value_type;
 		typedef std::ptrdiff_t						difference_type;
-		typedef T*									pointer;
-		typedef T&									reference;
+		typedef const T*									pointer;
+		typedef const T&									reference;
 		typedef std::random_access_iterator_tag		iterator_category;
 
 		T* ptr;
@@ -32,8 +32,8 @@ class ConstRandomAccessIterator
 
 		ConstRandomAccessIterator& operator = (const ConstRandomAccessIterator& ref);
 
-		T& operator*() const;
-		T* operator->() const;
+		reference operator*() const;
+		pointer operator->() const;
 
 		bool operator < (const ConstRandomAccessIterator<T>& ref);
 		bool operator < (const RandomAccessIterator<T>& ref);
@@ -109,13 +109,13 @@ ConstRandomAccessIterator<T>::ConstRandomAccessIterator(const ConstRandomAccessI
 };
 
 template <class T>
-T& ConstRandomAccessIterator<T>::operator * () const
+typename ft::ConstRandomAccessIterator<T>::reference ConstRandomAccessIterator<T>::operator * () const
 {
 	return *(this->ptr);
 }
 
 template <class T>
-T* ConstRandomAccessIterator<T>::operator -> () const
+typename ft::ConstRandomAccessIterator<T>::pointer ConstRandomAccessIterator<T>::operator -> () const
 {
 	return ptr;
 }

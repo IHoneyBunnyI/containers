@@ -62,13 +62,15 @@ class vector
 		size_type capacity() const;//ok
 		void clear();//ok
 		void push_back(const T& value);//ok
-
 		template <class InputIterator>
 		void assign (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last);//ok
 		void assign (size_type n, const value_type& val);//ok
-
-		reference at (size_type n);
-		const_reference at (size_type n) const;
+		reference at (size_type n);//ok
+		const_reference at (size_type n) const;//ok
+		reference back();//ok
+		const_reference back() const;//ok
+		iterator erase (iterator position);
+		iterator erase (iterator first, iterator last);
 
 
 	public: //operators
@@ -280,6 +282,18 @@ typename ft::vector<T, Allocator>::const_reference ft::vector<T, Allocator>::at 
 	if (n >= this->length)
 		throw std::out_of_range("vector");
 	return (*(this->first + n));
+}
+
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::reference ft::vector<T, Allocator>::back()
+{
+	return (*(this->first + (this->length - 1)));
+}
+
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::const_reference ft::vector<T, Allocator>::back() const
+{
+	return (*(this->first + (this->length - 1)));
 }
 
 //=========================Operators=================================
