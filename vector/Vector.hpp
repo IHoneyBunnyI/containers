@@ -59,12 +59,12 @@ class vector
 		size_type max_size() const;
 		void reserve(size_type new_cap);
 		size_type capacity() const;
-		void assign(size_type count, const T& value);
 		void clear();
 		void push_back(const T& value);
 
-		template<class InputIt>
-		void assign(InputIt first, InputIt last);
+		//template<class InputIt>
+		//void assign(InputIt first, InputIt last);
+		//void assign(size_type count, const T& value);
 
 	public: //operators
 		reference operator[](size_type pos);
@@ -141,13 +141,13 @@ typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::begin()
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::const_iterator ft::vector<T, Allocator>::end() const
 {
-	return const_iterator(this->last);
+	return const_iterator(this->first + this->length);
 }
 
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::end()
 {
-	return iterator(this->last);
+	return iterator(this->first + this->length);
 }
 
 template <class T, class Allocator>
@@ -179,10 +179,14 @@ typename ft::vector<T, Allocator>::size_type ft::vector<T, Allocator>::capacity(
 template <class T, class Allocator>
 void vector<T, Allocator>::clear()
 {
+	if (this->first == 0)
+		return ;
 	pointer end = this->first + this->size();
 	for (pointer tmp = this->first; tmp < end; tmp++)
 		allocator.destroy(tmp);
 	this->length = 0;
+	//this->first = 0;
+	//this->last = 0;
 }
 
 template <class T, class Allocator>
