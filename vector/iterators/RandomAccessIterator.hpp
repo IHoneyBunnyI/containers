@@ -189,14 +189,14 @@ bool RandomAccessIterator<T>::operator != (const ConstRandomAccessIterator<T>& r
 template <class T>
 RandomAccessIterator<T>& RandomAccessIterator<T>::operator += (difference_type n)
 {
-	ptr += n;
+	this->ptr += n;
 	return *this;
 }
 
 template <class T>
 RandomAccessIterator<T>& RandomAccessIterator<T>::operator -= (difference_type n)
 {
-	ptr -= n;
+	this->ptr -= n;
 	return *this;
 }
 

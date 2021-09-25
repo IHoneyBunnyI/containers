@@ -2,6 +2,7 @@
 #define VECTOR_HPP
 
 #include <memory>
+#include <stdexcept>
 #include "RandomAccessIterator.hpp"
 #include "ConstRandomAccessIterator.hpp"
 #include "ReverseRandomAccessIterator.hpp"
@@ -63,12 +64,12 @@ class vector
 		void push_back(const T& value);//ok
 
 		template <class InputIterator>
-		void assign (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last);
-		void assign (size_type n, const value_type& val);
+		void assign (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last);//ok
+		void assign (size_type n, const value_type& val);//ok
 
-		//template<class InputIt>
-		//void assign(InputIt first, InputIt last);
-		//void assign(size_type count, const T& value);
+		reference at (size_type n);
+		const_reference at (size_type n) const;
+
 
 	public: //operators
 		reference operator[](size_type pos);
@@ -240,6 +241,45 @@ void ft::vector<T, Allocator>::assign (InputIterator first, typename ft::enable_
 			allocator.construct(this->first + i, *(first + i));
 		this->last = this->first + this->length;
 	}
+}
+
+template <class T, class Allocator>
+void ft::vector<T, Allocator>::assign (size_type n, const value_type& val)
+{
+	this->clear();
+	if (n > this->capacityAllocated)
+	{
+		allocator.deallocate(this->first, this->capacityAllocated);
+		this->capacityAllocated = n;
+		this->length = n;
+		this->first = allocator.allocate(this->capacityAllocated);
+		for (size_type i = 0; i < n; i++)
+			allocator.construct(this->first + i, val);
+		this->last = this->first + this->length;
+	}
+	else
+	{
+		this->length = n;
+		for (size_type i = 0; i < n; i++)
+			allocator.construct(this->first + i, val);
+		this->last = this->first + this->length;
+	}
+}
+
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::reference ft::vector<T, Allocator>::at (size_type n)
+{
+	if (n >= this->length)
+		throw std::out_of_range("vector");
+	return (*(this->first + n));
+}
+
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::const_reference ft::vector<T, Allocator>::at (typename ft::vector<T,Allocator>::size_type n) const
+{
+	if (n >= this->length)
+		throw std::out_of_range("vector");
+	return (*(this->first + n));
 }
 
 //=========================Operators=================================

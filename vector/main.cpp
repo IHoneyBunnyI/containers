@@ -68,6 +68,7 @@ void test_million_push_back()
 
 void test_assign()
 {
+	//with_iterators
 	std::vector<int> a(15, 1);
 	std::vector<int> b(10, 9);
 	print_vector(b);
@@ -78,11 +79,60 @@ void test_assign()
 	b.assign(begin, end);
 	b.assign(cbegin, cend);
 	print_vector(b);
+	std::vector<int> c;
+	std::vector<int>::iterator begin1 = c.begin();
+	std::vector<int>::iterator end1 = c.end();
+	b.assign(begin1, end1);
+	print_vector(b);
+	a.assign(a.begin(), a.end());
+	print_vector(a);
+	std::vector<int> aa;
+	std::vector<int>::iterator begin2 = aa.begin();
+	std::vector<int>::iterator end2 = aa.end();
+	aa.assign(begin2, end2);
+	//with value
+	std::vector<int> u(15, 1);
+	print_vector(u);
+	u.assign(20, 4);
+	print_vector(u);
+	u.assign(50, 10);
+	print_vector(u);
+	u.assign(0, 1);
+	print_vector(u);
+}
+
+void test_at()
+{
+	int a_ref;
+	int a_ref2;
+	std::vector<int> a(10, 4);
+	try
+	{
+		a_ref = a.at(9);
+		a_ref2 = a.at(10);
+	}
+	catch (std::out_of_range &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+	std::cout << a_ref << std::endl;
+	std::vector<int> myvector (10);   // 10 zero-initialized ints
+
+	// assign some values:
+	for (unsigned i=0; i<myvector.size(); i++)
+		myvector.at(i)=i;
+
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<myvector.size(); i++)
+		std::cout << ' ' << myvector.at(i);
+	std::cout << '\n';
 }
 
 int main()
 {
 	//test_clear();
 	//test_million_push_back();
-	test_assign();
+	//test_assign();
+	//test_at();
+	//while (1);
 }
