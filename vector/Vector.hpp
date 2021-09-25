@@ -2,6 +2,7 @@
 #define VECTOR_HPP
 
 #include <memory>
+//#include <cstring>
 #include <stdexcept>
 #include "RandomAccessIterator.hpp"
 #include "ConstRandomAccessIterator.hpp"
@@ -197,11 +198,11 @@ void vector<T, Allocator>::clear()
 template <class T, class Allocator>
 void ft::vector<T, Allocator>::push_back(const T& value)
 {
-	if (this->capacityAllocated == 0)
-		this->capacityAllocated = 1;
 	if (++length > this->capacityAllocated)
 	{
 		this->capacityAllocated *= 2;
+		if (this->capacityAllocated == 0)
+			this->capacityAllocated = 1;
 		pointer tmp = allocator.allocate(this->capacityAllocated);
 		for (size_type i = 0; i < length - 1; i++)
 			allocator.construct(tmp + i, *(this->first + i));
@@ -210,7 +211,7 @@ void ft::vector<T, Allocator>::push_back(const T& value)
 		allocator.deallocate(this->first, length - 1);
 		this->first = tmp;
 		*(this->first + length - 1) = value;
-		this->last = this->first + length;
+		this->last = this->first + this->length;
 	}
 	else
 	{
@@ -299,7 +300,10 @@ typename ft::vector<T, Allocator>::const_reference ft::vector<T, Allocator>::bac
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::erase (iterator position)
 {
-	(void)position;
+	allocator.destroy(&(*position));
+	std::copy(position + 1, this->end(), position);
+	this->last = this->first + --this->length;
+	return (position);
 }
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::iterator ft::vector<T,Allocator>::erase (iterator first, iterator last)
