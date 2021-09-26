@@ -1,8 +1,8 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
+#include <iostream>
 #include <memory>
-//#include <cstring>
 #include <stdexcept>
 #include "RandomAccessIterator.hpp"
 #include "ConstRandomAccessIterator.hpp"
@@ -70,8 +70,18 @@ class vector
 		const_reference at (size_type n) const;//ok
 		reference back();//ok
 		const_reference back() const;//ok
-		iterator erase (iterator position);
-		iterator erase (iterator first, iterator last);
+		iterator erase (iterator position); // vrode ok
+		iterator erase (iterator first, iterator last); // vrode ok
+		reference front(); //ok
+		const_reference front() const; //ok
+		allocator_type get_allocator() const; //ok
+
+		iterator insert (iterator position, const value_type& val);
+		void insert (iterator position, size_type n, const value_type& val);
+		template <class InputIterator>
+		void insert (iterator position, InputIterator first, InputIterator last);
+
+		void pop_back();
 
 
 	public: //operators
@@ -85,7 +95,6 @@ ft::vector<T, Allocator>::vector() : first(0), last(0), capacityAllocated(0), le
 
 template <class T, class Allocator>
 ft::vector<T, Allocator>::vector(const Allocator& alloc) : first(0), last(0), capacityAllocated(0), length(0), allocator(alloc) {}
-
 
 template <class T, class Allocator>
 ft::vector<T, Allocator>::vector(ft::vector<T, Allocator>::size_type count, const T& value, const Allocator& alloc) : allocator(alloc)
@@ -300,7 +309,8 @@ typename ft::vector<T, Allocator>::const_reference ft::vector<T, Allocator>::bac
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::erase (iterator position)
 {
-	allocator.destroy(&(*position));
+	size_type i = std::distance(iterator(this->first), position);
+	allocator.destroy(this->first + i);
 	std::copy(position + 1, this->end(), position);
 	this->last = this->first + --this->length;
 	return (position);
@@ -308,10 +318,38 @@ typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::erase (ite
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::iterator ft::vector<T,Allocator>::erase (iterator first, iterator last)
 {
-	(void)first;
-	(void)last;
+	size_type dist = std::distance(first, last);
+	for (size_type i = 0; i < dist; i++)
+		allocator.destroy(this->first + i);
+	std::copy(last, this->end(), first);
+	this->length -= dist;
+	this->last = this->first + this->length;
+	return(first);
 }
 
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::reference ft::vector<T, Allocator>::front()
+{
+	return *this->first;
+}
+
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::const_reference ft::vector<T, Allocator>::front() const
+{
+	return *this->first;
+}
+
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::allocator_type ft::vector<T, Allocator>::get_allocator() const
+{
+	return allocator;
+}
+
+template <class T, class Allocator>
+void ft::vector<T, Allocator>::pop_back()
+{
+	erase(this->end() - 1);
+}
 //=========================Operators=================================
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::reference ft::vector<T,Allocator>::operator [] (typename ft::vector<T, Allocator>::size_type pos)
