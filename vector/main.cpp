@@ -336,16 +336,16 @@ void test_pop_back()
 
 int main()
 {
-	//test_iterators();
-	//test_clear();
-	//test_million_push_back();
-	//test_push_back();
-	//test_assign();
-	//test_at();
-	//test_back();
-	//test_erase();
-	//test_front();
-	//test_get_allocator();
+	test_iterators();
+	test_clear();
+	test_million_push_back();
+	test_push_back();
+	test_assign();
+	test_at();
+	test_back();
+	test_erase();
+	test_front();
+	test_get_allocator();
 	test_pop_back();
 	//while (1);
 }
