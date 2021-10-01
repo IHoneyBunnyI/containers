@@ -338,48 +338,48 @@ void test_insert()
 {
 	ft::vector<int> a(5);
 	a.erase(a.begin(), a.end());
-	a.insert(a.begin(), 2);
+	a.insert(a.begin(), 1); //1
 	print_vector(a);
-	a.insert(a.begin(), 1);
+	a.insert(a.begin(), 2); //21
 	print_vector(a);
-	a.insert(a.begin(), 10);
-	print_vector(a);
-	//std::cout << &a[0] << std::endl;
-	a.insert(a.begin() + 1, 3);
+	a.insert(a.begin(), 3); //321
 	print_vector(a);
 	//std::cout << &a[0] << std::endl;
-	a.insert(a.end(), 4);
+	a.insert(a.begin() + 1, 4); //3421
 	print_vector(a);
 	//std::cout << &a[0] << std::endl;
-	a.insert(a.end(), 5);
+	a.insert(a.end(), 5); //34215
 	print_vector(a);
 	//std::cout << &a[0] << std::endl;
-	for (int i = 0; i < 10000; i++)
+	a.insert(a.end(), 6);
+	print_vector(a);
+	//std::cout << &a[0] << std::endl;
+	for (int i = 0; i < 100000; i++)
 	{
-		a.insert(a.begin(), i);
+		a.insert(a.begin() + 10, i);
 	}
 	print_vector(a);
 	//ft::vector<int> a;
-	//for (int i = 0; i < 10; i++)
-		//a.push_back(i);
-	//a.pop_back();
-	//print_vector(a);
-	//a.insert(a.begin(), 99);
-	//print_vector(a);
+	for (int i = 0; i < 10; i++)
+		a.push_back(i);
+	a.pop_back();
+	print_vector(a);
+	a.insert(a.begin(), 99);
+	print_vector(a);
 }
 int main()
 {
-	//test_iterators();
-	//test_clear();
-	//test_million_push_back();
-	//test_push_back();
-	//test_assign();
-	//test_at();
-	//test_back();
-	//test_erase();
-	//test_front();
-	//test_get_allocator();
-	//test_pop_back();
-	test_insert();
+	test_iterators();
+	test_clear();
+	test_million_push_back();
+	test_push_back();
+	test_assign();
+	test_at();
+	test_back();
+	test_erase();
+	test_front();
+	test_get_allocator();
+	test_pop_back();
+	//test_insert();
 	//while (1);
 }

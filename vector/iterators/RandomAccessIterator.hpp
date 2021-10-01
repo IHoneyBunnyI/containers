@@ -23,7 +23,7 @@ class RandomAccessIterator
 		typedef T&									reference;
 		typedef std::random_access_iterator_tag		iterator_category;
 
-		T* ptr;
+		T* ptr; 
 
 		RandomAccessIterator();
 		~RandomAccessIterator();
