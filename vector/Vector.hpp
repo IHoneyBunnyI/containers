@@ -409,7 +409,6 @@ typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::insert (it
 	}
 	else
 	{
-		//std::copy_backward(iterator(this->first + pos), iterator(this->first + this->length), iterator(this->first + this->length + 1));
 		for (size_type i = this->length - 1; i > pos; i--)
 			*(this->first + i) = *(this->first + i - 1);
 		size_type i = std::distance(this->begin(), iterator(this->first + pos));
