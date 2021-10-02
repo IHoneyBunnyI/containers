@@ -401,6 +401,7 @@ void ft::vector<T, Allocator>::insert (iterator position, size_type n, const val
 	(void)val;
 	(void)position;
 	this->length += n;
+	size_type pos = std::distance(this->begin(), position);
 	if (this->length > this->capacityAllocated * 2)
 	{
 		this->capacityAllocated = this->length;
@@ -410,6 +411,10 @@ void ft::vector<T, Allocator>::insert (iterator position, size_type n, const val
 	else if (this->length > this->capacityAllocated)
 	{
 		this->capacityAllocated *= 2;
+	}
+	else
+	{
+		
 	}
 }
 
