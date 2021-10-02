@@ -436,6 +436,13 @@ void ft::vector<T, Allocator>::insert (iterator position, size_type n, const val
 	}
 	else
 	{
+		size_type i = pos;
+		while (i < pos + n)
+		{
+			insert(iterator(this->first + i), val);
+			i++;
+			this->length--;
+		}
 	}
 }
 

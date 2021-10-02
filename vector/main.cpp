@@ -389,10 +389,10 @@ void test_insert2()
 	print_vector(a);
 	a.insert(a.end() - 1, 10, 1);
 	print_vector(a);
-	//a.insert(a.end(), 10, 99);
-	//print_vector(a);
-	//a.insert(a.begin() + 3, 1000000, 6);
-	//print_vector(a);
+	a.insert(a.end(), 10, 99);
+	print_vector(a);
+	a.insert(a.begin() + 3, 1000000, 6);
+	print_vector(a);
 }
 int main()
 {
