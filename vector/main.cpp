@@ -20,10 +20,10 @@ void print_vector(ft::vector<T> &v)
 {
 	std::cout << "capacity=\t" << v.capacity() << std::endl;
 	std::cout << "size=\t\t" << v.size() << std::endl;
-	//typename ft::vector<T>::iterator begin = v.begin();
-	//typename ft::vector<T>::iterator end = v.end();
-	//for (; begin != end; begin++)
-		//std::cout << "\033[38;5;46m" << *begin << "\033[0m ";
+	typename ft::vector<T>::iterator begin = v.begin();
+	typename ft::vector<T>::iterator end = v.end();
+	for (; begin != end; begin++)
+		std::cout << "\033[38;5;46m" << *begin << "\033[0m ";
 	std::cout << std::endl;
 }
 
@@ -32,10 +32,10 @@ void print_vector(const ft::vector<T> &v)
 {
 	std::cout << "capacity=\t" << v.capacity() << std::endl;
 	std::cout << "size=\t\t" << v.size() << std::endl;
-	//typename ft::vector<T>::const_iterator begin = v.begin();
-	//typename ft::vector<T>::const_iterator end = v.end();
-	//for (; begin != end; begin++)
-		//std::cout << "\033[38;5;46m" << *begin << "\033[0m ";
+	typename ft::vector<T>::const_iterator begin = v.begin();
+	typename ft::vector<T>::const_iterator end = v.end();
+	for (; begin != end; begin++)
+		std::cout << "\033[38;5;46m" << *begin << "\033[0m ";
 	std::cout << std::endl;
 }
 
@@ -383,14 +383,14 @@ void test_insert2()
 	print_vector(a);
 	a.insert(a.end(), 100, 99);
 	print_vector(a);
-	a.insert(a.end(), 1024, 99);
+	a.insert(a.end(), 1024, 55);
 	print_vector(a);
-	a.insert(a.end(), 10, 99);
+	a.insert(a.end(), 10, 2);
 	print_vector(a);
-	a.insert(a.end(), 10, 99);
+	a.insert(a.end() - 1, 10, 1);
 	print_vector(a);
-	a.insert(a.end(), 10, 99);
-	print_vector(a);
+	//a.insert(a.end(), 10, 99);
+	//print_vector(a);
 	//a.insert(a.begin() + 3, 1000000, 6);
 	//print_vector(a);
 }

@@ -401,20 +401,41 @@ void ft::vector<T, Allocator>::insert (iterator position, size_type n, const val
 	(void)val;
 	(void)position;
 	this->length += n;
+	size_type old_capacity = this->capacityAllocated;
 	size_type pos = std::distance(this->begin(), position);
 	if (this->length > this->capacityAllocated * 2)
 	{
 		this->capacityAllocated = this->length;
 		if (this->capacityAllocated == 0)
 			this->capacityAllocated = n;
+		pointer tmp = allocator.allocate(this->capacityAllocated);
+		for (size_type i = 0; i < pos; i++)
+			*(tmp + i) = *(this->first + i);
+		for (size_type i = pos; i < pos + n; i++)
+			allocator.construct(tmp + i, val);
+		for (size_type i = pos + n; i < this->length; i++)
+			*(tmp + i) = *(this->first + i - n);
+		allocator.deallocate(this->first, old_capacity);
+		this->first = tmp;
 	}
 	else if (this->length > this->capacityAllocated)
 	{
 		this->capacityAllocated *= 2;
+		//this->capacityAllocated = this->length;
+		if (this->capacityAllocated == 0)
+			this->capacityAllocated = n;
+		pointer tmp = allocator.allocate(this->capacityAllocated);
+		for (size_type i = 0; i < pos; i++)
+			*(tmp + i) = *(this->first + i);
+		for (size_type i = pos; i < pos + n; i++)
+			allocator.construct(tmp + i, val);
+		for (size_type i = pos + n; i < this->length; i++)
+			*(tmp + i) = *(this->first + i - n);
+		allocator.deallocate(this->first, old_capacity);
+		this->first = tmp;
 	}
 	else
 	{
-		
 	}
 }
 
