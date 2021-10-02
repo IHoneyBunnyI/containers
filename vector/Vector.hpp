@@ -368,7 +368,7 @@ template <class T, class Allocator>
 typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::insert (iterator position, const value_type& val)
 {
 	size_type pos = std::distance(this->begin(), position);
-	allocator.destroy(this->first + pos);
+	//allocator.destroy(this->first + pos);
 	if (++this->length > this->capacityAllocated)
 	{
 		this->capacityAllocated *= 2;

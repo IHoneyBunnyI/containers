@@ -393,6 +393,11 @@ void test_insert2()
 	print_vector(a);
 	a.insert(a.begin() + 3, 1000000, 6);
 	print_vector(a);
+
+	//for (int i = 0; i < 1000; i++)//очень плохая идея
+	//{
+		//a.insert(a.begin(), i + 1, i);
+	//}
 }
 int main()
 {
