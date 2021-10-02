@@ -367,29 +367,6 @@ void ft::vector<T, Allocator>::pop_back()
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::insert (iterator position, const value_type& val)
 {
-	//size_type pos = std::distance(this->begin(), position);
-	//if (++this->length > this->capacityAllocated)
-	//{
-		//this->capacityAllocated *= 2;
-		//if (this->capacityAllocated == 0)
-			//this->capacityAllocated = 1;
-		//pointer tmp;
-		//tmp = allocator.allocate(this->capacityAllocated);
-		//for (size_type i = 0; i < this->length - 1; i++)
-			//*(tmp + i) = *(this->first + i);
-		//allocator.deallocate(this->first, this->length - 1);
-		//this->first = tmp;
-	//}
-	//for (size_type i = this->length - 1; i > pos; i--)
-	//{
-		//*(this->first + i) = *(this->first + i - 1);
-		////std::cout << *(this->first + i) << " ";
-	//}
-	////std::copy_backward(iterator(this->first + pos), this->end(), this->end() + 1);
-	//size_type i = std::distance(this->begin(), iterator(this->first + pos));
-	//allocator.destroy(this->first + i);
-	//allocator.construct(this->first + i, val);
-	//return position;
 	size_type pos = std::distance(this->begin(), position);
 	allocator.destroy(this->first + pos);
 	if (++this->length > this->capacityAllocated)
@@ -417,12 +394,24 @@ typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::insert (it
 		return position;
 	}
 }
-// position
-//  |
-// [0, 1, 2, 3]
-// [..., 0, 1, 2, 3]
-//
-//
+
+template <class T, class Allocator>
+void ft::vector<T, Allocator>::insert (iterator position, size_type n, const value_type& val)
+{
+	(void)val;
+	(void)position;
+	this->length += n;
+	if (this->length > this->capacityAllocated * 2)
+	{
+		this->capacityAllocated = this->length;
+		if (this->capacityAllocated == 0)
+			this->capacityAllocated = n;
+	}
+	else if (this->length > this->capacityAllocated)
+	{
+		this->capacityAllocated *= 2;
+	}
+}
 
 //=========================Operators=================================
 template <class T, class Allocator>

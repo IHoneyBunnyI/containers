@@ -18,24 +18,24 @@ class B
 template <class T>
 void print_vector(ft::vector<T> &v)
 {
-	typename ft::vector<T>::iterator begin = v.begin();
-	typename ft::vector<T>::iterator end = v.end();
 	std::cout << "capacity=\t" << v.capacity() << std::endl;
 	std::cout << "size=\t\t" << v.size() << std::endl;
-	for (; begin != end; begin++)
-		std::cout << "\033[38;5;46m" << *begin << "\033[0m ";
+	//typename ft::vector<T>::iterator begin = v.begin();
+	//typename ft::vector<T>::iterator end = v.end();
+	//for (; begin != end; begin++)
+		//std::cout << "\033[38;5;46m" << *begin << "\033[0m ";
 	std::cout << std::endl;
 }
 
 template <class T>
 void print_vector(const ft::vector<T> &v)
 {
-	typename ft::vector<T>::const_iterator begin = v.begin();
-	typename ft::vector<T>::const_iterator end = v.end();
 	std::cout << "capacity=\t" << v.capacity() << std::endl;
 	std::cout << "size=\t\t" << v.size() << std::endl;
-	for (; begin != end; begin++)
-		std::cout << "\033[38;5;46m" << *begin << "\033[0m ";
+	//typename ft::vector<T>::const_iterator begin = v.begin();
+	//typename ft::vector<T>::const_iterator end = v.end();
+	//for (; begin != end; begin++)
+		//std::cout << "\033[38;5;46m" << *begin << "\033[0m ";
 	std::cout << std::endl;
 }
 
@@ -356,30 +356,58 @@ void test_insert()
 	//std::cout << &a[0] << std::endl;
 	for (int i = 0; i < 1000000; i++)
 	{
-		a.insert(a.end(), i + 1);
+		a.insert(a.begin(), i + 1);
 	}
 	print_vector(a);
-	//ft::vector<int> b;
-	//for (int i = 0; i < 10; i++)
-		//b.push_back(i);
-	//b.pop_back();
+	ft::vector<int> b;
+	for (int i = 0; i < 10; i++)
+		b.push_back(i);
+	b.pop_back();
+	print_vector(b);
+	b.insert(b.begin(), 99);
+	print_vector(b);
+}
+
+void test_insert2()
+{
+	ft::vector<int> a;
+	//a.erase(a.begin(), a.end());
+	print_vector(a);
+	a.insert(a.begin(), 5, 10);
+	print_vector(a);
+	a.insert(a.begin() + 3, 3, 8);
+	print_vector(a);
+	a.insert(a.end(), 13, 99);
+	print_vector(a);
+	a.insert(a.end(), 11, 99);
+	print_vector(a);
+	a.insert(a.end(), 100, 99);
+	print_vector(a);
+	a.insert(a.end(), 1024, 99);
+	print_vector(a);
+	a.insert(a.end(), 10, 99);
+	print_vector(a);
+	a.insert(a.end(), 10, 99);
+	print_vector(a);
+	a.insert(a.end(), 10, 99);
+	print_vector(a);
+	//a.insert(a.begin() + 3, 1000000, 6);
 	//print_vector(a);
-	//b.insert(b.begin(), 99);
-	//print_vector(b);
 }
 int main()
 {
-	test_iterators();
-	test_clear();
-	test_million_push_back();
-	test_push_back();
-	test_assign();
-	test_at();
-	test_back();
-	test_erase();
-	test_front();
-	test_get_allocator();
-	test_pop_back();
-	test_insert();
+	//test_iterators();
+	//test_clear();
+	//test_million_push_back();
+	//test_push_back();
+	//test_assign();
+	//test_at();
+	//test_back();
+	//test_erase();
+	//test_front();
+	//test_get_allocator();
+	//test_pop_back();
+	//test_insert();
+	test_insert2();
 	//while (1);
 }

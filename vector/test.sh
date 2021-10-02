@@ -30,17 +30,17 @@ fi
 clear
 if grep "ft::vector" ./main.cpp > /dev/null
 then
-	clang++ -Wall -Wextra -Werror -Iiterators/ -I../utils/ main.cpp -o ft_vector
+	clang++ -Wall -Wextra -Werror -Iiterators/ -I../utils/ main.cpp -o ft_vector -Ofast
 	time ./ft_vector > ft_output
 	sed -i '' "s/ft::vector/std::vector/g" ./main.cpp
-	clang++ -Wall -Wextra -Werror -Iiterators/ -I../utils/ main.cpp -o std_vector
+	clang++ -Wall -Wextra -Werror -Iiterators/ -I../utils/ main.cpp -o std_vector -Ofast
 	time ./std_vector > std_output
 	sed -i '' "s/std::vector/ft::vector/g" ./main.cpp
 else
-	clang++ -Wall -Wextra -Werror -Iiterators/ -I../utils/ main.cpp -o std_vector
+	clang++ -Wall -Wextra -Werror -Iiterators/ -I../utils/ main.cpp -o std_vector -Ofast
 	time ./std_vector > std_output
 	sed -i '' "s/std::vector/ft::vector/g" ./main.cpp
-	clang++ -Wall -Wextra -Werror -Iiterators/ -I../utils/ main.cpp -o ft_vector
+	clang++ -Wall -Wextra -Werror -Iiterators/ -I../utils/ main.cpp -o ft_vector -Ofast
 	time ./ft_vector > ft_output
 	sed -i '' "s/ft::vector/std::vector/g" ./main.cpp
 fi
