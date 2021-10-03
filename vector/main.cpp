@@ -354,7 +354,7 @@ void test_insert()
 	a.insert(a.end(), 6);
 	print_vector(a);
 	//std::cout << &a[0] << std::endl;
-	for (int i = 0; i < 10000; i++)
+	for (int i = 0; i < 1000000; i++)
 	{
 		a.insert(a.begin(), i + 1);
 	}
@@ -395,7 +395,25 @@ void test_insert3()
 	a.push_back(2);
 	a.push_back(3);
 	print_vector(a);
-	a.insert(a.end(), a.begin(), a.end());
+	//a.insert(a.end(), a.begin(), a.end());
+	print_vector(a);
+}
+
+void test_reserve()
+{
+	ft::vector<int> a;
+	print_vector(a);
+	a.reserve(0);
+	print_vector(a);
+	a.reserve(100);
+	print_vector(a);
+	a.reserve(10);
+	print_vector(a);
+	//a.insert(a.begin(), 10, 6);
+	for (int i = 0; i < 10; i++)
+		a.push_back(i);
+	print_vector(a);
+	a.reserve(200);
 	print_vector(a);
 }
 int main()
@@ -413,6 +431,7 @@ int main()
 	//test_pop_back();
 	//test_insert();
 	//test_insert2();
-	test_insert3();
+	//test_insert3();
+	test_reserve();
 	//while (1);
 }

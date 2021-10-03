@@ -68,5 +68,23 @@ void ft::stack<T, Container>::pop()
 	container.pop_back();
 }
 
+template <class T, class Container>
+bool operator== (const stack<T,Container>& lhs, const stack<T,Container>& rhs);
+
+template <class T, class Container>
+bool operator!= (const stack<T,Container>& lhs, const stack<T,Container>& rhs);
+
+template <class T, class Container>
+bool operator<  (const stack<T,Container>& lhs, const stack<T,Container>& rhs);
+
+template <class T, class Container>
+bool operator<= (const stack<T,Container>& lhs, const stack<T,Container>& rhs);
+
+template <class T, class Container>
+bool operator>  (const stack<T,Container>& lhs, const stack<T,Container>& rhs);
+
+template <class T, class Container>
+bool operator>= (const stack<T,Container>& lhs, const stack<T,Container>& rhs);
+
 }
 #endif

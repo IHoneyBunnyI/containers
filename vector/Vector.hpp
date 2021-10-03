@@ -90,7 +90,7 @@ class vector
 
 		size_type max_size() const;//ok
 		size_type size() const;
-		void reserve(size_type new_cap);//ok
+		void reserve(size_type new_cap);
 		void push_back(const T& value);//ok
 
 
@@ -453,6 +453,24 @@ void ft::vector<T, Allocator>::insert (typename ft::vector<T,Allocator>::iterato
 	(void)first;
 	(void)last;
 
+}
+
+template <class T, class Allocator>
+void ft::vector<T, Allocator>::reserve(size_type new_cap)
+{
+	if (new_cap < this->capacityAllocated)
+		return;
+	pointer tmp = allocator.allocate(new_cap);
+	for (size_type i = 0; i < this->length; i++)
+		*(tmp + i) = *(this->first + i);
+	if (this->first)
+	{
+		for (size_type i = 0; i < this->length; i++)
+			allocator.destroy(this->first + i);
+		allocator.deallocate(this->first, this->capacityAllocated);
+	}
+	this->capacityAllocated = new_cap;
+	this->first = tmp;
 }
 
 //=========================Operators=================================
