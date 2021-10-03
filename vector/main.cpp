@@ -354,7 +354,7 @@ void test_insert()
 	a.insert(a.end(), 6);
 	print_vector(a);
 	//std::cout << &a[0] << std::endl;
-	for (int i = 0; i < 1000000; i++)
+	for (int i = 0; i < 10000; i++)
 	{
 		a.insert(a.begin(), i + 1);
 	}
@@ -373,31 +373,30 @@ void test_insert2()
 	ft::vector<int> a;
 	//a.erase(a.begin(), a.end());
 	print_vector(a);
-	a.insert(a.begin(), 5, 10);
+	a.insert(a.begin(), 5, 1);
 	print_vector(a);
-	a.insert(a.begin() + 3, 3, 8);
+	a.insert(a.begin(), 1, 2);
 	print_vector(a);
-	a.insert(a.end(), 13, 99);
-	print_vector(a);
-	a.insert(a.end(), 11, 99);
-	print_vector(a);
-	a.insert(a.end(), 100, 99);
-	print_vector(a);
-	a.insert(a.end(), 1024, 55);
-	print_vector(a);
-	a.insert(a.end(), 10, 2);
-	print_vector(a);
-	a.insert(a.end() - 1, 10, 1);
-	print_vector(a);
-	a.insert(a.end(), 10, 99);
-	print_vector(a);
-	a.insert(a.begin() + 3, 1000000, 6);
+	a.insert(a.begin() + 3, 2, 3);
 	print_vector(a);
 
-	//for (int i = 0; i < 1000; i++)//очень плохая идея
-	//{
-		//a.insert(a.begin(), i + 1, i);
-	//}
+	for (int i = 0; i < 1000; i++)//очень плохая идея
+	{
+		a.insert(a.begin() + 1, i + 1, i);
+	}
+	print_vector(a);
+}
+
+void test_insert3()
+{
+	ft::vector<int> a;
+	print_vector(a);
+	a.push_back(1);
+	a.push_back(2);
+	a.push_back(3);
+	print_vector(a);
+	a.insert(a.end(), a.begin(), a.end());
+	print_vector(a);
 }
 int main()
 {
@@ -413,6 +412,7 @@ int main()
 	//test_get_allocator();
 	//test_pop_back();
 	//test_insert();
-	test_insert2();
+	//test_insert2();
+	test_insert3();
 	//while (1);
 }

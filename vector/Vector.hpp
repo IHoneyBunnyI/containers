@@ -84,6 +84,7 @@ class vector
 
 		iterator insert (iterator position, const value_type& val);
 		void insert (iterator position, size_type n, const value_type& val);
+
 		template <class InputIterator>
 		void insert (iterator position, typename ft::enable_if<!ft::is_integral_const<InputIterator>::value, InputIterator>::type first, InputIterator last);
 
@@ -398,8 +399,6 @@ typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::insert (it
 template <class T, class Allocator>
 void ft::vector<T, Allocator>::insert (iterator position, size_type n, const value_type& val)
 {
-	(void)val;
-	(void)position;
 	this->length += n;
 	size_type old_capacity = this->capacityAllocated;
 	size_type pos = std::distance(this->begin(), position);
@@ -421,7 +420,6 @@ void ft::vector<T, Allocator>::insert (iterator position, size_type n, const val
 	else if (this->length > this->capacityAllocated)
 	{
 		this->capacityAllocated *= 2;
-		//this->capacityAllocated = this->length;
 		if (this->capacityAllocated == 0)
 			this->capacityAllocated = n;
 		pointer tmp = allocator.allocate(this->capacityAllocated);
@@ -436,8 +434,25 @@ void ft::vector<T, Allocator>::insert (iterator position, size_type n, const val
 	}
 	else
 	{
-
+		for (size_type i = this->length - 1; i >= pos + n; i--)
+			*(this->first + i) = *(this->first + i - n);
+		for (size_type i = pos + n - 1; i > pos - 1; i--)
+			allocator.construct(this->first + i, val);
 	}
+}
+
+
+template <class T, class Allocator>
+template <class InputIterator>
+void ft::vector<T, Allocator>::insert (typename ft::vector<T,Allocator>::iterator position, typename ft::enable_if<!ft::is_integral_const<InputIterator>::value, InputIterator>::type first, InputIterator last)
+{
+	//size_type old_capacity = this->capacityAllocated;
+	//size_type pos = std::distance(this->begin(), position);
+	//size_type len = std::distance(first, last);
+	(void)position;
+	(void)first;
+	(void)last;
+
 }
 
 //=========================Operators=================================
