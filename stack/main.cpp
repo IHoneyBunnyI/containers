@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Stack.hpp"
 #include <stack>
+typedef std::size_t				size_type;
 
 template <class T>
 void print_stack(std::stack<T> &s)
@@ -30,4 +31,13 @@ int main()
 {
 	std::stack<int> stack;
 	print_stack(stack);
+	stack.push(10);
+	print_stack(stack);
+	for (int i = 0; i < 10000000; i++)
+		stack.push(i + 1);
+	print_stack(stack);
+	for (size_type i = 0; i < stack.size(); i++)
+		stack.pop();
+	print_stack(stack);
+
 }
