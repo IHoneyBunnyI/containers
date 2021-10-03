@@ -371,7 +371,7 @@ void test_insert()
 void test_insert2()
 {
 	ft::vector<int> a;
-	//a.erase(a.begin(), a.end());
+	a.erase(a.begin(), a.end());
 	print_vector(a);
 	a.insert(a.begin(), 5, 1);
 	print_vector(a);
@@ -409,11 +409,14 @@ void test_reserve()
 	print_vector(a);
 	a.reserve(10);
 	print_vector(a);
-	//a.insert(a.begin(), 10, 6);
+	a.insert(a.begin(), 10, 6);
 	for (int i = 0; i < 10; i++)
 		a.push_back(i);
 	print_vector(a);
 	a.reserve(200);
+	print_vector(a);
+	for (int i = 0; i < 1000; i++)
+		a.insert(a.end(), i, 10);
 	print_vector(a);
 }
 int main()

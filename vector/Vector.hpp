@@ -436,8 +436,8 @@ void ft::vector<T, Allocator>::insert (iterator position, size_type n, const val
 	{
 		for (size_type i = this->length - 1; i >= pos + n; i--)
 			*(this->first + i) = *(this->first + i - n);
-		for (size_type i = pos + n - 1; i > pos - 1; i--)
-			allocator.construct(this->first + i, val);
+		for (size_type i = pos + n; i > pos; i--)
+			allocator.construct(this->first + i - 1, val);
 	}
 }
 
