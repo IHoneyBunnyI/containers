@@ -116,7 +116,7 @@ class vector
 
 //=========================Constructors=================================
 template <class T, class Allocator>
-ft::vector<T, Allocator>::vector() : first(0), /*last(0),*/ capacityAllocated(0), length(0), allocator(allocator_type()) {}
+ft::vector<T, Allocator>::vector() : first(0), capacityAllocated(0), length(0), allocator(allocator_type()) {}
 
 template <class T, class Allocator>
 ft::vector<T, Allocator>::vector(const Allocator& alloc) : first(0), /*last(0),*/ capacityAllocated(0), length(0), allocator(alloc) {}
@@ -129,7 +129,6 @@ ft::vector<T, Allocator>::vector(ft::vector<T, Allocator>::size_type count, cons
 	this->length = count;
 	for (size_type i = 0; i < count; i++)
 		allocator.construct(first + i, value);
-	//this->last = this->first + this->length;
 }
 
 template <class T, class Allocator>
@@ -141,7 +140,6 @@ ft::vector<T, Allocator>::vector(InputIt first, typename ft::enable_if<!ft::is_i
 	this->first = allocator.allocate(this->capacityAllocated);
 	for (size_type i = 0; i < this->length; i++)
 		allocator.construct(this->first + i, *(first + i));
-	//this->last = this->first + this->length;
 }
 
 template <class T, class Allocator>
@@ -152,7 +150,6 @@ ft::vector<T, Allocator>::vector(const vector& other): allocator(other.allocator
 	this->first = allocator.allocate(this->capacityAllocated);
 	for (size_type i = 0; i < this->length; i++)
 		allocator.construct(this->first + i, *(other.first + i));
-	//this->last = this->first + this->length;
 }
 
 //=========================Destructor=================================
@@ -230,37 +227,10 @@ void vector<T, Allocator>::clear()
 }
 
 template <class T, class Allocator>
-void ft::vector<T, Allocator>::push_back(const T& value)
-{
-	if (++this->length > this->capacityAllocated)
-	{
-		this->capacityAllocated *= 2;
-		if (this->capacityAllocated == 0)
-			this->capacityAllocated = 1;
-		pointer tmp = allocator.allocate(this->capacityAllocated);
-		for (size_type i = 0; i < this->length - 1; i++)
-			allocator.construct(tmp + i, *(this->first + i));
-		for (pointer it = this->first; it != this->first + this->length; it++)
-			allocator.destroy(it);
-		allocator.deallocate(this->first, length - 1);
-		this->first = tmp;
-		*(this->first + length - 1) = value;
-		//this->last = this->first + this->length;
-	}
-	else
-	{
-		*(this->first + this->length - 1) = value;
-		//*(this->last) = value;
-		//this->last = this->first + length;
-	}
-}
-
-template <class T, class Allocator>
 template <class InputIterator>
 void ft::vector<T, Allocator>::assign (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last)
 {
 	this->clear();
-	//this->insert(this->first, first, last); можно так
 	size_type dist = std::distance(first, last);
 	if (dist > this->capacityAllocated)
 	{
@@ -270,14 +240,12 @@ void ft::vector<T, Allocator>::assign (InputIterator first, typename ft::enable_
 		this->first = allocator.allocate(this->capacityAllocated);
 		for (size_type i = 0; first + i < last; i++)
 			allocator.construct(this->first + i, *(first + i));
-		//this->last = this->first + this->length;
 	}
 	else
 	{
 		this->length = dist;
 		for (size_type i = 0; first + i < last; i++)
 			allocator.construct(this->first + i, *(first + i));
-		//this->last = this->first + this->length;
 	}
 }
 
@@ -293,14 +261,12 @@ void ft::vector<T, Allocator>::assign (size_type n, const value_type& val)
 		this->first = allocator.allocate(this->capacityAllocated);
 		for (size_type i = 0; i < n; i++)
 			allocator.construct(this->first + i, val);
-		//this->last = this->first + this->length;
 	}
 	else
 	{
 		this->length = n;
 		for (size_type i = 0; i < n; i++)
 			allocator.construct(this->first + i, val);
-		//this->last = this->first + this->length;
 	}
 }
 
@@ -372,16 +338,9 @@ typename ft::vector<T, Allocator>::allocator_type ft::vector<T, Allocator>::get_
 }
 
 template <class T, class Allocator>
-void ft::vector<T, Allocator>::pop_back()
-{
-	erase(this->end() - 1);
-}
-
-template <class T, class Allocator>
 typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::insert (iterator position, const value_type& val)
 {
 	size_type pos = std::distance(this->begin(), position);
-	//allocator.destroy(this->first + pos);
 	if (++this->length > this->capacityAllocated)
 	{
 		this->capacityAllocated *= 2;
@@ -542,7 +501,6 @@ ft::vector<T, Allocator>& ft::vector<T, Allocator>::operator = (const ft::vector
 	return *this;
 }
 
-//=========================Operators=================================
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::reference ft::vector<T,Allocator>::operator [] (typename ft::vector<T, Allocator>::size_type pos)
 {
@@ -555,5 +513,45 @@ typename ft::vector<T, Allocator>::const_reference ft::vector<T,Allocator>::oper
 	return (*(this->first + pos));
 }
 
+template <class T, class Allocator>
+void ft::vector<T, Allocator>::pop_back()
+{
+	erase(this->end() - 1);
 }
+
+template <class T, class Allocator>
+void ft::vector<T, Allocator>::push_back(const T& value)
+{
+	if (++this->length > this->capacityAllocated)
+	{
+		this->capacityAllocated *= 2;
+		if (this->capacityAllocated == 0)
+			this->capacityAllocated = 1;
+		pointer tmp = allocator.allocate(this->capacityAllocated);
+		for (size_type i = 0; i < this->length - 1; i++)
+			allocator.construct(tmp + i, *(this->first + i));
+		for (pointer it = this->first; it != this->first + this->length; it++)
+			allocator.destroy(it);
+		allocator.deallocate(this->first, length - 1);
+		this->first = tmp;
+		*(this->first + length - 1) = value;
+	}
+	else
+		*(this->first + this->length - 1) = value;
+}
+
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::reverse_iterator ft::vector<T, Allocator>::rbegin()
+{
+	return (reverse_iterator(this->first));
+}
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::const_reverse_iterator ft::vector<T, Allocator>::rbegin() const
+{
+	return (const_reverse_iterator(this->first));
+}
+
+
+}
+
 #endif
