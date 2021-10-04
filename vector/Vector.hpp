@@ -36,7 +36,6 @@ class vector
 
 	private:
 		value_type* first;
-		//value_type* last;
 		size_type capacityAllocated;
 		size_type length;
 		Allocator allocator;
@@ -71,8 +70,8 @@ class vector
 
 		bool empty() const;
 
-		const_iterator end() const;
-		iterator end();
+		const_iterator end() const; //
+		iterator end();//
 
 		iterator erase (iterator position); // vrode ok
 		iterator erase (iterator first, iterator last); // vrode ok
@@ -90,7 +89,7 @@ class vector
 
 		size_type max_size() const;//ok
 
-		vector& operator = (const vector& x);
+		vector& operator = (const vector& x); //
 
 		reference operator[](size_type pos);
 		const_reference operator[](size_type pos) const;
@@ -109,7 +108,7 @@ class vector
 
 		void resize (size_type n, value_type val = value_type());
 
-		size_type size() const;
+		size_type size() const; //
 
 		void swap (vector& x);
 };
@@ -545,10 +544,28 @@ typename ft::vector<T, Allocator>::reverse_iterator ft::vector<T, Allocator>::rb
 {
 	return (reverse_iterator(this->first));
 }
+
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::const_reverse_iterator ft::vector<T, Allocator>::rbegin() const
 {
 	return (const_reverse_iterator(this->first));
+}
+
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::reverse_iterator ft::vector<T, Allocator>::rend()
+{
+	return (reverse_iterator(this->first + this->length));
+}
+template <class T, class Allocator>
+typename ft::vector<T, Allocator>::const_reverse_iterator ft::vector<T, Allocator>::rend() const
+{
+	return (const_reverse_iterator(this->first + this->length));
+}
+
+template <class T, class Allocator>
+void ft::vector<T, Allocator>::resize (size_type n, value_type val)
+{
+
 }
 
 
