@@ -89,17 +89,29 @@ class vector
 		void insert (iterator position, typename ft::enable_if<!ft::is_integral_const<InputIterator>::value, InputIterator>::type first, InputIterator last);
 
 		size_type max_size() const;//ok
-		size_type size() const;
-		void reserve(size_type new_cap);
-		void push_back(const T& value);//ok
 
+		vector& operator = (const vector& x);
+
+		reference operator[](size_type pos);
+		const_reference operator[](size_type pos) const;
 
 		void pop_back(); //ok
 
+		void push_back(const T& value);//ok
 
-	public: //operators
-		reference operator[](size_type pos);
-		const_reference operator[](size_type pos) const;
+		reverse_iterator rbegin();
+		const_reverse_iterator rbegin() const;
+
+		reverse_iterator rend();
+		const_reverse_iterator rend() const;
+
+		void reserve(size_type new_cap);
+
+		void resize (size_type n, value_type val = value_type());
+
+		size_type size() const;
+
+		void swap (vector& x);
 };
 
 //=========================Constructors=================================
@@ -449,8 +461,6 @@ void ft::vector<T, Allocator>::insert (typename ft::vector<T,Allocator>::iterato
 	size_type n = std::distance(first, last);
 	size_type pos = std::distance(this->begin(), position);
 	size_type old_capacity = this->capacityAllocated;
-	iterator copy_f(first);
-	iterator copy_l(last);
 	this->length += n;
 	if (this->length > this->capacityAllocated * 2)
 	{
@@ -510,6 +520,26 @@ void ft::vector<T, Allocator>::reserve(size_type new_cap)
 	}
 	this->capacityAllocated = new_cap;
 	this->first = tmp;
+}
+
+template <class T, class Allocator>
+ft::vector<T, Allocator>& ft::vector<T, Allocator>::operator = (const ft::vector<T, Allocator>& x)
+{
+	if (this != &x)
+	{
+		if (this->first != 0)
+			this->clear();
+		for (size_type i = 0; i < this->length; i++)
+			allocator.destroy(this->first + i);
+		allocator = x.allocator;
+		allocator.deallocate(this->capacityAllocated);
+		this->length = x.length;
+		this->capacityAllocated = x.capacityAllocated;
+		this->first = this->allocator.allocate(this->capacityAllocated);
+		for (size_type i = 0; i < this->length; i++)
+			allocator.allocate(this->first + i, *(x.first + i));
+	}
+	return *this;
 }
 
 //=========================Operators=================================
