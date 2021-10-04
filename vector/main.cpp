@@ -389,13 +389,41 @@ void test_insert2()
 
 void test_insert3()
 {
-	ft::vector<int> a;
+	ft::vector<int> a(100, 1);
+	ft::vector<int> b(100);
+	b.push_back(1);
+	b.push_back(2);
+	b.push_back(3);
 	print_vector(a);
 	a.push_back(1);
 	a.push_back(2);
 	a.push_back(3);
 	print_vector(a);
-	//a.insert(a.end(), a.begin(), a.end());
+	a.insert(a.end(), b.end() - 50, b.end());
+	print_vector(a);
+	a.reserve(100);
+	print_vector(a);
+	ft::vector<int> million(1000000, 10);
+	a.insert(a.end(), million.begin(), million.end() - 1000);
+	print_vector(a);
+	a.erase(a.begin(), a.end());
+	print_vector(a);
+	a.insert(a.begin(), million.end() - 1000, million.end());
+	print_vector(a);
+	ft::vector<int> one_thousand;
+	for (int i = 0; i < 1000; i++)
+		one_thousand.push_back(i);
+	for (int i = 0; i < 100; i++)
+		a.insert(a.end(), one_thousand.begin(), one_thousand.end());
+	print_vector(a);
+	a.insert(a.end(), a.begin(), a.end());
+	std::cout << *(a.begin()) << " " << *(a.end()); ////////////////////////////////
+	print_vector(a);
+	ft::vector<int> test;
+	for (int i = 0; i < 500; i++)
+		test.push_back(i);
+	print_vector(a);
+	test.insert(test.begin() + 10, test.begin(), test.end());
 	print_vector(a);
 }
 
@@ -421,20 +449,20 @@ void test_reserve()
 }
 int main()
 {
-	//test_iterators();
-	//test_clear();
-	//test_million_push_back();
-	//test_push_back();
-	//test_assign();
-	//test_at();
-	//test_back();
-	//test_erase();
-	//test_front();
-	//test_get_allocator();
-	//test_pop_back();
-	//test_insert();
-	//test_insert2();
-	//test_insert3();
+	test_iterators();
+	test_clear();
+	test_million_push_back();
+	test_push_back();
+	test_assign();
+	test_at();
+	test_back();
+	test_erase();
+	test_front();
+	test_get_allocator();
+	test_pop_back();
+	test_insert();
+	test_insert2();
+	test_insert3();
 	test_reserve();
 	//while (1);
 }

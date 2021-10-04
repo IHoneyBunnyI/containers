@@ -446,13 +446,52 @@ template <class T, class Allocator>
 template <class InputIterator>
 void ft::vector<T, Allocator>::insert (typename ft::vector<T,Allocator>::iterator position, typename ft::enable_if<!ft::is_integral_const<InputIterator>::value, InputIterator>::type first, InputIterator last)
 {
-	//size_type old_capacity = this->capacityAllocated;
-	//size_type pos = std::distance(this->begin(), position);
-	//size_type len = std::distance(first, last);
-	(void)position;
-	(void)first;
-	(void)last;
-
+	size_type n = std::distance(first, last);
+	size_type pos = std::distance(this->begin(), position);
+	size_type old_capacity = this->capacityAllocated;
+	iterator copy_f(first);
+	iterator copy_l(last);
+	this->length += n;
+	if (this->length > this->capacityAllocated * 2)
+	{
+		size_type index = 0;
+		this->capacityAllocated = this->length;
+		if (this->capacityAllocated == 0)
+			this->capacityAllocated = n;
+		pointer tmp = allocator.allocate(this->capacityAllocated);
+		for (size_type i = 0; i < pos; i++)
+			*(tmp + i) = *(this->first + i);
+		for (size_type i = pos; i < pos + n; i++)
+			allocator.construct(tmp + i, *(first + index));
+		for (size_type i = pos + n; i < this->length; i++)
+			*(tmp + i) = *(this->first + i - n);
+		allocator.deallocate(this->first, old_capacity);
+		this->first = tmp;
+	}
+	else if (this->length > this->capacityAllocated)
+	{
+		size_type index = 0;
+		this->capacityAllocated *= 2;
+		if (this->capacityAllocated == 0)
+			this->capacityAllocated = n;
+		pointer tmp = allocator.allocate(this->capacityAllocated);
+		for (size_type i = 0; i < pos; i++)
+			*(tmp + i) = *(this->first + i);
+		for (size_type i = pos; i < pos + n; i++)
+			allocator.construct(tmp + i, *(first + index));
+		for (size_type i = pos + n; i < this->length; i++)
+			*(tmp + i) = *(this->first + i - n);
+		allocator.deallocate(this->first, old_capacity);
+		this->first = tmp;
+	}
+	else
+	{
+		size_type index = n - 1;
+		for (size_type i = this->length - 1; i >= pos + n; i--)
+			*(this->first + i) = *(this->first + i - n);
+		for (size_type i = pos + n; i > pos; i--)
+			allocator.construct(this->first + i - 1, *(first + index--));
+	}
 }
 
 template <class T, class Allocator>
