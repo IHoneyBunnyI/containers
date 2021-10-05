@@ -8,8 +8,26 @@ class B
 	public:
 		std::string a;
 		std::string b;
+		char *str;
 		B()
 		{
+			/*str = new char("heelo");
+			print(LOL);
+			<HEAD>
+				<Title>
+			<\HEAD>
+			fmt.Println("SSSSSSS");
+			public static final void class main
+			{
+				public static void System.out.Print("AAAAAAAAAAA");
+			}
+			printf("AAAA&");
+			mov rax 0x234
+			__syscall 0x8234
+			echo "sdfgh" | grep s | cat -e | head 1>/dev/null
+			+++++++++++++++++++++++++++++++++++++++++----------->-<[+++++]+++++++++++++++++
+
+			ret */
 			a = "Hello";
 			b = ", World!";
 		}
@@ -486,23 +504,57 @@ void test_resize()
 		a.resize(i, 99);
 	print_vector(a);
 }
+
+void test_swap()
+{
+	ft::vector<int> a(10, 10);
+	print_vector(a);
+	a.insert(a.end(), 100, 99);
+	print_vector(a);
+	ft::vector<int> b(10, 5);
+	print_vector(a);
+	print_vector(b);
+	a.swap(b);
+	print_vector(a);
+	print_vector(b);
+	swap(a, b);
+	print_vector(a);
+	print_vector(b);
+}
+
+void test_non_member()
+{
+	{
+	ft::vector<int> a;
+	ft::vector<int> b;
+	std::cout << (a == b) << std::endl;
+	}
+	{
+	ft::vector<int> a;
+	ft::vector<int> b(1);
+	std::cout << (a == b) << std::endl;
+	}
+}
+
 int main()
 {
-	test_iterators();
-	test_clear();
-	test_million_push_back();
-	test_push_back();
-	test_assign();
-	test_at();
-	test_back();
-	test_erase();
-	test_front();
-	test_get_allocator();
-	test_pop_back();
-	test_insert();
-	test_insert2();
-	test_insert3();
-	test_reserve();
-	test_resize();
-	while (1);
+	//test_iterators();
+	//test_clear();
+	//test_million_push_back();
+	//test_push_back();
+	//test_assign();
+	//test_at();
+	//test_back();
+	//test_erase();
+	//test_front();
+	//test_get_allocator();
+	//test_pop_back();
+	//test_insert();
+	//test_insert2();
+	//test_insert3();
+	//test_reserve();
+	//test_resize();
+	//test_swap();
+	test_non_member();
+	//while (1);
 }

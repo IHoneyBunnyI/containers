@@ -1,6 +1,10 @@
 #ifndef LEXICOGRAPHICAL_COMPARE_HPP
 #define LEXICOGRAPHICAL_COMPARE_HPP
 
+namespace ft
+{
+
+
 template<class It1, class It2>
 bool lexicographical_compare(It1 first1, It1 last1, It2 first2, It2 last2)
 {
@@ -14,6 +18,8 @@ bool lexicographical_compare(It1 first1, It1 last1, It2 first2, It2 last2)
 		++first2;
 	}
 	return (first2 != last2);
+}
+
 }
 
 #endif

@@ -9,6 +9,7 @@
 #include "ReverseRandomAccessIterator.hpp"
 #include "ConstReverseRandomAccessIterator.hpp"
 #include "enable_if.hpp"
+#include "equal.hpp"
 #include "is_integral.hpp"
 #include "remove_const.hpp"
 
@@ -91,8 +92,8 @@ class vector
 
 		vector& operator = (const vector& x); //
 
-		reference operator[](size_type pos);
-		const_reference operator[](size_type pos) const;
+		reference operator [](size_type pos);
+		const_reference operator [](size_type pos) const;
 
 		void pop_back(); //ok
 
@@ -118,7 +119,7 @@ template <class T, class Allocator>
 ft::vector<T, Allocator>::vector() : first(0), capacityAllocated(0), length(0), allocator(allocator_type()) {}
 
 template <class T, class Allocator>
-ft::vector<T, Allocator>::vector(const Allocator& alloc) : first(0), /*last(0),*/ capacityAllocated(0), length(0), allocator(alloc) {}
+ft::vector<T, Allocator>::vector(const Allocator& alloc) : first(0), capacityAllocated(0), length(0), allocator(alloc) {}
 
 template <class T, class Allocator>
 ft::vector<T, Allocator>::vector(ft::vector<T, Allocator>::size_type count, const T& value, const Allocator& alloc) : allocator(alloc)
@@ -155,7 +156,7 @@ ft::vector<T, Allocator>::vector(const vector& other): allocator(other.allocator
 template <class T, class Allocator>
 ft::vector<T, Allocator>::~vector()
 {
-	if (first != 0)
+	if (this->first != 0)
 	{
 		for (size_type i = 0; first + i != (this->first + this->length); i++)
 			allocator.destroy(first + i);
@@ -556,6 +557,7 @@ typename ft::vector<T, Allocator>::reverse_iterator ft::vector<T, Allocator>::re
 {
 	return (reverse_iterator(this->first + this->length));
 }
+
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::const_reverse_iterator ft::vector<T, Allocator>::rend() const
 {
@@ -563,7 +565,7 @@ typename ft::vector<T, Allocator>::const_reverse_iterator ft::vector<T, Allocato
 }
 
 template <class T, class Allocator>
-void ft::vector<T, Allocator>::resize (size_type n, value_type val)
+void ft::vector<T, Allocator>::resize(size_type n, value_type val)
 {
 	size_type old_len = this->length;
 	size_type old_capacity = this->capacityAllocated;
@@ -593,6 +595,59 @@ void ft::vector<T, Allocator>::resize (size_type n, value_type val)
 		for (size_type i = old_len; i < n; i++)
 			allocator.construct(this->first + i, val);
 	}
+}
+
+template <class T, class Allocator>
+void ft::vector<T, Allocator>::swap (vector& x)
+{
+	std::swap(this->first, x.first);
+	std::swap(this->length, x.length);
+	std::swap(this->capacityAllocated, x.capacityAllocated);
+	std::swap(this->allocator, x.allocator);
+}
+
+// NON MEMBER FUNCTIONS
+
+template <class T, class Alloc>
+void swap (ft::vector<T,Alloc>& x, ft::vector<T,Alloc>& y)
+{
+	x.swap(y);
+}
+
+template <class T, class Alloc>
+bool operator== (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
+{
+	return lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin());
+}
+
+template <class T, class Alloc>
+bool operator!= (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
+{
+
+}
+
+template <class T, class Alloc>
+bool operator<  (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
+{
+
+}
+
+template <class T, class Alloc>
+bool operator<= (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
+{
+
+}
+
+template <class T, class Alloc>
+bool operator>  (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
+{
+
+}
+
+template <class T, class Alloc>
+bool operator>= (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
+{
+
 }
 
 }
