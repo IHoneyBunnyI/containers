@@ -459,7 +459,28 @@ void test_resize()
 {
 	std::vector<int> a(10, 100);
 	print_vector(a);
-	a.resize(50);
+	a.resize(5);
+	print_vector(a);
+	a.resize(5, 1);
+	print_vector(a);
+	a.resize(10, 1);
+	print_vector(a);
+	a.resize(1, 1);
+	print_vector(a);
+	a.resize(15, 1);
+	print_vector(a);
+	a.resize(40);
+	print_vector(a);
+	for (int i = 0; i < 1000000; i++)
+		a.resize(i);
+	print_vector(a);
+	for (int i = 1000000; i > 0; i--)
+		a.resize(i);
+	for (int i = 0; i < 1000000; i++)
+		a.resize(i, 1101);
+	print_vector(a);
+	for (int i = 1000000; i > 0; i--)
+		a.resize(i, 99);
 	print_vector(a);
 }
 int main()

@@ -565,9 +565,35 @@ typename ft::vector<T, Allocator>::const_reverse_iterator ft::vector<T, Allocato
 template <class T, class Allocator>
 void ft::vector<T, Allocator>::resize (size_type n, value_type val)
 {
-
+	size_type old_len = this->length;
+	size_type old_capacity = this->capacityAllocated;
+	this->length = n;
+	if (old_len > n)
+	{
+		for (size_type i = old_len; i > n; i--)
+			allocator.destroy(this->first + i);
+	}
+	if (n > this->capacityAllocated)
+	{
+		this->capacityAllocated *= 2;
+		pointer tmp = allocator.allocate(this->capacityAllocated);
+		for (size_type i = 0; i < old_len; i++)
+			*(tmp + i) = *(this->first + i);
+		for (size_type i = old_len; i < n; i++)
+			allocator.construct(tmp + i, val);
+		for (size_type i = 0; i < old_len; i++)
+			allocator.destroy(this->first + i);
+		allocator.deallocate(this->first, old_capacity);
+		this->first = tmp;
+	}
+	else if (n > old_len)
+	{
+		for (size_type i = old_len; i < n; i++)
+			allocator.destroy(this->first + i);
+		for (size_type i = old_len; i < n; i++)
+			allocator.construct(this->first + i, val);
+	}
 }
-
 
 }
 
