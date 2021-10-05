@@ -12,6 +12,7 @@
 #include "equal.hpp"
 #include "is_integral.hpp"
 #include "remove_const.hpp"
+#include "lexicographical_compare.hpp"
 
 
 namespace ft
@@ -623,31 +624,31 @@ bool operator== (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
 template <class T, class Alloc>
 bool operator!= (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
 {
-
+	return !(lhs == rhs);
 }
 
 template <class T, class Alloc>
-bool operator<  (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
+bool operator< (const ft::vector<T,Alloc>& a, const ft::vector<T,Alloc>& b)
 {
-
+	return ft::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
 }
 
 template <class T, class Alloc>
 bool operator<= (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
 {
-
+	return !(rhs < lhs);
 }
 
 template <class T, class Alloc>
-bool operator>  (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
+bool operator> (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
 {
-
+	return rhs < lhs;
 }
 
 template <class T, class Alloc>
 bool operator>= (const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs)
 {
-
+	return !(lhs < rhs); 
 }
 
 }

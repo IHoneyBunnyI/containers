@@ -534,6 +534,18 @@ void test_non_member()
 	ft::vector<int> b(1);
 	std::cout << (a == b) << std::endl;
 	}
+	{
+
+	}
+	{
+
+	}
+	{
+
+	}
+	{
+
+	}
 }
 
 int main()
