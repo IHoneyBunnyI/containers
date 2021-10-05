@@ -4,7 +4,7 @@
 typedef std::size_t				size_type;
 
 template <class T>
-void print_stack(std::stack<T> &s)
+void print_stack(ft::stack<T> &s)
 {
 	std::cout << "\e[38;5;220m" << "is empty?:\t\t" << s.empty() << "\e[0m" << std::endl;
 	std::cout << "\e[38;5;125m" << "size=\t\t\t" << s.size() << "\e[0m" << std::endl;
@@ -16,7 +16,7 @@ void print_stack(std::stack<T> &s)
 }
 
 template <class T>
-void print_stack(const std::stack<T> &s)
+void print_stack(const ft::stack<T> &s)
 {
 	std::cout << "is empty?:\t\t" << s.empty() << std::endl;
 	std::cout << "size=\t\t" << s.size() << std::endl;
@@ -29,7 +29,7 @@ void print_stack(const std::stack<T> &s)
 
 int main()
 {
-	std::stack<int> stack;
+	ft::stack<int> stack;
 	print_stack(stack);
 	stack.push(10);
 	print_stack(stack);
@@ -40,4 +40,29 @@ int main()
 		stack.pop();
 	print_stack(stack);
 
+	ft::stack<int> stack2;
+	ft::stack<int> stack3;
+	std::cout << "== " << (stack2 == stack3) << std::endl;
+	std::cout << "== " <<  (stack == stack3) << std::endl;
+	std::cout << "== " <<  (stack == stack3) << std::endl;
+
+	std::cout << "!= " <<  (stack2 != stack3) << std::endl;
+	std::cout << "!= " <<  (stack != stack3) << std::endl;
+	std::cout << "!= " <<  (stack != stack3) << std::endl;
+
+	std::cout << "< " <<  (stack2 < stack3) << std::endl;
+	std::cout << "< " <<  (stack < stack3) << std::endl;
+	std::cout << "< " <<  (stack < stack3) << std::endl;
+
+	std::cout << "<= " <<  (stack2 <= stack3) << std::endl;
+	std::cout << "<= " <<  (stack <= stack3) << std::endl;
+	std::cout << "<= " <<  (stack <= stack3) << std::endl;
+
+	std::cout << "> " <<  (stack2 > stack3) << std::endl;
+	std::cout << "> " <<  (stack > stack3) << std::endl;
+	std::cout << "> " <<  (stack > stack3) << std::endl;
+
+	std::cout << ">= " <<  (stack2 >= stack3) << std::endl;
+	std::cout << ">= " <<  (stack >= stack3) << std::endl;
+	std::cout << ">= " <<  (stack >= stack3) << std::endl;
 }
