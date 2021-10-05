@@ -528,45 +528,43 @@ void test_non_member()
 	ft::vector<int> a;
 	ft::vector<int> b;
 	std::cout << (a == b) << std::endl;
+	std::cout << (a != b) << std::endl;
 	}
 	{
 	ft::vector<int> a;
 	ft::vector<int> b(1);
 	std::cout << (a == b) << std::endl;
+	std::cout << (a != b) << std::endl;
 	}
 	{
-
-	}
-	{
-
-	}
-	{
-
-	}
-	{
-
+	ft::vector<int> a(1);
+	ft::vector<int> b;
+	std::cout << (a > b) << std::endl;
+	std::cout << (a >= b) << std::endl;
+	std::cout << (a < b) << std::endl;
+	std::cout << (a <= b) << std::endl;
 	}
 }
 
 int main()
 {
-	//test_iterators();
-	//test_clear();
-	//test_million_push_back();
-	//test_push_back();
-	//test_assign();
-	//test_at();
-	//test_back();
-	//test_erase();
-	//test_front();
-	//test_get_allocator();
-	//test_pop_back();
-	//test_insert();
-	//test_insert2();
-	//test_insert3();
-	//test_reserve();
-	//test_resize();
-	//test_swap();
+	test_iterators();
+	test_clear();
+	test_million_push_back();
+	test_push_back();
+	test_assign();
+	test_at();
+	test_back();
+	test_erase();
+	test_front();
+	test_get_allocator();
+	test_pop_back();
+	test_insert();
+	test_insert2();
+	test_insert3();
+	test_reserve();
+	test_resize();
+	test_swap();
 	test_non_member();
 	//while (1);
 }
