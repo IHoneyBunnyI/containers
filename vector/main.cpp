@@ -137,6 +137,13 @@ void test_iterators()
 	//*cbegin = 10;
 }
 
+void test_reverse_iterators()
+{
+	ft::vector<int> a(5, 10);
+	ft::vector<int>::reverse_iterator rit = a.rbegin();
+	(void)rit;
+}
+
 
 void test_clear()
 {

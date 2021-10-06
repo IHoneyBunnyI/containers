@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include "RandomAccessIterator.hpp"
 #include "ConstRandomAccessIterator.hpp"
+#include "ReverseIterator.hpp"
 #include "enable_if.hpp"
 #include "equal.hpp"
 #include "is_integral.hpp"
