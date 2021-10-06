@@ -2,7 +2,6 @@
 #include <vector>
 #include "Vector.hpp"
 
-
 class B
 {
 	public:
