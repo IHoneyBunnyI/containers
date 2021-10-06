@@ -6,8 +6,6 @@
 #include <stdexcept>
 #include "RandomAccessIterator.hpp"
 #include "ConstRandomAccessIterator.hpp"
-#include "ReverseRandomAccessIterator.hpp"
-#include "ConstReverseRandomAccessIterator.hpp"
 #include "enable_if.hpp"
 #include "equal.hpp"
 #include "is_integral.hpp"
@@ -33,8 +31,8 @@ class vector
 
 		typedef RandomAccessIterator<value_type>				iterator;
 		typedef ConstRandomAccessIterator<value_type>			const_iterator;
-		typedef ReverseRandomAccessIterator<value_type>			reverse_iterator;
-		typedef ConstReverseRandomAccessIterator<value_type>	const_reverse_iterator;
+		typedef reverse_iterator<iterator>						reverse_iterator;
+		typedef reverse_iterator<const_iterator>				const_reverse_iterator;
 
 	private:
 		value_type* first;
