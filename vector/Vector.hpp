@@ -31,8 +31,8 @@ class vector
 
 		typedef RandomAccessIterator<value_type>				iterator;
 		typedef ConstRandomAccessIterator<value_type>			const_iterator;
-		typedef reverse_iterator<iterator>						reverse_iterator;
-		typedef reverse_iterator<const_iterator>				const_reverse_iterator;
+		typedef ft::reverse_iterator<iterator>						reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 
 	private:
 		value_type* first;
