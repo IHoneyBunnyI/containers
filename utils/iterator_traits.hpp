@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+namespace ft
+{
 template <class Iterator>
 class iterator_traits
 {
@@ -36,4 +38,5 @@ class iterator_traits<const T*>
 		typedef std::random_access_iterator_tag			iterator_category;
 };
 
+}
 #endif

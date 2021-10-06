@@ -13,6 +13,7 @@ namespace ft
 template <class Iterator>
 class reverse_iterator
 {
+	//public:
 		//typedef Iterator														iterator_type;
 		//typedef typename ft::iterator_traits<Iterator>::iterator_category		iterator_category;
 		//typedef typename ft::iterator_traits<Iterator>::value_type				value_type;

@@ -140,7 +140,9 @@ void test_reverse_iterators()
 {
 	ft::vector<int> a(5, 10);
 	ft::vector<int>::reverse_iterator rit = a.rbegin();
+	ft::vector<int>::const_reverse_iterator crit = a.rbegin();
 	(void)rit;
+	(void)crit;
 }
 
 
@@ -554,23 +556,24 @@ void test_non_member()
 
 int main()
 {
-	test_iterators();
-	test_clear();
-	test_million_push_back();
-	test_push_back();
-	test_assign();
-	test_at();
-	test_back();
-	test_erase();
-	test_front();
-	test_get_allocator();
-	test_pop_back();
-	test_insert();
-	test_insert2();
-	test_insert3();
-	test_reserve();
-	test_resize();
-	test_swap();
-	test_non_member();
+	//test_iterators();
+	test_reverse_iterators();
+	//test_clear();
+	//test_million_push_back();
+	//test_push_back();
+	//test_assign();
+	//test_at();
+	//test_back();
+	//test_erase();
+	//test_front();
+	//test_get_allocator();
+	//test_pop_back();
+	//test_insert();
+	//test_insert2();
+	//test_insert3();
+	//test_reserve();
+	//test_resize();
+	//test_swap();
+	//test_non_member();
 	//while (1);
 }
