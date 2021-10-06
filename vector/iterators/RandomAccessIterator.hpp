@@ -5,6 +5,7 @@
 #include "enable_if.hpp"
 #include "is_integral.hpp"
 #include "remove_const.hpp"
+#include "ReverseIterator.hpp"
 
 
 namespace ft
@@ -23,7 +24,6 @@ class RandomAccessIterator
 		typedef T&									reference;
 		typedef std::random_access_iterator_tag		iterator_category;
 
-		T* ptr; 
 
 		RandomAccessIterator();
 		~RandomAccessIterator();
@@ -37,6 +37,7 @@ class RandomAccessIterator
 
 		bool operator < (const RandomAccessIterator<T>& ref);
 		bool operator < (const ConstRandomAccessIterator<T>& ref);
+		//bool operator < (const reverse_iterator<ConstRandomAccessIterator<T> >& ref);
 
 		bool operator <= (const RandomAccessIterator<T>& ref);
 		bool operator <= (const ConstRandomAccessIterator<T>& ref);
@@ -65,6 +66,9 @@ class RandomAccessIterator
 		RandomAccessIterator operator ++ (int);
 		RandomAccessIterator operator -- (int);
 		reference operator[](difference_type index);
+
+	private:
+		T* ptr; 
 
 		template <class type>
 		friend RandomAccessIterator<type> operator + (typename RandomAccessIterator<type>::difference_type n, const RandomAccessIterator<type>& ref);
