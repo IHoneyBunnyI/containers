@@ -32,6 +32,8 @@ class vector
 
 		typedef RandomAccessIterator<value_type>				iterator;
 		typedef ConstRandomAccessIterator<value_type>			const_iterator;
+		//typedef std::reverse_iterator<iterator>					reverse_iterator;
+		//typedef std::reverse_iterator<const_iterator>			const_reverse_iterator;
 		typedef ft::reverse_iterator<iterator>						reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 
@@ -543,25 +545,25 @@ void ft::vector<T, Allocator>::push_back(const T& value)
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::reverse_iterator ft::vector<T, Allocator>::rbegin()
 {
-	return (reverse_iterator(this->first));
+	return (reverse_iterator(this->first + this->length));
 }
 
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::const_reverse_iterator ft::vector<T, Allocator>::rbegin() const
 {
-	return (const_reverse_iterator(this->first));
+	return (const_reverse_iterator(this->first + this->length));
 }
 
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::reverse_iterator ft::vector<T, Allocator>::rend()
 {
-	return (reverse_iterator(this->first + this->length));
+	return (reverse_iterator(this->first));
 }
 
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::const_reverse_iterator ft::vector<T, Allocator>::rend() const
 {
-	return (const_reverse_iterator(this->first + this->length));
+	return (const_reverse_iterator(this->first));
 }
 
 template <class T, class Allocator>
