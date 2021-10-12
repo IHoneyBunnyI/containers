@@ -8,6 +8,9 @@ namespace ft
 {
 class RedBlackTree
 {
+private:
+	
+public:
 	
 };
 }
