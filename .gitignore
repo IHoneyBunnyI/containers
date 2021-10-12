@@ -3,8 +3,8 @@ The\ C++\ Standart\ Template\ Library.pdf
 *.DS_Store
 *a.out*
 *compile_flags.txt
-*clang
 *stack
 *ft*
 *std*
 vector/vector
+redBlackTree
