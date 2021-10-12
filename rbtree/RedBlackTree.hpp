@@ -6,7 +6,10 @@
 
 namespace ft
 {
-
+class RedBlackTree
+{
+	
+};
 }
 
 #endif
