@@ -58,26 +58,18 @@ void print_vector(const ft::vector<T> &v)
 
 void test_reverse_iterators()
 {
-	//ft::vector<int> a(5, 10);
-	//ft::vector<int>::reverse_iterator rit = a.rbegin();
-	////ft::vector<int>::const_reverse_iterator crit = a.rbegin();
-	//std::cout << *rit << std::endl;
-	//std::cout << *(++rit + 1) << std::endl;
-	//std::cout << *(1 + rit) << std::endl;
-//rr	(void)rit;
-	//(void)crit ;
 	ft::vector<int> a(5, 10);
 	ft::vector<int>::reverse_iterator begin = a.rbegin();
 	ft::vector<int>::reverse_iterator end = a.rend();
 	ft::vector<int>::const_reverse_iterator cbegin = a.rbegin();
 	ft::vector<int>::const_reverse_iterator cend = a.rend();
 	std::cout << *(begin + 1) << std::endl; // 1
-	//std::cout << *(1 + begin) << std::endl; // 2
+	std::cout << *(1 + begin) << std::endl; // 2
 	std::cout << *(begin - 0) << std::endl; // 3
-	//std::cout << begin - end << std::endl; // 4
-	//std::cout << begin - cend << std::endl; //5
-	//std::cout << end - begin << std::endl; //6
-	//std::cout << end - cbegin << std::endl; //7
+	std::cout << begin - end << std::endl; // 4
+	std::cout << begin - cend << std::endl; //5
+	std::cout << end - begin << std::endl; //6
+	std::cout << end - cbegin << std::endl; //7
 	begin++;
 	cbegin++;
 	end--;
@@ -631,24 +623,24 @@ void test_non_member()
 
 int main()
 {
-	//test_iterators();
+	test_iterators();
 	test_reverse_iterators();
-	//test_clear();
-	//test_million_push_back();
-	//test_push_back();
-	//test_assign();
-	//test_at();
-	//test_back();
-	//test_erase();
-	//test_front();
-	//test_get_allocator();
-	//test_pop_back();
-	//test_insert();
-	//test_insert2();
-	//test_insert3();
-	//test_reserve();
-	//test_resize();
-	//test_swap();
-	//test_non_member();
+	test_clear();
+	test_million_push_back();
+	test_push_back();
+	test_assign();
+	test_at();
+	test_back();
+	test_erase();
+	test_front();
+	test_get_allocator();
+	test_pop_back();
+	test_insert();
+	test_insert2();
+	test_insert3();
+	test_reserve();
+	test_resize();
+	test_swap();
+	test_non_member();
 	//while (1);
 }
