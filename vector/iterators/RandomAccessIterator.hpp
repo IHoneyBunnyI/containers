@@ -17,8 +17,6 @@ class ConstRandomAccessIterator;
 template <class T>
 class RandomAccessIterator
 {
-	private:
-		T* ptr; 
 	public:
 		typedef T									value_type;
 		typedef std::ptrdiff_t						difference_type;
@@ -66,12 +64,13 @@ class RandomAccessIterator
 		RandomAccessIterator& operator -- ();
 		RandomAccessIterator operator ++ (int);
 		RandomAccessIterator operator -- (int);
+		pointer base() const;
 		reference operator[](difference_type index);
-		pointer get_ptr() const;
 
 		template <class type>
 		friend RandomAccessIterator<type> operator + (typename RandomAccessIterator<type>::difference_type n, const RandomAccessIterator<type>& ref);
-
+	private:
+		pointer ptr; 
 };
 
 template <class T>
@@ -94,7 +93,7 @@ RandomAccessIterator<T>& RandomAccessIterator<T>::operator = (const RandomAccess
 {
 	if (this != &ref)
 	{
-		this->ptr = ref.get_ptr();
+		this->ptr = ref.base();
 	}
 	return (*this);
 }
@@ -120,73 +119,73 @@ T* RandomAccessIterator<T>::operator -> () const
 template <class T>
 bool RandomAccessIterator<T>::operator < (const RandomAccessIterator<T>& ref)
 {
-	return (this->ptr < ref.get_ptr());
+	return (this->ptr < ref.base());
 }
 
 template <class T>
 bool RandomAccessIterator<T>::operator < (const ConstRandomAccessIterator<T>& ref)
 {
-	return (this->ptr < ref.get_ptr());
+	return (this->ptr < ref.base());
 }
 
 template <class T>
 bool RandomAccessIterator<T>::operator <= (const RandomAccessIterator<T>& ref)
 {
-	return (this->ptr <= ref.get_ptr());
+	return (this->ptr <= ref.base());
 }
 
 template <class T>
 bool RandomAccessIterator<T>::operator <= (const ConstRandomAccessIterator<T>& ref)
 {
-	return (this->ptr <= ref.get_ptr());
+	return (this->ptr <= ref.base());
 }
 
 template <class T>
 bool RandomAccessIterator<T>::operator > (const RandomAccessIterator<T>& ref)
 {
-	return (this->ptr > ref.get_ptr());
+	return (this->ptr > ref.base());
 }
 
 template <class T>
 bool RandomAccessIterator<T>::operator > (const ConstRandomAccessIterator<T>& ref)
 {
-	return (this->ptr > ref.get_ptr());
+	return (this->ptr > ref.base());
 }
 
 template <class T>
 bool RandomAccessIterator<T>::operator >= (const RandomAccessIterator<T>& ref)
 {
-	return (this->ptr >= ref.get_ptr());
+	return (this->ptr >= ref.base());
 }
 
 template <class T>
 bool RandomAccessIterator<T>::operator >= (const ConstRandomAccessIterator<T>& ref)
 {
-	return (this->ptr >= ref.get_ptr());
+	return (this->ptr >= ref.base());
 }
 
 template <class T>
 bool RandomAccessIterator<T>::operator == (const RandomAccessIterator<T>& ref) const
 {
-	return (this->ptr == ref.get_ptr());
+	return (this->ptr == ref.base());
 }
 
 template <class T>
 bool RandomAccessIterator<T>::operator == (const ConstRandomAccessIterator<T>& ref) const
 {
-	return (this->ptr == ref.get_ptr());
+	return (this->ptr == ref.base());
 }
 
 template <class T>
 bool RandomAccessIterator<T>::operator != (const RandomAccessIterator<T>& ref) const
 {
-	return (this->ptr != ref.get_ptr());
+	return (this->ptr != ref.base());
 }
 
 template <class T>
 bool RandomAccessIterator<T>::operator != (const ConstRandomAccessIterator<T>& ref) const
 {
-	return (this->ptr != ref.get_ptr());
+	return (this->ptr != ref.base());
 }
 
 template <class T>
@@ -221,13 +220,13 @@ RandomAccessIterator<T> RandomAccessIterator<T>::operator - (difference_type n) 
 template <class T>
 typename RandomAccessIterator<T>::difference_type RandomAccessIterator<T>::operator - (const RandomAccessIterator<T>& ref) const
 {
-	return this->ptr - ref.get_ptr();
+	return this->ptr - ref.base();
 }
 
 template <class T>
 typename RandomAccessIterator<T>::difference_type RandomAccessIterator<T>::operator - (const ConstRandomAccessIterator<T>& ref) const
 {
-	return this->ptr - ref.get_ptr();
+	return this->ptr - ref.base();
 }
 
 template <class T>
@@ -267,7 +266,7 @@ typename RandomAccessIterator<T>::reference RandomAccessIterator<T>::operator[](
 }
 
 template <class T>
-typename RandomAccessIterator<T>::pointer ft::RandomAccessIterator<T>::get_ptr() const
+typename RandomAccessIterator<T>::pointer ft::RandomAccessIterator<T>::base() const
 {
 	return this->ptr;
 }
@@ -275,7 +274,7 @@ typename RandomAccessIterator<T>::pointer ft::RandomAccessIterator<T>::get_ptr()
 template <class type>
 RandomAccessIterator<type> operator + (typename RandomAccessIterator<type>::difference_type n, const RandomAccessIterator<type>& ref)
 {
-	return (ref.get_ptr() + n);
+	return (ref.base() + n);
 }
 
 }
