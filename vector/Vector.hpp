@@ -206,7 +206,7 @@ typename ft::vector<T, Allocator>::size_type ft::vector<T, Allocator>::size() co
 template <class T, class Allocator>
 typename ft::vector<T, Allocator>::size_type ft::vector<T, Allocator>::max_size() const
 {
-	return allocator.max_size(); //////////ПОЛНЫЙ БРЕД
+	return allocator.max_size();
 }
 
 template <class T, class Allocator>
