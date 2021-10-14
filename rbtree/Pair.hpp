@@ -21,7 +21,6 @@ struct pair
 
 	//Overloads
 	pair& operator=(pair const& p);
-
 };
 
 

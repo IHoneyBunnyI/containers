@@ -1,7 +1,7 @@
 #include <iostream>
 #include <utility>
 #include "RedBlackTree.hpp"
-#include "Pair.hpp"
+#include "pair.hpp"
 
 void test_pair_and_make_pair()
 {
