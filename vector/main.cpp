@@ -634,24 +634,24 @@ void test_non_member()
 
 int main()
 {
-	//test_iterators();
-	//test_reverse_iterators();
-	//test_clear();
-	//test_million_push_back();
-	//test_push_back();
-	//test_assign();
-	//test_at();
-	//test_back();
-	//test_erase();
-	//test_front();
-	//test_get_allocator();
-	//test_pop_back();
-	//test_insert();
-	//test_insert2();
-	//test_insert3();
+	test_iterators();
+	test_reverse_iterators();
+	test_clear();
+	test_million_push_back();
+	test_push_back();
+	test_assign();
+	test_at();
+	test_back();
+	test_erase();
+	test_front();
+	test_get_allocator();
+	test_pop_back();
+	test_insert();
+	test_insert2();
+	test_insert3();
 	test_reserve();
-	//test_resize();
-	//test_swap();
-	//test_non_member();
+	test_resize();
+	test_swap();
+	test_non_member();
 	//while (1);
 }

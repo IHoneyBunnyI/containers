@@ -349,10 +349,8 @@ typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::insert (it
 		pointer tmp = allocator.allocate(this->capacityAllocated);
 		for (size_type i = 0; i < pos; i++)
 			allocator.construct(tmp + i, *(this->first + i));
-			//*(tmp + i) = *(this->first + i); ////////////////////////////
 		for (size_type i = pos; i < this->length - 1; i++)
 			allocator.construct(tmp + i + 1, *(this->first + i));
-			//*(tmp + i + 1) = *(this->first + i); /////////////////////////////////
 		allocator.deallocate(this->first, this->length - 1);
 		this->first = tmp;
 		allocator.construct(this->first + pos, val);
@@ -362,7 +360,6 @@ typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::insert (it
 	{
 		for (size_type i = this->length - 1; i > pos; i--)
 			allocator.construct(this->first + i, *(this->first + i - 1));
-			//*(this->first + i) = *(this->first + i - 1); /////////////////////////////////////////
 		size_type i = std::distance(this->begin(), iterator(this->first + pos));
 		allocator.destroy(this->first + i);
 		allocator.construct(this->first + i, val);
@@ -384,12 +381,10 @@ void ft::vector<T, Allocator>::insert (iterator position, size_type n, const val
 		pointer tmp = allocator.allocate(this->capacityAllocated);
 		for (size_type i = 0; i < pos; i++)
 			allocator.construct(tmp + i, *(this->first + i));
-			//*(tmp + i) = *(this->first + i); /////////////////////////////////////
 		for (size_type i = pos; i < pos + n; i++)
 			allocator.construct(tmp + i, val);
 		for (size_type i = pos + n; i < this->length; i++)
 			allocator.construct(tmp + i, *(this->first + i - n));
-			//*(tmp + i) = *(this->first + i - n); /////////////////////////////////////
 		allocator.deallocate(this->first, old_capacity);
 		this->first = tmp;
 	}
@@ -401,12 +396,10 @@ void ft::vector<T, Allocator>::insert (iterator position, size_type n, const val
 		pointer tmp = allocator.allocate(this->capacityAllocated);
 		for (size_type i = 0; i < pos; i++)
 			allocator.construct(tmp + i, *(this->first + i));
-			//*(tmp + i) = *(this->first + i); /////////////////////////////////////
 		for (size_type i = pos; i < pos + n; i++)
 			allocator.construct(tmp + i, val);
 		for (size_type i = pos + n; i < this->length; i++)
 			allocator.construct(tmp + i, *(this->first + i - n));
-			//*(tmp + i) = *(this->first + i - n); /////////////////////////////////////
 		allocator.deallocate(this->first, old_capacity);
 		this->first = tmp;
 	}
@@ -414,7 +407,6 @@ void ft::vector<T, Allocator>::insert (iterator position, size_type n, const val
 	{
 		for (size_type i = this->length - 1; i >= pos + n; i--)
 			allocator.construct(this->first + i, *(this->first + i - n));
-			//*(this->first + i) = *(this->first + i - n); /////////////////////////////////////
 		for (size_type i = pos + n; i > pos; i--)
 			allocator.construct(this->first + i - 1, val);
 	}
@@ -438,12 +430,10 @@ void ft::vector<T, Allocator>::insert (typename ft::vector<T,Allocator>::iterato
 		pointer tmp = allocator.allocate(this->capacityAllocated);
 		for (size_type i = 0; i < pos; i++)
 			allocator.construct(tmp + i, *(this->first + i));
-			//*(tmp + i) = *(this->first + i); /////////////////////////////////////
 		for (size_type i = pos; i < pos + n; i++)
 			allocator.construct(tmp + i, *(first + index++));
 		for (size_type i = pos + n; i < this->length; i++)
 			allocator.construct(tmp + i, *(this->first + i - n));
-			//*(tmp + i) = *(this->first + i - n); /////////////////////////////////////
 		allocator.deallocate(this->first, old_capacity);
 		this->first = tmp;
 	}
@@ -456,12 +446,10 @@ void ft::vector<T, Allocator>::insert (typename ft::vector<T,Allocator>::iterato
 		pointer tmp = allocator.allocate(this->capacityAllocated);
 		for (size_type i = 0; i < pos; i++)
 			allocator.construct(tmp + i, *(this->first + i));
-			//*(tmp + i) = *(this->first + i); /////////////////////////////////////
 		for (size_type i = pos; i < pos + n; i++)
 			allocator.construct(tmp + i, *(first + index++));
 		for (size_type i = pos + n; i < this->length; i++)
 			allocator.construct(tmp + i, *(this->first + i - n));
-			//*(tmp + i) = *(this->first + i - n); /////////////////////////////////////
 		allocator.deallocate(this->first, old_capacity);
 		this->first = tmp;
 	}
@@ -470,7 +458,6 @@ void ft::vector<T, Allocator>::insert (typename ft::vector<T,Allocator>::iterato
 		size_type index = n - 1;
 		for (size_type i = this->length - 1; i >= pos + n; i--)
 			allocator.construct(this->first + i, *(this->first + i - n));
-			//*(this->first + i) = *(this->first + i - n); /////////////////////////////////////
 		for (size_type i = pos + n; i > pos; i--)
 			allocator.construct(this->first + i - 1, *(first + index--));
 	}
@@ -484,7 +471,6 @@ void ft::vector<T, Allocator>::reserve(size_type new_cap)
 	pointer tmp = allocator.allocate(new_cap);
 	for (size_type i = 0; i < this->length; i++)
 		allocator.construct(tmp + i, *(this->first + i));
-		//*(tmp + i) = *(this->first + i); ///////////////////////////// 
 	if (this->first)
 	{
 		for (size_type i = 0; i < this->length; i++)
@@ -552,7 +538,6 @@ void ft::vector<T, Allocator>::push_back(const T& value)
 	}
 	else
 		allocator.construct(this->first + this->length - 1, value);
-		//*(this->first + this->length - 1) = value; /////////////////////////////////////
 }
 
 template <class T, class Allocator>
@@ -596,7 +581,6 @@ void ft::vector<T, Allocator>::resize(size_type n, value_type val)
 		pointer tmp = allocator.allocate(this->capacityAllocated);
 		for (size_type i = 0; i < old_len; i++)
 			allocator.construct(tmp + i, *(this->first + i));
-			//*(tmp + i) = *(this->first + i); /////////////////////////////////////
 		for (size_type i = old_len; i < n; i++)
 			allocator.construct(tmp + i, val);
 		for (size_type i = 0; i < old_len; i++)
