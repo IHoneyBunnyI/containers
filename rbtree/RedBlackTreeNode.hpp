@@ -75,10 +75,41 @@ const RedBlackTreeNode<T>* redBlackTree_increment(const RedBlackTreeNode<T>* x)
 }
 
 template <class T>
-RedBlackTreeNode<T>* redBlackTree_decrement(RedBlackTreeNode<T>* x);
+RedBlackTreeNode<T>* redBlackTree_decrement_l(RedBlackTreeNode<T>* x)
+{
+	if (x->color == red && x->parent->parent == x)
+		x = x->right;
+	else if (x->left)
+	{
+		RedBlackTreeNode<T>* y = x->parent;
+		while (y->right)
+			y = y->right;
+		x = y;
+	}
+	else
+	{
+		RedBlackTreeNode<T>* y = x->parent;
+		while (x == y->left)
+		{
+			x = y;
+			y = y->parent;
+		}
+		x = y;
+	}
+	return x;
+}
 
 template <class T>
-const RedBlackTreeNode<T>* redBlackTree_decrement(const RedBlackTreeNode<T>* x);
+RedBlackTreeNode<T>* redBlackTree_decrement(RedBlackTreeNode<T>* x)
+{
+	return redBlackTree_decrement_l(x);
+}
+
+template <class T>
+const RedBlackTreeNode<T>* redBlackTree_decrement(const RedBlackTreeNode<T>* x)
+{
+	return redBlackTree_decrement_l(const_cast<RedBlackTreeNode<T>*>(x));
+}
 
 }
 
