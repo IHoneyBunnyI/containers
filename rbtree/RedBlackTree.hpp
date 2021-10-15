@@ -32,5 +32,18 @@ class RedBlackTree
 };
 
 
+//Overloads
+template<typename T>
+bool operator==(const RedBlackTreeIterator<T>& x, const RedBlackTreeConstIterator<T>& y)
+{
+	return x.node == y.node;
+}
+ 
+template<typename T>
+bool operator!=(const RedBlackTreeIterator<T>& x, const RedBlackTreeConstIterator<T>& y)
+{
+	return x.node != y.node;
+}
+
 }
 #endif
