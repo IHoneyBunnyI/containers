@@ -11,29 +11,29 @@ class RedBlackTreeIterator
 {
 
 public:
-	typedef T value_type;
-	typedef T& reference;
-	typedef T* pointer;
-	typedef std::bidirectional_iterator_tag iterator_category;
-	typedef std::ptrdiff_t difference_type;
-	typedef RedBlackTreeIterator<value_type> self;
-	typedef RedBlackTreeNode<value_type>* link_type;
+	typedef T									value_type;
+	typedef T&									reference;
+	typedef T*									pointer;
+	typedef std::bidirectional_iterator_tag 	iterator_category;
+	typedef std::ptrdiff_t						difference_type;
+	typedef RedBlackTreeIterator<value_type>	self;
+	typedef RedBlackTreeNode<value_type>* 		link_type;
 
 	RedBlackTreeNode<value_type>* node;
 
 	//Constructors
 	RedBlackTreeIterator();
-	explicit RedBlackTreeIterator(link_type x);
+	explicit	RedBlackTreeIterator(link_type x);
 
 	//Operators
-	reference operator*() const;
-	pointer operator->() const;
-	self& operator++();
-	self operator++(int);
-	self& operator--();
-	self operator--(int);
-	bool operator==(const self& ref) const;
-	bool operator!=(const self& ref) const;
+	reference	operator*() const;
+	pointer		operator->() const;
+	self&		operator++();
+	self		operator++(int);
+	self&		operator--();
+	self		operator--(int);
+	bool		operator==(const self& ref) const;
+	bool		operator!=(const self& ref) const;
 };
 
 
