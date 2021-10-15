@@ -1,25 +1,13 @@
-#ifndef rEDBLACKTrEE_HPP
-#define rEDBLACKTrEE_HPP
+#ifndef REDBLACKTREE_HPP
+#define REDBLACKTREE_HPP
 
-#include "enable_if.hpp"
 #include <iostream>
 #include "RedBlackTreeNode.hpp"
+#include "RedBlackTreeConstIterator.hpp"
+#include "RedBlackTreeIterator.hpp"
 
 namespace ft
 {
-
-
-template <class T>
-class rb_tree_iterator
-{
-
-};
-
-template <class T>
-class rb_tree_const_iterator
-{
-
-};
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc = std::allocator<Val> >
 class RedBlackTree
@@ -36,8 +24,8 @@ class RedBlackTree
 		typedef size_t size_type;
 		typedef ptrdiff_t difference_type;
 		typedef Alloc allocator_type;
-		typedef rb_tree_iterator<value_type> iterator;
-		typedef rb_tree_const_iterator<value_type> const_iterator;
+		typedef RedBlackTreeIterator<value_type> iterator;
+		typedef RedBlackTreeConstIterator<value_type> const_iterator;
 		typedef std::reverse_iterator<iterator> reverse_iterator;
 		typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 		typedef Compare key_compare;
