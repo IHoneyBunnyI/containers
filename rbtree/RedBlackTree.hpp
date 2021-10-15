@@ -3,22 +3,11 @@
 
 #include "enable_if.hpp"
 #include <iostream>
+#include "RedBlackTreeNode.hpp"
 
 namespace ft
 {
-enum rb_tree_color { red = false, black = true };
 
-template <class T>
-class rb_tree_node
-{
-	public:
-		T val;
-		rb_tree_node<T>* parent;
-		rb_tree_node<T>* left;
-		rb_tree_node<T>* right;
-		rb_tree_color color;
-	
-};
 
 template <class T>
 class rb_tree_iterator
@@ -33,9 +22,9 @@ class rb_tree_const_iterator
 };
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc = std::allocator<Val> >
-class redBlackTree
+class RedBlackTree
 {
-	typedef typename Alloc::template rebind<rb_tree_node<Val> >::other _Node_allocator;
+	typedef typename Alloc::template rebind<RedBlackTreeNode<Val> >::other _Node_allocator;
 	public:
 		typedef Key key_type;
 		typedef Val value_type;
@@ -43,7 +32,7 @@ class redBlackTree
 		typedef const value_type* const_pointer;
 		typedef value_type& reference;
 		typedef const value_type& const_reference;
-		typedef rb_tree_node<Val>* node_type;
+		typedef RedBlackTreeNode<Val>* node_type;
 		typedef size_t size_type;
 		typedef ptrdiff_t difference_type;
 		typedef Alloc allocator_type;
