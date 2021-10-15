@@ -30,44 +30,73 @@ public:
 	pointer operator->() const;
 	self& operator++();
 	self operator++(int);
+	self& operator--();
+	self operator--(int);
+	bool operator==(const self& ref) const;
+	bool operator!=(const self& ref) const;
 };
 
-}
 
 template <class T>
-ft::RedBlackTreeIterator<T>::RedBlackTreeIterator(): node() {};
+RedBlackTreeIterator<T>::RedBlackTreeIterator(): node() {};
 
 
 template <class T>
-ft::RedBlackTreeIterator<T>::RedBlackTreeIterator(link_type x): node(x) {};
+RedBlackTreeIterator<T>::RedBlackTreeIterator(link_type x): node(x) {};
 
 template <class T>
-typename ft::RedBlackTreeIterator<T>::reference ft::RedBlackTreeIterator<T>::operator*() const
+typename RedBlackTreeIterator<T>::reference RedBlackTreeIterator<T>::operator*() const
 {
 	return this->node->val;
 }
 
 template <class T>
-typename ft::RedBlackTreeIterator<T>::pointer ft::RedBlackTreeIterator<T>::operator->() const
+typename RedBlackTreeIterator<T>::pointer RedBlackTreeIterator<T>::operator->() const
 {
 	return &(this->node->val);
 }
 
 template <class T>
-typename ft::RedBlackTreeIterator<T>::self& ft::RedBlackTreeIterator<T>::operator++()
+typename RedBlackTreeIterator<T>::self& RedBlackTreeIterator<T>::operator++()
 {
 	this->node = redBlackTree_increment(this->node);
 	return (*this);
 }
 
 template <class T>
-typename ft::RedBlackTreeIterator<T>::self ft::RedBlackTreeIterator<T>::operator++(int)
+typename RedBlackTreeIterator<T>::self RedBlackTreeIterator<T>::operator++(int)
 {
 	self tmp = *this;
 	this->node = redBlackTree_increment(this->node);
 	return tmp;
 }
 
+template <class T>
+typename RedBlackTreeIterator<T>::self& RedBlackTreeIterator<T>::operator--()
+{
+	this->node = redBlackTree_decrement(this->node);
+	return (*this);
+}
 
+template <class T>
+typename RedBlackTreeIterator<T>::self RedBlackTreeIterator<T>::operator--(int)
+{
+	self tmp = *this;
+	this->node = redBlackTree_decrement(this->node);
+	return tmp;
+}
 
+template <class T>
+bool ft::RedBlackTreeIterator<T>::operator==(const self& ref) const
+{
+	return this->node == ref.node;
+}
+
+template <class T>
+bool ft::RedBlackTreeIterator<T>::operator!=(const self& ref) const
+{
+	return this->node != ref.node;
+}
+
+}
 #endif
