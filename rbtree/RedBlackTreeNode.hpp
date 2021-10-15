@@ -23,7 +23,6 @@ class RedBlackTreeNode
 		static const_pointer minimum(const_pointer x);
 };
 
-
 template <class T>
 typename RedBlackTreeNode<T>::pointer RedBlackTreeNode<T>::minimum(pointer x)
 {
@@ -41,10 +40,39 @@ typename RedBlackTreeNode<T>::const_pointer RedBlackTreeNode<T>::minimum(const_p
 }
 
 template <class T>
-RedBlackTreeNode<T>* redBlackTree_increment(RedBlackTreeNode<T>* x);
+static RedBlackTreeNode<T>* redBlackTree_increment_l(RedBlackTreeNode<T>* x)
+{
+	if (x->right)
+	{
+		x = x->right;
+		while (x->left)
+			x = x->left;
+	}
+	else
+	{
+		RedBlackTreeNode<T>* p = x->parent;
+		while (x == p->right)
+		{
+			x = p;
+			p = p->parent;
+		}
+		if (x->right != p)
+			x = p;
+	}
+	return x;
+}
 
 template <class T>
-const RedBlackTreeNode<T>* redBlackTree_increment(const RedBlackTreeNode<T>* x);
+RedBlackTreeNode<T>* redBlackTree_increment(RedBlackTreeNode<T>* x)
+{
+	return redBlackTree_increment_l(x);
+}
+
+template <class T>
+const RedBlackTreeNode<T>* redBlackTree_increment(const RedBlackTreeNode<T>* x)
+{
+	return redBlackTree_increment_l(const_cast<RedBlackTreeNode<T>*>(x));
+}
 
 template <class T>
 RedBlackTreeNode<T>* redBlackTree_decrement(RedBlackTreeNode<T>* x);
