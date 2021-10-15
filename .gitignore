@@ -3,8 +3,9 @@ The\ C++\ Standart\ Template\ Library.pdf
 *.DS_Store
 *a.out*
 *compile_flags.txt
-*stack
 *ft*
+stack/stack
 *std*
 vector/vector
 redBlackTree
+redBlackTree.dSYM

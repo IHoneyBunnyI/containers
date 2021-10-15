@@ -1,10 +1,8 @@
 #!/bin/zsh
 
-if [ 'flags' = "$1" ]
+if [ '0' = "$#" ]
 then
-	clang++ -Wall -Wextra -Werror -g -Iiterators/ -I../utils main.cpp -o vector
-else
-	clang++ -Iiterators/ -I../utils main.cpp -o vector
+	clang++ -Wall -Wextra -Werror -Iiterators/ -I../utils main.cpp -o vector
 fi
 if [ '-g' = "$1" ]
 then

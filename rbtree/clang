@@ -1,10 +1,8 @@
 #!/bin/zsh
 
-if [ 'flags' = "$1" ]
+if [ $# = "0" ]
 then
-	clang++ -Wall -Wextra -Werror -g -I../utils main.cpp -o redBlackTree
-else
-	clang++ -I../utils main.cpp -o redBlackTree
+	clang++ -Wall -Wextra -Werror -I../utils main.cpp -o redBlackTree
 fi
 if [ '-g' = "$1" ]
 then
