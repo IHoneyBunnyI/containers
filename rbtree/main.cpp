@@ -42,4 +42,6 @@ void test_pair_and_make_pair()
 int main()
 {
 	test_pair_and_make_pair();
+	ft::RedBlackTree<int, char, int, char> a;
+	(void)a;
 }

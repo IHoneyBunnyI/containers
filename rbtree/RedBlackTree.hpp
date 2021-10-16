@@ -13,7 +13,7 @@ namespace ft
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc = std::allocator<Val> >
 class RedBlackTree
 {
-	typedef typename Alloc::template rebind<RedBlackTreeNode<Val> >::other _Node_allocator;
+	typedef typename Alloc::template rebind<RedBlackTreeNode<Val> >::other node_allocator;
 	public:
 		typedef Key key_type;
 		typedef Val value_type;
@@ -33,6 +33,25 @@ class RedBlackTree
 
 	private:
 		RedBlackTreeNode<value_type> first;
+		size_type size;
+		node_allocator allocator_node;
+		allocator_type allocator_value;
+		key_compare compare;
+
+		void initialize()
+		{
+			this->first.color = red;
+			this->first.parent = 0;
+			this->first.right = this->first;
+			this->first.left = this->first;
+			this->size = 0;
+		}
+
+	public:
+		RedBlackTree() : first(), size(0), allocator_node(), allocator_value(), compare()
+		{
+			initialize();
+		}
 };
 
 
