@@ -33,7 +33,7 @@ class RedBlackTree
 
 	private:
 		RedBlackTreeNode<value_type> head;
-		size_type size;
+		size_type count;
 		node_allocator allocator_node;
 		allocator_type allocator_value;
 		key_compare compare;
@@ -54,11 +54,14 @@ class RedBlackTree
 
 
 		//MEMBER FUNCTIONS
+		bool empty() const;
+		size_type size() const;
+
+		//ITERATORS
 		iterator begin();
 		const_iterator begin() const;
 		iterator end();
 		const_iterator end() const;
-
 		reverse_iterator rbegin();
 		const_reverse_iterator rbegin() const;
 		reverse_iterator rend();
@@ -68,7 +71,7 @@ class RedBlackTree
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::RedBlackTree()
-: head(), size(0), allocator_node(), allocator_value(), compare()
+: head(), count(0), allocator_node(), allocator_value(), compare()
 {
 	initialize();
 }
@@ -83,7 +86,6 @@ RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::RedBlackTree(const Compare& 
 
 
 /// ITERATORS
-
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::iterator RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::begin()
 {
@@ -125,8 +127,20 @@ typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::const_reverse_itera
 {
 	return const_reverse_iterator(begin());
 }
+//ITERATORS_END
 
 
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+bool RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::empty() const
+{
+	return this->count == 0;
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::size_type RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::size() const
+{
+	return this->count;
+}
 
 //Overloads
 template<typename T>
