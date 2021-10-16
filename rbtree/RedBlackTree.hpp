@@ -32,7 +32,7 @@ class RedBlackTree
 		typedef Compare key_compare;
 
 	private:
-		RedBlackTreeNode<value_type> first;
+		RedBlackTreeNode<value_type> head;
 		size_type size;
 		node_allocator allocator_node;
 		allocator_type allocator_value;
@@ -40,19 +40,92 @@ class RedBlackTree
 
 		void initialize()
 		{
-			this->first.color = red;
-			this->first.parent = 0;
-			this->first.right = this->first;
-			this->first.left = this->first;
+			this->head.color = red;
+			this->head.parent = 0;
+			this->head.right = this->head;
+			this->head.left = this->head;
 			this->size = 0;
 		}
 
 	public:
-		RedBlackTree() : first(), size(0), allocator_node(), allocator_value(), compare()
-		{
-			initialize();
-		}
+		//Constructors
+		RedBlackTree();
+		RedBlackTree(const Compare& comp, const allocator_type& a = allocator_type());
+
+
+		//MEMBER FUNCTIONS
+		iterator begin();
+		const_iterator begin() const;
+		iterator end();
+		const_iterator end() const;
+
+		reverse_iterator rbegin();
+		const_reverse_iterator rbegin() const;
+		reverse_iterator rend();
+		const_reverse_iterator rend() const;
 };
+
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::RedBlackTree()
+: head(), size(0), allocator_node(), allocator_value(), compare()
+{
+	initialize();
+}
+
+
+//typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::RedBlackTree(const Compare& comp, const allocator_type& a): compare(comp), allocator_value(a) {}
+
+
+
+
+
+/// ITERATORS
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::iterator RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::begin()
+{
+	return iterator(this->head.left);
+}
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::const_iterator RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::begin() const
+{
+	return const_iterator(this->head.left);
+}
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::iterator RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::end()
+{
+	return iterator(&(this->head));
+}
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::const_iterator RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::end() const
+{
+	return const_iterator(&(this->head));
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::reverse_iterator RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::rbegin()
+{
+	return reverse_iterator(end());
+}
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::const_reverse_iterator RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::rbegin() const
+{
+	return const_reverse_iterator(end());
+}
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::reverse_iterator RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::rend()
+{
+	return reverse_iterator(begin());
+}
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::const_reverse_iterator RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::rend() const
+{
+	return const_reverse_iterator(begin());
+}
+
 
 
 //Overloads
