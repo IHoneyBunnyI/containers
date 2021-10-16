@@ -30,20 +30,20 @@ fi
 clear
 if grep "ft::pair" ./main.cpp > /dev/null
 then
-	clang++ -Wall -Wextra -Werror -I../utils/ main.cpp -o ft_rb_tree -Ofast
+	clang++ -Wall -Wextra -Werror -I../utils/ -Iiterators main.cpp -o ft_rb_tree -Ofast
 	time ./ft_rb_tree > ft_output
 	sed -i '' "s/ft::pair/std::pair/g" ./main.cpp
 	sed -i '' "s/ft::make_pair/std::make_pair/g" ./main.cpp
-	clang++ -Wall -Wextra -Werror  -I../utils/ main.cpp -o std_rb_tree -Ofast
+	clang++ -Wall -Wextra -Werror  -I../utils/ -Iiterators main.cpp -o std_rb_tree -Ofast
 	time ./std_rb_tree > std_output
 	sed -i '' "s/std::pair/ft::pair/g" ./main.cpp
 	sed -i '' "s/std::make_pair/ft::make_pair/g" ./main.cpp
 else
-	clang++ -Wall -Wextra -Werror -I../utils/ main.cpp -o std_rb_tree -Ofast
+	clang++ -Wall -Wextra -Werror -I../utils/ -Iiterators main.cpp -o std_rb_tree -Ofast
 	time ./std_rb_tree > std_output
 	sed -i '' "s/std::pair/ft::pair/g" ./main.cpp
 	sed -i '' "s/std::make_pair/ft::make_pair/g" ./main.cpp
-	clang++ -Wall -Wextra -Werror -I../utils/ main.cpp -o ft_rb_tree -Ofast
+	clang++ -Wall -Wextra -Werror -I../utils/ -Iiterators main.cpp -o ft_rb_tree -Ofast
 	time ./ft_rb_tree > ft_output
 	sed -i '' "s/ft::pair/std::pair/g" ./main.cpp
 	sed -i '' "s/ft::make_pair/std::make_pair/g" ./main.cpp

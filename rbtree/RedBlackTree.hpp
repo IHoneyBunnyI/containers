@@ -5,6 +5,7 @@
 #include "RedBlackTreeNode.hpp"
 #include "RedBlackTreeConstIterator.hpp"
 #include "RedBlackTreeIterator.hpp"
+#include "ReverseIterator.hpp"
 
 namespace ft
 {
@@ -26,9 +27,12 @@ class RedBlackTree
 		typedef Alloc allocator_type;
 		typedef RedBlackTreeIterator<value_type> iterator;
 		typedef RedBlackTreeConstIterator<value_type> const_iterator;
-		typedef std::reverse_iterator<iterator> reverse_iterator;
-		typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+		typedef ft::reverse_iterator<iterator> reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 		typedef Compare key_compare;
+
+	private:
+		RedBlackTreeNode<value_type> first;
 };
 
 

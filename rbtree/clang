@@ -2,11 +2,11 @@
 
 if [ $# = "0" ]
 then
-	clang++ -Wall -Wextra -Werror -I../utils main.cpp -o redBlackTree
+	clang++ -Wall -Wextra -Werror -I../utils -Iiterators main.cpp -o redBlackTree
 fi
 if [ '-g' = "$1" ]
 then
-	clang++ -g -fsanitize=address -I../utils main.cpp -o redBlackTree
+	clang++ -g -fsanitize=address -I../utils -Iiterators main.cpp -o redBlackTree
 fi
 
 
