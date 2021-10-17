@@ -21,6 +21,8 @@ class RedBlackTreeNode
 
 		static pointer minimum(pointer x);
 		static const_pointer minimum(const_pointer x);
+		static pointer maximum(pointer x);
+		static const_pointer maximum(const_pointer x);
 };
 
 template <class T>
@@ -36,6 +38,22 @@ typename RedBlackTreeNode<T>::const_pointer RedBlackTreeNode<T>::minimum(const_p
 {
 	while (x->left)
 		x = x->left;
+	return (x);
+}
+
+template <class T>
+typename RedBlackTreeNode<T>::pointer RedBlackTreeNode<T>::maximum(pointer x)
+{
+	while (x->right)
+		x = x->right;
+	return (x);
+}
+
+template <class T>
+typename RedBlackTreeNode<T>::const_pointer RedBlackTreeNode<T>::maximum(const_pointer x)
+{
+	while (x->right)
+		x = x->right;
 	return (x);
 }
 

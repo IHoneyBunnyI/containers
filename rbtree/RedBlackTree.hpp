@@ -21,7 +21,8 @@ class RedBlackTree
 		typedef const value_type* const_pointer;
 		typedef value_type& reference;
 		typedef const value_type& const_reference;
-		typedef RedBlackTreeNode<Val>* node_type;
+		typedef RedBlackTreeNode<Val>* link_type;
+		typedef const RedBlackTreeNode<Val>* const_link_type;
 		typedef size_t size_type;
 		typedef ptrdiff_t difference_type;
 		typedef Alloc allocator_type;
@@ -42,15 +43,20 @@ class RedBlackTree
 		{
 			this->head.color = red;
 			this->head.parent = 0;
-			this->head.right = this->head;
-			this->head.left = this->head;
-			this->size = 0;
+			this->head.right = &this->head;
+			this->head.left = &this->head;
+			this->count = 0;
 		}
+
+		link_type _copy(const_link_type x, link_type p);
+
+
 
 	public:
 		//Constructors
 		RedBlackTree();
 		RedBlackTree(const Compare& comp, const allocator_type& a = allocator_type());
+		RedBlackTree(const RedBlackTree& x);
 
 
 		//MEMBER FUNCTIONS
@@ -68,6 +74,29 @@ class RedBlackTree
 		const_reverse_iterator rend() const;
 };
 
+//Private:
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::link_type RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::_copy(const_link_type x, link_type p)
+{
+	link_type top = _clone_node(x);
+	top->parent = p;
+	if (x->right)
+		top->right = _copy(x->right, top);
+	p = top;
+	x = x->left;
+	while (x)
+	{
+		link_type y = _clone_node(x);
+		p->left = y;
+		y->parent = p;
+		if (x->right)
+			y->right = _copy(x->right, y);
+		p = y;
+		x = x->left;
+	}
+	return top;
+}
+
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::RedBlackTree()
@@ -76,11 +105,21 @@ RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::RedBlackTree()
 	initialize();
 }
 
-
 //typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::RedBlackTree(const Compare& comp, const allocator_type& a): compare(comp), allocator_value(a) {}
 
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::RedBlackTree(const RedBlackTree& x)
+{
+	if (x.head.parent)
+	{
+		this->head.parent = _copy(x.head.parent, &head);
+		this->head.left = RedBlackTreeNode<Val>::minimum(head.parent);
+		this->head.right = RedBlackTreeNode<Val>::maximum(head.parent);
+		this->count = x.count;
+	}
+}
 
 
 
