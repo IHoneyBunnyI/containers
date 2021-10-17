@@ -49,6 +49,8 @@ class RedBlackTree
 		}
 
 		link_type _copy(const_link_type x, link_type p);
+		link_type _clone_node(const_link_type x);
+		link_type _create_node(const value_type& x);
 
 
 
@@ -75,6 +77,26 @@ class RedBlackTree
 };
 
 //Private:
+
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::link_type RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::_create_node(const value_type& x)
+{
+	link_type tmp = allocator_node.allocate(1);
+	allocator_value.construct(&tmp->val, x);
+	return tmp;
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::link_type RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::_clone_node(const_link_type x)
+{
+	link_type tmp = _create_node(x->val);
+	tmp->color = x->color;
+	tmp->left = 0;
+	tmp->right = 0;
+	return tmp;
+}
+
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::link_type RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::_copy(const_link_type x, link_type p)
 {
