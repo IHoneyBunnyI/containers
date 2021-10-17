@@ -61,6 +61,7 @@ class RedBlackTree
 		RedBlackTree();
 		RedBlackTree(const Compare& comp, const allocator_type& a = allocator_type());
 		RedBlackTree(const RedBlackTree& x);
+		//Destructor
 		~RedBlackTree();
 
 
@@ -163,16 +164,18 @@ RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::RedBlackTree(const RedBlackT
 		this->head.left = RedBlackTreeNode<Val>::minimum(head.parent);
 		this->head.right = RedBlackTreeNode<Val>::maximum(head.parent);
 		this->count = x.count;
-	}
+	 }
+	else
+		initialize();
 }
+
+
+//Destructor
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::~RedBlackTree()
 {
 	_erase(this->head.parent);
 }
-
-
-
 
 /// ITERATORS
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>

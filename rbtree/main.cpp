@@ -41,11 +41,26 @@ void test_pair_and_make_pair()
 
 int main()
 {
-	test_pair_and_make_pair();
+	//test_pair_and_make_pair();
 	ft::RedBlackTree<int, char, int, char> a;
-	ft::RedBlackTree<int, char, int, char> b(a);
+	const ft::RedBlackTree<int, char, int, char> b(a);
 
-	(void)a;
-	(void)b;
-	while (1);
+	ft::RedBlackTree<int, char, int, char>::iterator it = a.begin();
+	ft::RedBlackTree<int, char, int, char>::const_iterator cit = a.begin();
+	ft::RedBlackTree<int, char, int, char>::reverse_iterator rit = a.rbegin();
+	ft::RedBlackTree<int, char, int, char>::const_reverse_iterator rcit = a.rbegin();
+
+	//ft::RedBlackTree<int, char, int, char>::iterator bit = b.begin();
+	ft::RedBlackTree<int, char, int, char>::const_iterator bcit = b.begin();
+	//ft::RedBlackTree<int, char, int, char>::reverse_iterator brit = b.rbegin();
+	ft::RedBlackTree<int, char, int, char>::const_reverse_iterator brcit = b.rbegin();
+	(void)it;
+	(void)cit;
+	(void)rit;
+	(void)rcit;
+	(void)bcit;
+	(void)brcit;
+	std::cout << a.empty() << " " << b.empty() << std::endl;
+	std::cout << a.size() << " " << b.size() << std::endl;
+	//while (1);
 }
