@@ -47,4 +47,5 @@ int main()
 
 	(void)a;
 	(void)b;
+	while (1);
 }

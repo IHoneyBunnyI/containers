@@ -51,6 +51,8 @@ class RedBlackTree
 		link_type _copy(const_link_type x, link_type p);
 		link_type _clone_node(const_link_type x);
 		link_type _create_node(const value_type& x);
+		void _erase(link_type x);
+		void _destroy_node(link_type p);
 
 
 
@@ -59,6 +61,7 @@ class RedBlackTree
 		RedBlackTree();
 		RedBlackTree(const Compare& comp, const allocator_type& a = allocator_type());
 		RedBlackTree(const RedBlackTree& x);
+		~RedBlackTree();
 
 
 		//MEMBER FUNCTIONS
@@ -77,7 +80,24 @@ class RedBlackTree
 };
 
 //Private:
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+void RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::_destroy_node(link_type p)
+{
+	this->allocator_value.destroy(&(p->val));
+	this->allocator_node.deallocate(p, 1);
+}
 
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+void RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::_erase(link_type x)
+{
+	while (x)
+	{
+		_erase(x->right);
+		link_type y = x->left;
+		_destroy_node(x);
+		x = y;
+	}
+}
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::link_type RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::_create_node(const value_type& x)
@@ -120,6 +140,9 @@ typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::link_type RedBlackT
 }
 
 
+
+//Constructors
+
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::RedBlackTree()
 : head(), count(0), allocator_node(), allocator_value(), compare()
@@ -141,6 +164,11 @@ RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::RedBlackTree(const RedBlackT
 		this->head.right = RedBlackTreeNode<Val>::maximum(head.parent);
 		this->count = x.count;
 	}
+}
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::~RedBlackTree()
+{
+	_erase(this->head.parent);
 }
 
 
