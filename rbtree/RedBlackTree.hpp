@@ -168,6 +168,26 @@ void RB_TREE::_insert_and_rebalance(const bool insert_left, link_type x, link_ty
 	x->left = 0;
 	x->right = 0;
 	x->color = red;
+
+	if (insert_left)
+	{
+		p->left = x;
+		if (p == &head)
+		{
+			head.parent = x;
+			head.right = x;
+		}
+		else if (p == head.left)
+			head.left = x;
+	}
+	else
+	{
+		p->right = x;
+		if (p == head.right)
+			head.right = x;
+	}
+	//Rebalance
+	//while (x != this->
 }
 
 //Constructors
