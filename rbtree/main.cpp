@@ -42,27 +42,21 @@ void test_pair_and_make_pair()
 
 int main()
 {
-	pair_first<ft::pair<int, int> > a;
 	//test_pair_and_make_pair();
-	//ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> > a;
-	//const ft::RedBlackTree<int, ft::pair<int, int>, int, std::less<int> > b(a);
+	ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> > a;
+	const ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> > b(a);
 
-	//ft::RedBlackTree<int, ft::pair<int, int>, int, std::less<int> >::iterator it = a.begin();
-	//ft::RedBlackTree<int, ft::pair<int, int>, int, std::less<int> >::const_iterator cit = a.begin();
-	//ft::RedBlackTree<int, ft::pair<int, int>, int, std::less<int> >::reverse_iterator rit = a.rbegin();
-	//ft::RedBlackTree<int, ft::pair<int, int>, int, std::less<int> >::const_reverse_iterator rcit = a.rbegin();
-
-	//ft::RedBlackTree<int, ft::pair<int, int>, int, std::less<int> >::const_iterator bcit = b.begin();
-	//ft::RedBlackTree<int, ft::pair<int, int>, int, std::less<int> >::const_reverse_iterator brcit = b.rbegin();
-	//(void)it;
-	//(void)cit;
-	//(void)rit;
-	//(void)rcit;
-	//(void)bcit;
-	//(void)brcit;
-	//std::cout << a.empty() << " " << b.empty() << std::endl;
-	//std::cout << a.size() << " " << b.size() << std::endl;
-	//ft::pair<int, int> pair;
-	//a.insert(pair);
+	ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> >::iterator it = a.begin();
+	ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> >::const_iterator cit = a.begin();
+	ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> >::reverse_iterator rit = a.rbegin();
+	ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> >::const_reverse_iterator rcit = a.rbegin();
+	(void)it;
+	(void)cit;
+	(void)rit;
+	(void)rcit;
+	std::cout << a.empty() << " " << b.empty() << std::endl;
+	std::cout << a.size() << " " << b.size() << std::endl;
+	ft::pair<int, int> pair;
+	a.insert(pair);
 	//while (1);
 }

@@ -7,7 +7,6 @@
 #include "RedBlackTreeIterator.hpp"
 #include "ReverseIterator.hpp"
 #include "pair.hpp"
-#include "utils.hpp"
 
 #define RB_TREE RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>
 
@@ -266,7 +265,7 @@ typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::size_type RB_TREE::
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-ft::pair<typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::iterator, bool> RB_TREE::insert(const Val& v)
+ft::pair<typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::iterator, bool> RB_TREE::insert(const Val& v) //ok
 {
 	link_type x = head.parent;
 	link_type y = &head;
@@ -275,7 +274,7 @@ ft::pair<typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::iterator, 
 	while (x)
 	{
 		y = x;
-		//comp = compare(v.first, x->val.first);
+		comp = compare(keyOfvalue(v), keyOfvalue(x->val));
 		x = comp ? x->left : x->right;
 	}
 	iterator j = iterator(y);
@@ -285,9 +284,10 @@ ft::pair<typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::iterator, 
 			return pair<iterator, bool>(_insert(x, y, v), true);
 		else
 			--j;
-		//if (compare(j.node->val.first, v.first))
-			//return pair<iterator, bool>(_insert(x, y, v), false);
 	}
+	if (compare(keyOfvalue(j.node->val), keyOfvalue(v)))
+		return pair<iterator, bool>(_insert(x, y, v), true);
+	return pair<iterator, bool>(j, false);
 }
 
 //Overloads
