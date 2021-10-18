@@ -187,7 +187,11 @@ void RB_TREE::_insert_and_rebalance(const bool insert_left, link_type x, link_ty
 			head.right = x;
 	}
 	//Rebalance
-	//while (x != this->
+	while (x != this->head.parent && x->parent->color == red)
+	{
+		link_type xpp = x->parent->parent;
+		(void)xpp;
+	}
 }
 
 //Constructors
