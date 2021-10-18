@@ -59,7 +59,7 @@ class RedBlackTree
 		void _erase(link_type x);
 		void _destroy_node(link_type p);
 		iterator _insert(link_type x, link_type p, const Val& v);
-
+		void _insert_and_rebalance(const bool insert_left, link_type x, link_type p);
 
 	public:
 		//Constructors
@@ -112,7 +112,7 @@ void RB_TREE::_erase(link_type x)
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::link_type RB_TREE::_create_node(const value_type& x)
+typename RB_TREE::link_type RB_TREE::_create_node(const value_type& x)
 {
 	link_type tmp = allocator_node.allocate(1);
 	allocator_value.construct(&tmp->val, x);
@@ -120,7 +120,7 @@ typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::link_type RB_TREE::
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::link_type RB_TREE::_clone_node(const_link_type x)
+typename RB_TREE::link_type RB_TREE::_clone_node(const_link_type x)
 {
 	link_type tmp = _create_node(x->val);
 	tmp->color = x->color;
@@ -130,7 +130,7 @@ typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::link_type RB_TREE::
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::link_type RB_TREE::_copy(const_link_type x, link_type p)
+typename RB_TREE::link_type RB_TREE::_copy(const_link_type x, link_type p)
 {
 	link_type top = _clone_node(x);
 	top->parent = p;
@@ -152,7 +152,7 @@ typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::link_type RB_TREE::
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::iterator RB_TREE::_insert(link_type x, link_type p, const Val& v)
+typename RB_TREE::iterator RB_TREE::_insert(link_type x, link_type p, const Val& v)
 {
 	bool insert_left = (x != 0 || p == &head || compare(keyOfvalue(v), keyOfvalue(p->val)));
 	link_type z = _create_node(v);
@@ -161,6 +161,14 @@ typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::iterator RB_TREE::_
 	return iterator(z);
 }
 
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+void RB_TREE::_insert_and_rebalance(const bool insert_left, link_type x, link_type p)
+{
+	x->parent = p;
+	x->left = 0;
+	x->right = 0;
+	x->color = red;
+}
 
 //Constructors
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
@@ -197,49 +205,49 @@ RB_TREE::~RedBlackTree()
 
 /// ITERATORS
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::iterator RB_TREE::begin()
+typename RB_TREE::iterator RB_TREE::begin()
 {
 	return iterator(this->head.left);
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::const_iterator RB_TREE::begin() const
+typename RB_TREE::const_iterator RB_TREE::begin() const
 {
 	return const_iterator(this->head.left);
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::iterator RB_TREE::end()
+typename RB_TREE::iterator RB_TREE::end()
 {
 	return iterator(&(this->head));
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::const_iterator RB_TREE::end() const
+typename RB_TREE::const_iterator RB_TREE::end() const
 {
 	return const_iterator(&(this->head));
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::reverse_iterator RB_TREE::rbegin()
+typename RB_TREE::reverse_iterator RB_TREE::rbegin()
 {
 	return reverse_iterator(end());
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::const_reverse_iterator RB_TREE::rbegin() const
+typename RB_TREE::const_reverse_iterator RB_TREE::rbegin() const
 {
 	return const_reverse_iterator(end());
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::reverse_iterator RB_TREE::rend()
+typename RB_TREE::reverse_iterator RB_TREE::rend()
 {
 	return reverse_iterator(begin());
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::const_reverse_iterator RB_TREE::rend() const
+typename RB_TREE::const_reverse_iterator RB_TREE::rend() const
 {
 	return const_reverse_iterator(begin());
 }
@@ -253,13 +261,13 @@ bool RB_TREE::empty() const
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::size_type RB_TREE::size() const
+typename RB_TREE::size_type RB_TREE::size() const
 {
 	return this->count;
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::size_type RB_TREE::max_size() const
+typename RB_TREE::size_type RB_TREE::max_size() const
 {
 	return this->allocator_node.max_size();
 }
