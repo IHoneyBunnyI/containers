@@ -21,18 +21,22 @@ public:
 	typedef pair<const Key, T> value_type;
 
 
-	class value_compare
+	class value_compare : std::binary_function<value_type, value_type, bool> //in cplusplus.com map->value_compare
 	{
-	private:
+	friend class map;
+	protected:
 		Compare _comp;
 		value_compare(Compare c) : _comp(c) {}
 
 	public:
-		bool operator()(const value_type& a, const value_type& b) const
-		{
-			return _comp(a.first, b.first);
-		}
+		typedef bool result_type;
+		typedef value_type first_argument_type;
+		typedef value_type second_argument_type;
 
+		bool operator()(const value_type& x, const value_type& y) const
+		{
+			return _comp(x.first, y.first);
+		}
 	};
 
 private:
