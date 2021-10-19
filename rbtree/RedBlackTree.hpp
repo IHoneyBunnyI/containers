@@ -60,6 +60,8 @@ class RedBlackTree
 		void _destroy_node(link_type p);
 		iterator _insert(link_type x, link_type p, const Val& v);
 		void _insert_and_rebalance(const bool insert_left, link_type x, link_type p);
+		void _rotate_right(link_type x);
+		void _rotate_left(link_type x);
 
 	public:
 		//Constructors
@@ -190,8 +192,88 @@ void RB_TREE::_insert_and_rebalance(const bool insert_left, link_type x, link_ty
 	while (x != this->head.parent && x->parent->color == red)
 	{
 		link_type xpp = x->parent->parent;
-		(void)xpp;
+		if (x->parent == xpp->left)
+		{
+			link_type y = xpp->right;
+			if (y && y->color == red)
+			{
+				x->parent->color = black;
+				y->color = black;
+				xpp->color = red;
+				x = xpp;
+			}
+			else
+			{
+				if (x == x->parent->right)
+				{
+					x = x->parent;
+					_rotate_left(x);
+				}
+				x->parent->color = black;
+				xpp->color = red;
+				_rotate_right(xpp);
+			}
+		}
+		else
+		{
+			link_type y = xpp->left;
+			if (y && y->color == red)
+			{
+				x->parent->color = black;
+				y->color = black;
+				xpp->color = red;
+				x = xpp;
+			}
+			else
+			{
+				if (x == x->parent->left)
+				{
+					x = x->parent;
+					_rotate_right(x);
+				}
+				x->parent->color = black;
+				xpp->color = red;
+				_rotate_left(xpp);
+			}
+		}
 	}
+	this->head.parent->color = black;
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+void RB_TREE::_rotate_right(link_type x)
+{
+	link_type y = x->left;
+	x->left = y->right;
+	if (y->right != 0)
+		y->right->parent = x;
+	y->parent = x->parent;
+	if (x == this->head.parent)
+		this->head.parent = y;
+	else if (x == x->parent->right)
+		x->parent->right = y;
+	else
+		x->parent->left = y;
+	y->right = x;
+	x->parent = y;
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+void RB_TREE::_rotate_left(link_type x)
+{
+	link_type y = x->right;
+	x->right = y->left;
+	if (y->left)
+		y->left->parent = x;
+	y->parent = x->parent;
+	if (x == head.parent)
+		head.parent = y;
+	else if (x == x->parent->left)
+		x->parent->left = y;
+	else
+		x->parent->right = y;
+	y->left = x;
+	x->parent = y;
 }
 
 //Constructors
