@@ -58,7 +58,7 @@ class RedBlackTree
 		link_type _create_node(const value_type& x);
 		void _erase(link_type x);
 		void _destroy_node(link_type p);
-		iterator _insert(link_type x, link_type p, const Val& v);
+		iterator _insert(const_link_type x, const_link_type p, const Val& v);
 		void _insert_and_rebalance(const bool insert_left, link_type x, link_type p);
 		void _rotate_right(link_type x);
 		void _rotate_left(link_type x);
@@ -77,8 +77,8 @@ class RedBlackTree
 		size_type size() const;
 		size_type max_size() const;
 
-		ft::pair<iterator, bool> insert(const Val& v); //NO
-		iterator insert(const_iterator position, const Val& v); //NO
+		ft::pair<iterator, bool> insert(const Val& v); //NO //vrode ok
+		iterator insert(const_iterator position, const Val& v); //NO //vrode Ok
 		template<class InputIterator>
 		void insert(InputIterator first, InputIterator last); //NO
 
@@ -154,11 +154,11 @@ typename RB_TREE::link_type RB_TREE::_copy(const_link_type x, link_type p)
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-typename RB_TREE::iterator RB_TREE::_insert(link_type x, link_type p, const Val& v)
+typename RB_TREE::iterator RB_TREE::_insert(const_link_type x, const_link_type p, const Val& v)
 {
 	bool insert_left = (x != 0 || p == &head || compare(keyOfvalue(v), keyOfvalue(p->val)));
 	link_type z = _create_node(v);
-	_insert_and_rebalance(insert_left, z, p);
+	_insert_and_rebalance(insert_left, z, const_cast<link_type>(p));
 	count++;
 	return iterator(z);
 }
@@ -263,7 +263,7 @@ void RB_TREE::_rotate_left(link_type x)
 {
 	link_type y = x->right;
 	x->right = y->left;
-	if (y->left)
+	if (y->left != 0)
 		y->left->parent = x;
 	y->parent = x->parent;
 	if (x == head.parent)
@@ -402,6 +402,60 @@ ft::pair<typename RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>::iterator, 
 	if (compare(keyOfvalue(j.node->val), keyOfvalue(v)))
 		return pair<iterator, bool>(_insert(x, y, v), true);
 	return pair<iterator, bool>(j, false);
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RB_TREE::iterator RB_TREE::insert(const_iterator position, const Val& v)
+{
+	if (position.node == &head)
+	{
+		if (this->size() > 0 && compare(head.right->val.first, keyOfvalue(v)))
+			return _insert(0, head.right, v);
+		else
+			return insert(v).first;
+	}
+	else if (compare(keyOfvalue(v), position->first))
+	{
+		const_iterator before = position;
+		--before;
+		if (position.node == head.left)
+			return _insert(head.left, head.left, v);
+		else if (compare(before->first, keyOfvalue(v)))
+		{
+			if (before.node->right == 0)
+				return _insert(0, before.node, v);
+			else
+				return _insert(position.node, position.node, v);
+		}
+		else
+			return insert(v).first;
+
+	}
+	else if (compare(position->first, keyOfvalue(v)))
+	{
+		const_iterator after = position;
+		++after;
+		if (position.node == head.right)
+			return _insert(0, head.right, v);
+		else if (compare(keyOfvalue(v), after->first))
+		{
+			if (position.node->right == 0)
+				return _insert(0, position.node, v);
+			else
+				return _insert(after.node, after.node, v);
+		}
+		else
+			return insert(v).first;
+	}
+	return iterator(const_cast<typename iterator::link_type>(position.node)); //ШИКОС
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+template<class InputIterator>
+void RB_TREE::insert(InputIterator first, InputIterator last)
+{
+	for (; first != last; ++first)
+		insert(end(), *first);
 }
 
 //Overloads

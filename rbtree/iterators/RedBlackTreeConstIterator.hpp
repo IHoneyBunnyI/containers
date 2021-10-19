@@ -13,7 +13,7 @@ class RedBlackTreeConstIterator
 public:
 	typedef T										value_type;
 	typedef const T&								reference;
-	typedef const T									pointer;
+	typedef const T*								pointer;
 	typedef RedBlackTreeIterator<value_type>		iterator;
 	typedef std::bidirectional_iterator_tag 		iterator_category;
 	typedef std::ptrdiff_t							difference_type;
