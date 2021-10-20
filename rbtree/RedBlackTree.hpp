@@ -43,18 +43,9 @@ class RedBlackTree
 		key_compare compare;
 		KeyOfValue keyOfvalue;
 
-		void initialize()
-		{
-			this->head.color = red;
-			this->head.parent = 0;
-			this->head.right = &this->head;
-			this->head.left = &this->head;
-			this->count = 0;
-		}
-
 		//Private
-		void printRBTREE(const std::string& prefix, link_type node, bool isLeft);
-
+		void printRBTREE(const std::string& prefix, link_type node, bool isLeft); 
+		void initialize();
 		link_type _copy(const_link_type x, link_type p);
 		link_type _clone_node(const_link_type x);
 		link_type _create_node(const value_type& x);
@@ -97,7 +88,20 @@ class RedBlackTree
 		void printTree();
 };
 
+
+
+
 //PRIVATE:
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+void RB_TREE::initialize()
+{
+	this->head.color = red;
+	this->head.parent = 0;
+	this->head.right = &this->head;
+	this->head.left = &this->head;
+	this->count = 0;
+}
+
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 void RB_TREE::_destroy_node(link_type p)
 {
