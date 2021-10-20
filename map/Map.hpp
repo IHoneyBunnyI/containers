@@ -70,7 +70,7 @@ public:
 
 
 	//OPERATOR OVERFLOW
-	map& operator= (const map& x);
+	map& operator= (const map& x); //////////////NO
 
 	//Iterators
 	iterator begin();
@@ -91,7 +91,7 @@ public:
 	size_type max_size() const;
 
 	//Element access:
-	mapped_type& operator[] (const key_type& k);
+	mapped_type& operator[] (const key_type& k); /////////////NO
 
 
 	//Modifiers:
@@ -138,19 +138,220 @@ template <class Key, class T, class Compare, class Allocator>
 MAP::map(const key_compare& comp, const allocator_type& alloc): rb_tree(comp, alloc) {}
 
 template <class Key, class T, class Compare, class Allocator>
-MAP::map(const map& x)
+MAP::map(const map& x): rb_tree(x.rb_tree){}
+
+template <class Key, class T, class Compare, class Allocator>
+template <class InputIterator>
+MAP::map(InputIterator first, InputIterator last, const key_compare& comp, const allocator_type& alloc) : rb_tree(comp, alloc)
+{
+	this->rb_tree.insert(first, last);
+}
+//Destructor
+template <class Key, class T, class Compare, class Allocator>
+MAP::~map()
+{
+	~rb_tree;
+}
+
+//OPERATOR OVERFLOW
+template <class Key, class T, class Compare, class Allocator>
+MAP& MAP::operator= (const map& x)
+{
+	this->rb_tree = x.rb_tree;
+	return (*this);
+}
+
+//Iterators
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::iterator MAP::begin()
+{
+	return this->rb_tree.begin();
+}
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::const_iterator MAP::begin() const
+{
+	return this->rb_tree.begin();
+}
+
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::iterator MAP::end()
+{
+	return this->rb_tree.end();
+}
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::const_iterator MAP::end() const
+{
+	return this->rb_tree.end();
+}
+
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::reverse_iterator MAP::rbegin()
+{
+	return this->rb_tree.rbegin();
+}
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::const_reverse_iterator MAP::rbegin() const
+{
+	return this->rb_tree.rbegin();
+}
+
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::reverse_iterator MAP::rend()
+{
+	return this->rb_tree.rend();
+}
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::const_reverse_iterator MAP::rend() const
+{
+	return this->rb_tree.rend();
+}
+
+//CAPACITY
+template <class Key, class T, class Compare, class Allocator>
+bool MAP::empty() const
+{
+	return this->rb_tree.empty();
+}
+
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::size_type MAP::size() const
+{
+	return this->rb_tree.size();
+}
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::size_type MAP::max_size() const
+{
+	return this->rb_tree.max_size();
+}
+
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::mapped_type& MAP::operator[] (const key_type& k)
 {
 
 }
 
 template <class Key, class T, class Compare, class Allocator>
-template <class InputIterator>
-MAP::map(InputIterator first, InputIterator last, const key_compare& comp, const allocator_type& alloc)
+typename ft::pair<typename MAP::iterator,bool> MAP::insert(const value_type& val)
 {
-
+	return this->rb_tree.insert(val);
 }
-//Destructor
-~map();
+
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::iterator MAP::insert(iterator position, const value_type& val)
+{
+	return this->rb_tree.insert(position, val);
+}
+
+template <class Key, class T, class Compare, class Allocator>
+template <class InputIterator> 
+void MAP::insert(InputIterator first, InputIterator last)
+{
+	this->rb_tree.insert(first, last);
+}
+
+template <class Key, class T, class Compare, class Allocator>
+void MAP::erase(iterator position)
+{
+	this->rb_tree.erase(position);
+}
+
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::size_type MAP::erase(const key_type& k)
+{
+	return this->rb_tree.erase(k);
+}
+
+template <class Key, class T, class Compare, class Allocator>
+void MAP::erase(iterator first, iterator last)
+{
+	return this->rb_tree.erase(first, last);
+}
+
+template <class Key, class T, class Compare, class Allocator>
+void MAP::swap(map& x)
+{
+	this->rb_tree.swap(x);
+}
+
+template <class Key, class T, class Compare, class Allocator>
+void MAP::clear()
+{
+	this->rb_tree.clear();
+}
+
+//Observers:
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::key_compare MAP::key_comp() const
+{
+	return this->rb_tree.key_comp();
+}
+
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::value_compare MAP::value_comp() const
+{
+	return this->rb_tree.value_comp();
+}
+
+//Operations:
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::iterator MAP::find(const key_type& k)
+{
+	return this->rb_tree.find(k);
+}
+
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::const_iterator MAP::find(const key_type& k) const
+{
+	return this->rb_tree.find(k);
+}
+
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::size_type MAP::count(const key_type& k) const
+{
+	return this->rb_tree.count(k);
+}
+
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::iterator MAP::lower_bound(const key_type& k)
+{
+	return this->rb_tree.lower_bound(k);
+}
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::const_iterator MAP::lower_bound(const key_type& k) const
+{
+	return this->rb_tree.lower_bound(k);
+}
+
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::iterator MAP::upper_bound(const key_type& k)
+{
+	return this->rb_tree.upper_bound(k);
+}
+
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::const_iterator MAP::upper_bound(const key_type& k) const
+{
+	return this->rb_tree.upper_bound(k);
+}
+
+template <class Key, class T, class Compare, class Allocator>
+pair<typename MAP::const_iterator,typename MAP::const_iterator> MAP::equal_range(const key_type& k) const
+{
+	return this->rb_tree.equal_range();
+}
+
+template <class Key, class T, class Compare, class Allocator>
+pair<typename MAP::iterator,typename MAP::iterator> MAP::equal_range(const key_type& k)
+{
+	return this->rb_tree.equal_range();
+}
+
+//Allocator:
+template <class Key, class T, class Compare, class Allocator>
+typename MAP::allocator_type MAP::get_allocator() const
+{
+	return this->rb_tree.get_allocator();
+}
 
 }
 #endif

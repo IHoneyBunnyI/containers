@@ -45,7 +45,6 @@ class RedBlackTree
 		KeyOfValue keyOfvalue;
 
 		//Private
-		void postorder(link_type p, int indent);
 		void initialize();
 		link_type _copy(const_link_type x, link_type p);
 		link_type _clone_node(const_link_type x);
@@ -86,14 +85,15 @@ class RedBlackTree
 		reverse_iterator rend();
 		const_reverse_iterator rend() const;
 
-		void printTree();
 		
 
 
 
 		///VISUALIZATOR
 	public:
-
+		void printTree();
+	private:
+		void postorder(link_type p, int indent);
 };
 
 
@@ -487,6 +487,9 @@ bool operator!=(const RedBlackTreeIterator<T>& x, const RedBlackTreeConstIterato
 	return x.node != y.node;
 }
 
+
+
+//VISUALIZATOR
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 void RB_TREE::postorder(link_type p, int indent)
 {

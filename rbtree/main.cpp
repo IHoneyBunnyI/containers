@@ -3,6 +3,7 @@
 #include "RedBlackTree.hpp"
 #include "pair.hpp"
 #include "pair_first.hpp"
+#include "Vector.hpp"
 
 void test_pair_and_make_pair()
 {
@@ -55,12 +56,30 @@ int main()
 	tree.insert(it, ft::pair<int, int>(30, 0));
 	tree.insert(it, ft::pair<int, int>(15, 99));
 	tree.insert(it, ft::pair<int, int>(28, 5000));
-	tree.printTree();
 
-	//std::cout << tree.first_call() << std::endl;
-	//tree.printTree();
+	tree.printTree();
 	std::cout << "tree contains: " << std::endl;
-	for (it=tree.begin(); it!=tree.end(); ++it)
+	for (it = tree.begin(); it != tree.end(); ++it)
 		std::cout << it->first << " => " << it->second << std::endl;
+	std::cout << std::endl;
+
+	ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> > tree2(tree);
+	ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<char> >::iterator it2 = tree2.begin();
+	std::cout << std::endl;
+	std::cout << std::endl;
+	tree2.printTree();
+
+	std::cout << "tree contains: " << std::endl;
+	for (; it2 != tree2.end(); ++it2)
+		std::cout << it2->first << " => " << it2->second << std::endl;
+	ft::vector<ft::pair<int, int> > vector;
+	for (int i = 1; i < 30; i++)
+		vector.push_back(ft::pair<int, int>(i, i + 100));
+	ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> > tree_vector;
+	ft::vector<ft::pair<int, int> >::iterator it_vector = vector.begin();
+	ft::vector<ft::pair<int, int> >::iterator it_vector_end = vector.end();
+	tree_vector.insert(it_vector, it_vector_end);
+
+	tree_vector.printTree();
 	//while (1);
 }
