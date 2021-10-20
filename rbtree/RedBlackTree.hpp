@@ -7,6 +7,7 @@
 #include "RedBlackTreeIterator.hpp"
 #include "ReverseIterator.hpp"
 #include "pair.hpp"
+#include <iomanip>
 
 #define RB_TREE RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>
 
@@ -44,7 +45,7 @@ class RedBlackTree
 		KeyOfValue keyOfvalue;
 
 		//Private
-		void printRBTREE(const std::string& prefix, link_type node, bool isLeft); 
+		void postorder(link_type p, int indent);
 		void initialize();
 		link_type _copy(const_link_type x, link_type p);
 		link_type _clone_node(const_link_type x);
@@ -86,6 +87,13 @@ class RedBlackTree
 		const_reverse_iterator rend() const;
 
 		void printTree();
+		
+
+
+
+		///VISUALIZATOR
+	public:
+
 };
 
 
@@ -480,27 +488,29 @@ bool operator!=(const RedBlackTreeIterator<T>& x, const RedBlackTreeConstIterato
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-void RB_TREE::printRBTREE(const std::string& prefix, link_type node, bool isLeft)
+void RB_TREE::postorder(link_type p, int indent)
 {
-	if( node != nullptr )
+	if (p != NULL)
 	{
-		std::cout << prefix;
-
-		std::cout << (isLeft ? "├──" : "└──" );
-
-		// print the value of the node
-		std::cout << (node->color == red ? "\033[1;38;5;9m" : "\033[1;38;5;238m") <<  node->val.first << "\033[0m" << std::endl;
-
-		// enter the next tree level - left and right branch
-		printRBTREE( prefix + (isLeft ? "│   " : "    "), node->left, true);
-		printRBTREE( prefix + (isLeft ? "│   " : "    "), node->right, false);
+		if (p->right) 
+			postorder(p->right, indent+4);
+		if (indent) 
+			std::cout << std::setw(indent) << ' ';
+		if (p->right)
+			std::cout<<" /\n" << std::setw(indent) << ' ';
+		std::cout << (p->color == red ? "\033[1;38;5;9m" : "\033[1;38;5;238m") <<  p->val.first << "\033[0m" << std::endl;
+		if(p->left)
+		{
+			std::cout << std::setw(indent) << ' ' <<" \\\n";
+			postorder(p->left, indent+4);
+		}
 	}
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 void RB_TREE::printTree()
 {
-	printRBTREE("", head.parent, false);
+	postorder(this->head.parent, 1);
 }
 
 

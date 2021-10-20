@@ -42,47 +42,25 @@ void test_pair_and_make_pair()
 
 int main()
 {
-	//test_pair_and_make_pair();
-	//ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> > a;
-	//const ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> > b(a);
 
-	////ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> >::iterator it = a.begin();
-	//ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> >::reverse_iterator rit = a.rbegin();
-	//ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> >::const_reverse_iterator rcit = a.rbegin();
-	////(void)it;
-	////(void)cit;
-	//(void)rit;
-	//(void)rcit;
-	////std::cout << a.empty() << " " << b.empty() << std::endl;
-	////std::cout << a.size() << " " << b.size() << std::endl;
-	//ft::pair<int, int> pair (10, 15);
-	//a.insert(pair);
-	//ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> >::iterator it = a.begin();
-	//ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> >::const_iterator cit = a.begin();
-	//a.insert(cit, pair);
-	//std:: cout << it->first << std::endl;
-	//std:: cout << cit->first << std::endl;
-	//ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> >::iterator start = a.begin();
-	//ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> >::iterator last = a.end();
-	//a.insert(start, last);
-	
-
-	ft::RedBlackTree<int, ft::pair<char, int>, pair_first<ft::pair<char, int> >, std::less<int> > tree;
-	tree.insert(ft::pair<char, int>('a', 100));
-	tree.insert(ft::pair<char, int>('z', 200));
-	ft::RedBlackTree<int, ft::pair<char, int>, pair_first<ft::pair<int, int> >, std::less<int> >::iterator it = tree.begin();
-	tree.insert(it, ft::pair<char, int>('b', 300));
-	tree.insert(it, ft::pair<char, int>('c', 400));
-	tree.insert(it, ft::pair<char, int>('f', 300));
-	tree.insert(it, ft::pair<char, int>('h', 300));
-	tree.insert(it, ft::pair<char, int>('A', 300));
-	//tree.insert(it, ft::pair<char, int>('B', 300));
-	//tree.insert(it, ft::pair<char, int>('C', 300));
+	ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> > tree;
+	ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<char> >::iterator it = tree.begin();
+	tree.insert(it, ft::pair<int, int>(0, 333));
+	tree.insert(it, ft::pair<int, int>(18, 401));
+	tree.insert(it, ft::pair<int, int>(9, 30));
+	tree.insert(it, ft::pair<int, int>(10, 55));
+	tree.insert(it, ft::pair<int, int>(5, 30));
+	tree.insert(it, ft::pair<int, int>(14, 45456));
+	tree.insert(it, ft::pair<int, int>(7, 3));
+	tree.insert(it, ft::pair<int, int>(30, 0));
+	tree.insert(it, ft::pair<int, int>(15, 99));
+	tree.insert(it, ft::pair<int, int>(28, 5000));
+	tree.printTree();
 
 	//std::cout << tree.first_call() << std::endl;
-	tree.printTree();
-	//std::cout << "tree contains: " << std::endl;
-	//for (it=tree.begin(); it!=tree.end(); ++it)
-		//std::cout << it->first << " => " << it->second << std::endl;
+	//tree.printTree();
+	std::cout << "tree contains: " << std::endl;
+	for (it=tree.begin(); it!=tree.end(); ++it)
+		std::cout << it->first << " => " << it->second << std::endl;
 	//while (1);
 }
