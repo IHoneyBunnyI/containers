@@ -6,6 +6,8 @@
 #include "RedBlackTree.hpp"
 #include "pair_first.hpp"
 
+#define MAP map<Key, T, Compare, Allocator>
+
 namespace ft
 {
 
@@ -63,6 +65,7 @@ public:
 	map(const map& x);
 	template <class InputIterator>
 	map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type());
+	//Destructor
 	~map();
 
 
@@ -129,6 +132,25 @@ public:
 	//Allocator:
 	allocator_type get_allocator() const;
 };
+
+	//Constructors
+template <class Key, class T, class Compare, class Allocator>
+MAP::map(const key_compare& comp, const allocator_type& alloc): rb_tree(comp, alloc) {}
+
+template <class Key, class T, class Compare, class Allocator>
+MAP::map(const map& x)
+{
+
+}
+
+template <class Key, class T, class Compare, class Allocator>
+template <class InputIterator>
+MAP::map(InputIterator first, InputIterator last, const key_compare& comp, const allocator_type& alloc)
+{
+
+}
+//Destructor
+~map();
 
 }
 #endif

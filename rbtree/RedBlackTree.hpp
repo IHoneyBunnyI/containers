@@ -53,6 +53,8 @@ class RedBlackTree
 		}
 
 		//Private
+		void printRBTREE(const std::string& prefix, link_type node, bool isLeft);
+
 		link_type _copy(const_link_type x, link_type p);
 		link_type _clone_node(const_link_type x);
 		link_type _create_node(const value_type& x);
@@ -91,9 +93,11 @@ class RedBlackTree
 		const_reverse_iterator rbegin() const;
 		reverse_iterator rend();
 		const_reverse_iterator rend() const;
+
+		void printTree();
 };
 
-//Private:
+//PRIVATE:
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 void RB_TREE::_destroy_node(link_type p)
 {
@@ -470,6 +474,37 @@ bool operator!=(const RedBlackTreeIterator<T>& x, const RedBlackTreeConstIterato
 {
 	return x.node != y.node;
 }
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+void RB_TREE::printRBTREE(const std::string& prefix, link_type node, bool isLeft)
+{
+	if( node != nullptr )
+	{
+		std::cout << prefix;
+
+		std::cout << (isLeft ? "├──" : "└──" );
+
+		// print the value of the node
+		std::cout << (node->color == red ? "\033[1;38;5;9m" : "\033[1;38;5;238m") <<  node->val.first << "\033[0m" << std::endl;
+
+		// enter the next tree level - left and right branch
+		printRBTREE( prefix + (isLeft ? "│   " : "    "), node->left, true);
+		printRBTREE( prefix + (isLeft ? "│   " : "    "), node->right, false);
+	}
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+void RB_TREE::printTree()
+{
+	printRBTREE("", head.parent, false);
+}
+
+
+
+
+
+
+
 
 }
 #endif
