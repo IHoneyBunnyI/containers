@@ -84,6 +84,12 @@ class RedBlackTree
 		template<class InputIterator>
 		void insert(InputIterator first, InputIterator last);
 
+		void erase(iterator position); ///////////////
+		void erase(const_iterator position);
+		size_type erase(const key_type& x);
+		void erase (iterator first, iterator last);
+		void erase (const_iterator first, const_iterator last);
+
 		iterator find(const Key& k);
 		const_iterator find(const Key& k) const;
 
