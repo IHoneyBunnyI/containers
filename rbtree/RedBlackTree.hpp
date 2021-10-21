@@ -59,6 +59,8 @@ class RedBlackTree
 		const_iterator _lower_bound(const_link_type x, const_link_type y, const Key& k) const;
 		iterator _upper_bound(link_type x, link_type y, const Key& k);
 		const_iterator _upper_bound(const_link_type x, const_link_type y, const Key& k) const;
+		void _erase_aux(const_iterator position);
+		link_type _rebalance_for_erase(link_type z);
 
 	public:
 		//Constructors
@@ -112,7 +114,7 @@ class RedBlackTree
 		reverse_iterator rend();
 		const_reverse_iterator rend() const;
 
-		
+
 
 
 
@@ -370,6 +372,26 @@ typename RB_TREE::const_iterator RB_TREE::_upper_bound(const_link_type x, const_
 	}
 	return const_iterator(y);
 }
+
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+void RB_TREE::_erase_aux(const_iterator position)
+{
+	link_type y = _rebalance_for_erase(const_cast<link_type>(position.node));
+	_destroy_node(y);
+	--this->count_node;
+}
+
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RB_TREE::link_type RB_TREE::_rebalance_for_erase(link_type z)
+{
+
+}
+
+
+
+
 
 //Constructors
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
@@ -709,7 +731,46 @@ typename RB_TREE::allocator_type RB_TREE::get_allocator() const
 	return allocator_node;
 }
 
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+void RB_TREE::erase(iterator position)
+{
+	_erase_aux(position);
+}
 
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+void RB_TREE::erase(const_iterator position)
+{
+	_erase_aux(position);
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RB_TREE::size_type RB_TREE::erase(const key_type& x)
+{
+	pair<iterator, iterator> p = equal_range(x);
+	const size_type old_size = this->size();
+	erase(p.first, p.second);
+	return old_size - this->size();
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+void RB_TREE::erase (iterator first, iterator last) 
+{
+	if (first == begin() && last == end())
+		clear();
+	else
+		while (first != last)
+			erase(first++);
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+void RB_TREE::erase (const_iterator first, const_iterator last)
+{
+	if (first == begin() && last == end())
+		clear();
+	else
+		while (first != last)
+			erase(first++);
+}
 
 
 
@@ -779,7 +840,6 @@ void RB_TREE::printTree()
 {
 	postorder(this->head.parent, 1);
 }
-
 
 
 
