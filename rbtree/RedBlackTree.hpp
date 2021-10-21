@@ -64,6 +64,8 @@ class RedBlackTree
 		//Destructor
 		~RedBlackTree();
 
+		//OVERLOADS
+		RedBlackTree& operator = (const RedBlackTree& x);
 
 		//MEMBER FUNCTIONS
 		bool empty() const;
@@ -474,7 +476,7 @@ void RB_TREE::insert(InputIterator first, InputIterator last)
 		insert(end(), *first);
 }
 
-//Overloads
+//OVERLOADS
 template<typename T>
 bool operator==(const RedBlackTreeIterator<T>& x, const RedBlackTreeConstIterator<T>& y)
 {
@@ -487,6 +489,23 @@ bool operator!=(const RedBlackTreeIterator<T>& x, const RedBlackTreeConstIterato
 	return x.node != y.node;
 }
 
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+RB_TREE& RB_TREE::operator = (const RedBlackTree& x)
+{
+	if (this != &x)
+	{
+		this->clear();
+		this->compare = x.compare;
+		if (x.head.parent)
+		{
+			this->head.parent = _copy(x.head.parent, &head);
+			this->head.left = RedBlackTreeNode<Val>::minimum(head.parent);
+			this->head.right = RedBlackTreeNode<Val>::maximum(head.parent);
+			this->count = x.count;
+		}
+	}
+	return *this;
+}
 
 
 //VISUALIZATOR
