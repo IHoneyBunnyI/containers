@@ -289,7 +289,7 @@ typename MAP::key_compare MAP::key_comp() const
 template <class Key, class T, class Compare, class Allocator>
 typename MAP::value_compare MAP::value_comp() const
 {
-	return this->rb_tree.value_comp();
+	return value_compare(this->rb_tree.key_comp());
 }
 
 //Operations:

@@ -38,7 +38,7 @@ class RedBlackTree
 
 	private:
 		RedBlackTreeNode<value_type> head;
-		size_type count;
+		size_type count_node;
 		node_allocator allocator_node;
 		allocator_type allocator_value;
 		key_compare compare;
@@ -55,6 +55,10 @@ class RedBlackTree
 		void _insert_and_rebalance(const bool insert_left, link_type x, link_type p);
 		void _rotate_right(link_type x);
 		void _rotate_left(link_type x);
+		iterator _lower_bound(link_type x, link_type y, const Key& k);
+		const_iterator _lower_bound(const_link_type x, const_link_type y, const Key& k) const;
+		iterator _upper_bound(link_type x, link_type y, const Key& k);
+		const_iterator _upper_bound(const_link_type x, const_link_type y, const Key& k) const;
 
 	public:
 		//Constructors
@@ -71,11 +75,26 @@ class RedBlackTree
 		bool empty() const;
 		size_type size() const;
 		size_type max_size() const;
+		void clear();
+		size_type count(const key_type& k) const;
+		Compare key_comp() const;
 
-		ft::pair<iterator, bool> insert(const Val& v); //NO //vrode ok
-		iterator insert(const_iterator position, const Val& v); //NO //vrode Ok
+		ft::pair<iterator, bool> insert(const Val& v);
+		iterator insert(const_iterator position, const Val& v);
 		template<class InputIterator>
-		void insert(InputIterator first, InputIterator last); //NO
+		void insert(InputIterator first, InputIterator last);
+
+		iterator find(const Key& k);
+		const_iterator find(const Key& k) const;
+
+		iterator lower_bound(const key_type& k);
+		const_iterator lower_bound(const key_type& k) const;
+		iterator upper_bound(const key_type& k);
+		const_iterator upper_bound(const key_type& k) const;
+		pair<iterator, iterator> equal_range(const key_type& k);
+		pair<const_iterator, const_iterator> equal_range(const key_type& k) const;
+		void swap(RedBlackTree& t);
+		allocator_type get_allocator() const;
 
 		//ITERATORS
 		iterator begin();
@@ -109,7 +128,7 @@ void RB_TREE::initialize()
 	this->head.parent = 0;
 	this->head.right = &this->head;
 	this->head.left = &this->head;
-	this->count = 0;
+	this->count_node = 0;
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
@@ -177,7 +196,7 @@ typename RB_TREE::iterator RB_TREE::_insert(const_link_type x, const_link_type p
 	bool insert_left = (x != 0 || p == &head || compare(keyOfvalue(v), keyOfvalue(p->val)));
 	link_type z = _create_node(v);
 	_insert_and_rebalance(insert_left, z, const_cast<link_type>(p));
-	count++;
+	count_node++;
 	return iterator(z);
 }
 
@@ -294,10 +313,62 @@ void RB_TREE::_rotate_left(link_type x)
 	x->parent = y;
 }
 
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RB_TREE::iterator RB_TREE::_lower_bound(link_type x, link_type y, const Key& k)
+{
+	while (x != 0)
+	{
+		if (!compare(keyOfvalue(x->val), k))
+			y = x, x = x->left;
+		else
+			x = x->right;
+	}
+	return iterator(y);
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RB_TREE::const_iterator RB_TREE::_lower_bound(const_link_type x, const_link_type y, const Key& k) const
+{
+	while (x != 0)
+	{
+		if (!compare(keyOfvalue(x->val), k))
+			y = x, x = x->left;
+		else
+			x = x->right;
+	}
+	return const_iterator(y);
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RB_TREE::iterator RB_TREE::_upper_bound(link_type x, link_type y, const Key& k)
+{
+	while (x != 0)
+	{
+		if (compare(k, keyOfvalue(x->val)))
+			y = x, x = x->left;
+		else
+			x = x->right;
+	}
+	return iterator(y);
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RB_TREE::const_iterator RB_TREE::_upper_bound(const_link_type x, const_link_type y, const Key& k) const
+{
+	while (x != 0)
+	{
+		if (compare(k, keyOfvalue(x->val)))
+			y = x, x = x->left;
+		else
+			x = x->right;
+	}
+	return const_iterator(y);
+}
+
 //Constructors
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 RB_TREE::RedBlackTree()
-: head(), count(0), allocator_node(), allocator_value(), compare()
+: head(), count_node(0), allocator_node(), allocator_value(), compare()
 {
 	initialize();
 }
@@ -313,7 +384,7 @@ RB_TREE::RedBlackTree(const RedBlackTree& x)
 		this->head.parent = _copy(x.head.parent, &head);
 		this->head.left = RedBlackTreeNode<Val>::minimum(head.parent);
 		this->head.right = RedBlackTreeNode<Val>::maximum(head.parent);
-		this->count = x.count;
+		this->count_node = x.count_node;
 	 }
 	else
 		initialize();
@@ -381,13 +452,13 @@ typename RB_TREE::const_reverse_iterator RB_TREE::rend() const
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 bool RB_TREE::empty() const
 {
-	return this->count == 0;
+	return this->count_node == 0;
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 typename RB_TREE::size_type RB_TREE::size() const
 {
-	return this->count;
+	return this->count_node;
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
@@ -476,6 +547,169 @@ void RB_TREE::insert(InputIterator first, InputIterator last)
 		insert(end(), *first);
 }
 
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RB_TREE::iterator RB_TREE::find(const Key& k)
+{
+	iterator j  = _lower_bound(this->head.parent, &this->head, k);
+	return (j == end() || compare(k, keyOfvalue(j.node->val))) ? end() : j;
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RB_TREE::const_iterator RB_TREE::find(const Key& k) const
+{
+	const_iterator j  = _lower_bound(this->head.parent, &this->head, k);
+	return (j == end() || compare(k, keyOfvalue(j.node->val))) ? end() : j;
+}
+
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RB_TREE::iterator RB_TREE::lower_bound(const key_type& k)
+{
+	return _lower_bound(this->head.parent, &head, k);
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RB_TREE::const_iterator RB_TREE::lower_bound(const key_type& k) const
+{
+	return _lower_bound(this->head.parent, &head, k);
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RB_TREE::iterator RB_TREE::upper_bound(const key_type& k)
+{
+	return _upper_bound(this->head.parent, &head, k);
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RB_TREE::const_iterator RB_TREE::upper_bound(const key_type& k) const
+{
+	return _upper_bound(this->head.parent, &head, k);
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+void RB_TREE::clear()
+{
+	_erase(this->head.parent);
+	this->head.left = &this->head;
+	this->head.parent = 0;
+	this->head.right = &head;
+	this->count_node = 0;
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RB_TREE::size_type RB_TREE::count(const key_type& k) const
+{
+	ft::pair<const_iterator, const_iterator> p = equal_range(k);
+	const size_type n = std::distance(p.first, p.second);
+	return n;
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+ft::pair<typename RB_TREE::iterator, typename RB_TREE::iterator> RB_TREE::equal_range(const key_type& k)
+{
+	link_type x = this->head.parent;
+	link_type y = &this->head;
+	while (x != 0)
+	{
+		if (compare(keyOfvalue(x->val), k))
+			x = x->right;
+		else if (compare(k, keyOfvalue(x->val)))
+			y = x, x = x->left;
+		else
+		{
+			link_type xu(x), yu(y);
+			y = x, x = x->left;
+			xu = xu->right;
+			return ft::pair<iterator, iterator>(_lower_bound(x, y, k), _upper_bound(xu, yu, k));
+		}
+	}
+	return ft::pair<iterator, iterator>(iterator(y), iterator(y));
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+ft::pair<typename RB_TREE::const_iterator, typename RB_TREE::const_iterator> RB_TREE::equal_range(const key_type& k) const
+{
+	const_link_type x = this->head.parent;
+	const_link_type y = &this->head;
+	while (x != 0)
+	{
+		if (compare(keyOfvalue(x->val), k))
+			x = x->right;
+		else if (compare(k, keyOfvalue(x->val)))
+			y = x, x = x->left;
+		else
+		{
+			const_link_type xu(x), yu(y);
+			y = x, x = x->left;
+			xu = xu->right;
+			return ft::pair<const_iterator, const_iterator>(_lower_bound(x, y, k), _upper_bound(xu, yu, k));
+		}
+	}
+	return ft::pair<const_iterator, const_iterator>(const_iterator(y), const_iterator(y));
+}
+
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+void RB_TREE::swap(RedBlackTree& t)
+{
+	if (this->head.parent == 0)
+	{
+		if (t.head.parent != 0)
+		{
+			this->head.parent = t.head.parent;
+			this->head.left = t.head.left;
+			this->head.right = t.head.right;
+			this->head.parent->parent = &head;
+
+			t.head.parent = 0;
+			t.head.left = &t.head;
+			t.head.right = &t.head;
+		}
+	}
+	else if (t.head.parent == 0)
+	{
+		t.head.parent = this->head.parent;
+		t.head.left = this->head.left;
+		t.head.right = this->head.right;
+		t.head.parent.parent = &t.head;
+
+		this->head.parent = 0;
+		this->head.left = &this->head;
+		this->head.right = &this->head;
+	}
+	else
+	{
+		std::swap(this->head.parent, t.head.parent);
+		std::swap(this->head.left, t.head.left);
+		std::swap(this->head.right, t.head.right);
+
+		this->head.parent.parent = &this->head;
+		t.head.parent.parent = &t.head;
+	}
+	std::swap(this->count_node, t.count_node);
+	std::swap(this->compare, t.compare);
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+Compare RB_TREE::key_comp() const
+{
+	return compare;
+}
+
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RB_TREE::allocator_type RB_TREE::get_allocator() const
+{
+	return allocator_node;
+}
+
+
+
+
+
+
+
+
 //OVERLOADS
 template<typename T>
 bool operator==(const RedBlackTreeIterator<T>& x, const RedBlackTreeConstIterator<T>& y)
@@ -501,11 +735,16 @@ RB_TREE& RB_TREE::operator = (const RedBlackTree& x)
 			this->head.parent = _copy(x.head.parent, &head);
 			this->head.left = RedBlackTreeNode<Val>::minimum(head.parent);
 			this->head.right = RedBlackTreeNode<Val>::maximum(head.parent);
-			this->count = x.count;
+			this->count_node = x.count_node;
 		}
 	}
 	return *this;
 }
+
+
+
+
+
 
 
 //VISUALIZATOR
