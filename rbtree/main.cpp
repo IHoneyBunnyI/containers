@@ -46,16 +46,26 @@ int main()
 
 	ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> > tree;
 	ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<char> >::iterator it = tree.begin();
-	tree.insert(it, ft::pair<int, int>(0, 333));
-	tree.insert(it, ft::pair<int, int>(18, 401));
-	tree.insert(it, ft::pair<int, int>(9, 30));
-	tree.insert(it, ft::pair<int, int>(10, 55));
-	tree.insert(it, ft::pair<int, int>(5, 30));
-	tree.insert(it, ft::pair<int, int>(14, 45456));
-	tree.insert(it, ft::pair<int, int>(7, 3));
-	tree.insert(it, ft::pair<int, int>(30, 0));
-	tree.insert(it, ft::pair<int, int>(15, 99));
-	tree.insert(it, ft::pair<int, int>(28, 5000));
+	tree.insert(ft::pair<int, int>(0, 333));
+	tree.insert(ft::pair<int, int>(18, 401));
+	tree.insert(ft::pair<int, int>(9, 30));
+	tree.insert(ft::pair<int, int>(10, 55));
+	tree.insert(ft::pair<int, int>(5, 30));
+	tree.insert(ft::pair<int, int>(14, 45456));
+	tree.insert(ft::pair<int, int>(7, 3));
+	tree.insert(ft::pair<int, int>(30, 0));
+	tree.insert(ft::pair<int, int>(15, 99));
+	tree.insert(ft::pair<int, int>(28, 5000));
+
+	tree.erase(18);
+	tree.erase(7);
+	tree.erase(9);
+	tree.insert(ft::pair<int, int>(100, 99));
+	tree.insert(ft::pair<int, int>(1, 5000));
+	tree.insert(ft::pair<int, int>(9, 5000));
+	tree.erase(14);
+	tree.erase(14);
+	tree.insert(ft::pair<int, int>(14, 5000));
 
 	tree.printTree();
 	std::cout << "tree contains: " << std::endl;
@@ -80,6 +90,6 @@ int main()
 	ft::vector<ft::pair<int, int> >::iterator it_vector_end = vector.end();
 	tree_vector.insert(it_vector, it_vector_end);
 
-	tree_vector.printTree();
+	//tree_vector.printTree();
 	//while (1);
 }

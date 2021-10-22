@@ -2,7 +2,7 @@
 
 if [ $# = "0" ]
 then
-	clang++ -Wall -Wextra -Werror -I../utils -Iiterators -I../vector/ -I../vector/iterators/ main.cpp -o redBlackTree
+	clang++ -Wall -Wextra -Werror -g -I../utils -Iiterators -I../vector/ -I../vector/iterators/ main.cpp -o redBlackTree
 fi
 if [ '-g' = "$1" ]
 then
