@@ -41,77 +41,75 @@ class vector
 		size_type length;
 		Allocator allocator;
 
-	public: //Construcors
+	public:
+		//Construcors
 		vector();
 		explicit vector(const Allocator& alloc);
 		explicit vector(size_type count, const T& value = T(), const Allocator& alloc = Allocator());
 		template<class InputIt>
 		vector(InputIt first, typename ft::enable_if<!ft::is_integral_const<InputIt>::value, InputIt>::type last, const Allocator& alloc = Allocator());
 		vector(const vector& other);
-	public:
+		//Destructor
 		~vector();
+		//Operator =
+		vector& operator = (const vector& x);
 
-	public: //member functions
-		template <class InputIterator>
-		void assign (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last);//ok
-		void assign (size_type n, const value_type& val);//ok
-
-		reference at (size_type n);//ok
-		const_reference at (size_type n) const;//ok
-
-		reference back();//ok
-		const_reference back() const;//ok
-
+		//Iterators:
 		const_iterator begin() const;
 		iterator begin();
+		const_iterator end() const;
+		iterator end();
+		reverse_iterator rbegin();
+		const_reverse_iterator rbegin() const;
+		reverse_iterator rend();
+		const_reverse_iterator rend() const;
 
-		size_type capacity() const;//ok
+		//Capacity:
+		size_type size() const;
+		size_type max_size() const;
+		void resize (size_type n, value_type val = value_type());
+		size_type capacity() const;
+		bool empty() const;
+		void reserve(size_type new_cap);
 
-		void clear();//ok
-
-		bool empty() const;//ok
-
-		const_iterator end() const; //ok
-		iterator end();//
-
-		iterator erase (iterator position); // vrode ok
-		iterator erase (iterator first, iterator last); // vrode ok
-
-		reference front(); //ok
-		const_reference front() const; //ok
-
-		allocator_type get_allocator() const; //ok
-
-		iterator insert (iterator position, const value_type& val); //ok
-		void insert (iterator position, size_type n, const value_type& val); //ok
-
-		template <class InputIterator>
-		void insert (iterator position, typename ft::enable_if<!ft::is_integral_const<InputIterator>::value, InputIterator>::type first, InputIterator last); //ok
-
-		size_type max_size() const;//ok
-
-		vector& operator = (const vector& x); //
-
+		//Element access:
 		reference operator [](size_type pos);
 		const_reference operator [](size_type pos) const;
+		reference at (size_type n);
+		const_reference at (size_type n) const;
+		reference front();
+		const_reference front() const;
+		reference back();
+		const_reference back() const;
 
-		void pop_back(); //ok
-
-		void push_back(const T& value);//ok
-
-		reverse_iterator rbegin(); //ok
-		const_reverse_iterator rbegin() const; //ok
-
-		reverse_iterator rend(); //ok
-		const_reverse_iterator rend() const;//ok
-
-		void reserve(size_type new_cap); //ok
-
-		void resize (size_type n, value_type val = value_type()); //ok
-
-		size_type size() const; //ok
-
+		//Modifiers:
+		template <class InputIterator>
+		void assign (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last);
+		void assign (size_type n, const value_type& val);
+		void push_back(const T& value);
+		void pop_back();
+		iterator insert (iterator position, const value_type& val);
+		void insert (iterator position, size_type n, const value_type& val);
+		template <class InputIterator>
+		void insert (iterator position, typename ft::enable_if<!ft::is_integral_const<InputIterator>::value, InputIterator>::type first, InputIterator last);
+		iterator erase (iterator position);
+		iterator erase (iterator first, iterator last);
 		void swap (vector& x);
+		void clear();
+
+		//Allocator:
+		allocator_type get_allocator() const;
+
+
+
+
+
+
+
+
+
+
+
 };
 
 //=========================Constructors=================================
