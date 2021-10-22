@@ -10,23 +10,6 @@ class B
 		char *str;
 		B()
 		{
-			/*str = new char("heelo");
-			print(LOL);
-			<HEAD>
-				<Title>
-			<\HEAD>
-			fmt.Println("SSSSSSS");
-			public static final void class main
-			{
-				public static void System.out.Print("AAAAAAAAAAA");
-			}
-			printf("AAAA&");
-			mov rax 0x234
-			__syscall 0x8234
-			echo "sdfgh" | grep s | cat -e | head 1>/dev/null
-			+++++++++++++++++++++++++++++++++++++++++----------->-<[+++++]+++++++++++++++++
-
-			ret */
 			a = "Hello";
 			b = ", World!";
 		}

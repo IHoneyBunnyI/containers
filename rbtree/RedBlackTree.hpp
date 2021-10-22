@@ -114,10 +114,6 @@ class RedBlackTree
 		reverse_iterator rend();
 		const_reverse_iterator rend() const;
 
-
-
-
-
 		///VISUALIZATOR
 	public:
 		void printTree();
@@ -381,12 +377,6 @@ void RB_TREE::_erase_aux(const_iterator position)
 	_destroy_node(y);
 	--this->count_node;
 }
-
-
-
-
-
-
 
 //Constructors
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
@@ -767,11 +757,6 @@ void RB_TREE::erase (const_iterator first, const_iterator last)
 			erase(first++);
 }
 
-
-
-
-
-
 //OVERLOADS
 template<typename T>
 bool operator==(const RedBlackTreeIterator<T>& x, const RedBlackTreeConstIterator<T>& y)
@@ -803,12 +788,6 @@ RB_TREE& RB_TREE::operator = (const RedBlackTree& x)
 	return *this;
 }
 
-
-
-
-
-
-
 //VISUALIZATOR
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 void RB_TREE::postorder(link_type p, int indent)
@@ -835,8 +814,6 @@ void RB_TREE::printTree()
 {
 	postorder(this->head.parent, 1);
 }
-
-
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 typename RB_TREE::link_type RB_TREE::_rebalance_for_erase(link_type z)
@@ -991,8 +968,6 @@ typename RB_TREE::link_type RB_TREE::_rebalance_for_erase(link_type z)
 	}
 	return y;
 }
-
-
 
 }
 #endif
