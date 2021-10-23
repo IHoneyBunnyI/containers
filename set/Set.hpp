@@ -3,11 +3,12 @@
 #include <iostream>
 #include "RedBlackTree.hpp"
 #include "get_value.hpp"
+#define SET set<T, Compare, Allocator>
 
 namespace ft
 {
 
-template <class T, class Compare = std::less<T>, class Alloc = std::allocator<T> >
+template <class T, class Compare = std::less<T>, class Allocator = std::allocator<T> >
 class set
 {
 public:
@@ -15,10 +16,10 @@ public:
 	typedef T value_type;
 	typedef Compare key_compare;
 	typedef Compare value_compare;
-	typedef Alloc allocator_type;
+	typedef Allocator allocator_type;
  private:
 	typedef typename ft::RedBlackTree<key_type, value_type, get_value<value_type>, key_compare, allocator_type> tree_type;
-	tree_type tree;
+	tree_type rb_tree;
 public:
 	typedef typename allocator_type::reference reference;
 	typedef typename allocator_type::const_reference const_reference;
@@ -82,22 +83,241 @@ public:
 	iterator lower_bound(const value_type& val) const;
 	iterator upper_bound(const value_type& val) const;
 	pair<iterator,iterator> equal_range(const value_type& val) const;
+
+	//Allocator:
 	allocator_type get_allocator() const;
+
+	//non-member overloads:
+	template <class _T, class _Compare, class _Alloc>
+	friend bool operator == (const set<_T, _Compare, _Alloc>& lhs, const set<_T, _Compare, _Alloc>& rhs);
+	template <class _T, class _Compare, class _Alloc>
+	friend bool operator < (const set<_T, _Compare, _Alloc>& lhs, const set<_T, _Compare, _Alloc>& rhs);
 
 };
 
-template <class Key, class T, class Compare, class Alloc>
-bool operator== (const set<T,Compare,Alloc>& lhs, const set<T,Compare,Alloc>& rhs);
-template <class Key, class T, class Compare, class Alloc>
-bool operator!= (const set<T,Compare,Alloc>& lhs, const set<T,Compare,Alloc>& rhs);
-template <class Key, class T, class Compare, class Alloc>
-bool operator<  (const set<T,Compare,Alloc>& lhs, const set<T,Compare,Alloc>& rhs);
-template <class Key, class T, class Compare, class Alloc>
-bool operator<= (const set<T,Compare,Alloc>& lhs, const set<T,Compare,Alloc>& rhs);
-template <class Key, class T, class Compare, class Alloc>
-bool operator>  (const set<T,Compare,Alloc>& lhs, const set<T,Compare,Alloc>& rhs);
-template <class Key, class T, class Compare, class Alloc>
-bool operator>= (const set<T,Compare,Alloc>& lhs, const set<T,Compare,Alloc>& rhs);
+//Constructors
+template <class T, class Compare, class Allocator>
+SET::set(const key_compare& comp, const allocator_type& alloc): rb_tree(comp, alloc) {}
+
+template <class T, class Compare, class Allocator>
+template <class InputIterator>
+SET::set(InputIterator first, InputIterator last, const key_compare& comp, const allocator_type& alloc) : rb_tree(comp, alloc)
+{
+	this->rb_tree.insert(first, last);
+}
+
+template <class T, class Compare, class Allocator>
+SET::set(const set& x) : rb_tree(x.rb_tree) {}
+
+//Destructor
+template <class T, class Compare, class Allocator>
+SET::~set()
+{
+	~rb_tree;
+}
+
+//OPERATOR =
+template <class T, class Compare, class Allocator>
+SET& SET::operator= (const set& x)
+{
+	this->rb_tree = x.rb_tree;
+	return (*this);
+}
+
+//Iterators
+template <class T, class Compare, class Allocator>
+typename SET::iterator SET::begin()
+{
+	return this->rb_tree.begin();
+}
+template <class T, class Compare, class Allocator>
+typename SET::const_iterator SET::begin() const
+{
+	return this->rb_tree.begin();
+}
+
+template <class T, class Compare, class Allocator>
+typename SET::iterator SET::end()
+{
+	return this->rb_tree.end();
+}
+template <class T, class Compare, class Allocator>
+typename SET::const_iterator SET::end() const
+{
+	return this->rb_tree.end();
+}
+
+template <class T, class Compare, class Allocator>
+typename SET::reverse_iterator SET::rbegin()
+{
+	return this->rb_tree.rbegin();
+}
+template <class T, class Compare, class Allocator>
+typename SET::const_reverse_iterator SET::rbegin() const
+{
+	return this->rb_tree.rbegin();
+}
+
+template <class T, class Compare, class Allocator>
+typename SET::reverse_iterator SET::rend()
+{
+	return this->rb_tree.rend();
+}
+template <class T, class Compare, class Allocator>
+typename SET::const_reverse_iterator SET::rend() const
+{
+	return this->rb_tree.rend();
+}
+
+//CAPACITY
+template <class T, class Compare, class Allocator>
+bool SET::empty() const
+{
+	return this->rb_tree.empty();
+}
+
+template <class T, class Compare, class Allocator>
+typename SET::size_type SET::size() const
+{
+	return this->rb_tree.size();
+}
+template <class T, class Compare, class Allocator>
+typename SET::size_type SET::max_size() const
+{
+	return this->rb_tree.max_size();
+}
+
+//Modifiers:
+template <class T, class Compare, class Allocator>
+typename ft::pair<typename SET::iterator,bool> SET::insert(const value_type& val)
+{
+	return this->rb_tree.insert(val);
+}
+
+template <class T, class Compare, class Allocator>
+typename SET::iterator SET::insert(iterator position, const value_type& val)
+{
+	return this->rb_tree.insert(position, val);
+}
+
+template <class T, class Compare, class Allocator>
+template <class InputIterator> 
+void SET::insert(InputIterator first, InputIterator last)
+{
+	this->rb_tree.insert(first, last);
+}
+
+template <class T, class Compare, class Allocator>
+void SET::erase(iterator position)
+{
+	this->rb_tree.erase(position);
+}
+
+template <class T, class Compare, class Allocator>
+typename SET::size_type SET::erase(const value_type& k)
+{
+	return this->rb_tree.erase(k);
+}
+
+template <class T, class Compare, class Allocator>
+void SET::erase(iterator first, iterator last)
+{
+	return this->rb_tree.erase(first, last);
+}
+
+template <class T, class Compare, class Allocator>
+void SET::swap(set& x)
+{
+	this->rb_tree.swap(x);
+}
+
+template <class T, class Compare, class Allocator>
+void SET::clear()
+{
+	this->rb_tree.clear();
+}
+
+//Observers:
+template <class T, class Compare, class Allocator>
+typename SET::key_compare SET::key_comp() const
+{
+	return this->rb_tree.key_comp();
+}
+
+template <class T, class Compare, class Allocator>
+typename SET::value_compare SET::value_comp() const
+{
+	return value_compare(this->rb_tree.key_comp());
+}
+
+
+//Operations:
+template <class T, class Compare, class Allocator>
+typename SET::iterator SET::find(const value_type& val) const
+{
+	return this->rb_tree.find(val);
+}
+template <class T, class Compare, class Allocator>
+typename SET::size_type SET::count(const value_type& val) const
+{
+	return this->rb_tree.count(val);
+}
+template <class T, class Compare, class Allocator>
+typename SET::iterator SET::lower_bound(const value_type& val) const
+{
+	return this->rb_tree.lower_bound(val);
+}
+template <class T, class Compare, class Allocator>
+typename SET::iterator SET::upper_bound(const value_type& val) const
+{
+	return this->rb_tree.upper_bound(val);
+}
+template <class T, class Compare, class Allocator>
+typename ft::pair<typename SET::iterator, typename SET::iterator> SET::equal_range(const value_type& val) const
+{
+	return this->rb_tree.equal_range(val);
+}
+template <class T, class Compare, class Allocator>
+typename SET::allocator_type SET::get_allocator() const
+{
+	return this->rb_tree.get_allocator();
+}
+
+template <class T, class Compare, class Allocator>
+bool operator== (const set<T,Compare,Allocator>& lhs, const set<T,Compare,Allocator>& rhs)
+{
+	return lhs.rb_tree == rhs.rb_tree;
+}
+template <class T, class Compare, class Allocator>
+bool operator<  (const set<T,Compare,Allocator>& lhs, const set<T,Compare,Allocator>& rhs)
+{
+	return lhs.rb_tree < rhs.rb_tree;
+}
+template <class T, class Compare, class Allocator>
+bool operator!= (const set<T,Compare,Allocator>& lhs, const set<T,Compare,Allocator>& rhs)
+{
+	return !(lhs == rhs);
+}
+template <class T, class Compare, class Allocator>
+bool operator<= (const set<T,Compare,Allocator>& lhs, const set<T,Compare,Allocator>& rhs)
+{
+	return !(rhs < lhs);
+}
+template <class T, class Compare, class Allocator>
+bool operator>  (const set<T,Compare,Allocator>& lhs, const set<T,Compare,Allocator>& rhs)
+{
+	return (rhs < lhs);
+}
+template <class T, class Compare, class Allocator>
+bool operator>= (const set<T,Compare,Allocator>& lhs, const set<T,Compare,Allocator>& rhs)
+{
+	return !(lhs < rhs);
+}
+template <class T, class Compare, class Allocator>
+void swap (set<T,Compare,Allocator>& x, set<T,Compare,Allocator>& y)
+{
+	x.swap(y);
+}
 
 }
 #endif

@@ -129,8 +129,8 @@ public:
 
 	//Allocator:
 	allocator_type get_allocator() const;
+
 	//non-member overloads:
-	
 	template <class _Key, class _T, class _Compare, class _Alloc>
 	friend bool operator == (const map<_Key, _T, _Compare, _Alloc>& lhs, const map<_Key, _T, _Compare, _Alloc>& rhs);
 	template <class _Key, class _T, class _Compare, class _Alloc>
@@ -157,7 +157,7 @@ MAP::~map()
 	~rb_tree;
 }
 
-//OPERATOR OVERFLOW
+//OPERATOR =
 template <class Key, class T, class Compare, class Allocator>
 MAP& MAP::operator= (const map& x)
 {
@@ -228,6 +228,7 @@ typename MAP::size_type MAP::max_size() const
 	return this->rb_tree.max_size();
 }
 
+//Element access:
 template <class Key, class T, class Compare, class Allocator>
 typename MAP::mapped_type& MAP::operator[] (const key_type& k)
 {
@@ -237,6 +238,7 @@ typename MAP::mapped_type& MAP::operator[] (const key_type& k)
 	return x->second;
 }
 
+//Modifiers:
 template <class Key, class T, class Compare, class Allocator>
 typename ft::pair<typename MAP::iterator,bool> MAP::insert(const value_type& val)
 {
@@ -342,13 +344,13 @@ typename MAP::const_iterator MAP::upper_bound(const key_type& k) const
 }
 
 template <class Key, class T, class Compare, class Allocator>
-pair<typename MAP::const_iterator,typename MAP::const_iterator> MAP::equal_range(const key_type& k) const
+ft::pair<typename MAP::const_iterator,typename MAP::const_iterator> MAP::equal_range(const key_type& k) const
 {
 	return this->rb_tree.equal_range();
 }
 
 template <class Key, class T, class Compare, class Allocator>
-pair<typename MAP::iterator,typename MAP::iterator> MAP::equal_range(const key_type& k)
+ft::pair<typename MAP::iterator,typename MAP::iterator> MAP::equal_range(const key_type& k)
 {
 	return this->rb_tree.equal_range();
 }
