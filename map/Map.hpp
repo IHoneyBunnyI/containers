@@ -70,7 +70,7 @@ public:
 
 
 	//OPERATOR OVERFLOW
-	map& operator= (const map& x); //////////////NO
+	map& operator= (const map& x);
 
 	//Iterators
 	iterator begin();
@@ -225,7 +225,10 @@ typename MAP::size_type MAP::max_size() const
 template <class Key, class T, class Compare, class Allocator>
 typename MAP::mapped_type& MAP::operator[] (const key_type& k)
 {
-
+	iterator x = find(k);
+	if (x == end() || key_compare()(k, x->find))
+		x = insert(x, value_type(k, mapped_type()));
+	return x->second;
 }
 
 template <class Key, class T, class Compare, class Allocator>
