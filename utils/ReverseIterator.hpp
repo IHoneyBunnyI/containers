@@ -78,7 +78,8 @@ typename ft::reverse_iterator<Iterator>::reference ft::reverse_iterator<Iterator
 template <class Iterator>
 typename ft::reverse_iterator<Iterator>::pointer  ft::reverse_iterator<Iterator>::operator->() const
 {
-	return &(*(--it));
+	//return &(*(--it)); //////////////////AAAAAAAAAAAAAAAAAA
+	return &(operator*());
 }
 
 template <class Iterator>

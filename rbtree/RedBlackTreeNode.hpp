@@ -99,7 +99,7 @@ RedBlackTreeNode<T>* redBlackTree_decrement_l(RedBlackTreeNode<T>* x)
 		x = x->right;
 	else if (x->left)
 	{
-		RedBlackTreeNode<T>* y = x->parent;
+		RedBlackTreeNode<T>* y = x->left;
 		while (y->right)
 			y = y->right;
 		x = y;

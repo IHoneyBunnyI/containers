@@ -543,7 +543,10 @@ RB_TREE::RedBlackTree()
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-RB_TREE::RedBlackTree(const Compare& comp, const allocator_type& a): compare(comp), allocator_value(a) {}
+RB_TREE::RedBlackTree(const Compare& comp, const allocator_type& a): allocator_value(a), compare(comp)
+{
+	initialize();
+}
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 RB_TREE::RedBlackTree(const RedBlackTree& x)

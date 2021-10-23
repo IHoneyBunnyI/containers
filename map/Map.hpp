@@ -154,7 +154,7 @@ MAP::map(InputIterator first, InputIterator last, const key_compare& comp, const
 template <class Key, class T, class Compare, class Allocator>
 MAP::~map()
 {
-	~rb_tree;
+	//~rb_tree;
 }
 
 //OPERATOR =
@@ -233,7 +233,7 @@ template <class Key, class T, class Compare, class Allocator>
 typename MAP::mapped_type& MAP::operator[] (const key_type& k)
 {
 	iterator x = find(k);
-	if (x == end() || key_compare()(k, x->find))
+	if (x == end() || key_compare()(k, x->first))
 		x = insert(x, value_type(k, mapped_type()));
 	return x->second;
 }
@@ -346,13 +346,13 @@ typename MAP::const_iterator MAP::upper_bound(const key_type& k) const
 template <class Key, class T, class Compare, class Allocator>
 ft::pair<typename MAP::const_iterator,typename MAP::const_iterator> MAP::equal_range(const key_type& k) const
 {
-	return this->rb_tree.equal_range();
+	return this->rb_tree.equal_range(k);
 }
 
 template <class Key, class T, class Compare, class Allocator>
 ft::pair<typename MAP::iterator,typename MAP::iterator> MAP::equal_range(const key_type& k)
 {
-	return this->rb_tree.equal_range();
+	return this->rb_tree.equal_range(k);
 }
 
 //Allocator:
