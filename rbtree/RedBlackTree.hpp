@@ -840,7 +840,7 @@ void RB_TREE::swap(RedBlackTree& t)
 		t.head.parent = this->head.parent;
 		t.head.left = this->head.left;
 		t.head.right = this->head.right;
-		t.head.parent.parent = &t.head;
+		t.head.parent->parent = &t.head;
 
 		this->head.parent = 0;
 		this->head.left = &this->head;
@@ -852,8 +852,8 @@ void RB_TREE::swap(RedBlackTree& t)
 		std::swap(this->head.left, t.head.left);
 		std::swap(this->head.right, t.head.right);
 
-		this->head.parent.parent = &this->head;
-		t.head.parent.parent = &t.head;
+		this->head.parent->parent = &this->head;
+		t.head.parent->parent = &t.head;
 	}
 	std::swap(this->count_node, t.count_node);
 	std::swap(this->compare, t.compare);
@@ -965,6 +965,8 @@ void RB_TREE::postorder(link_type p, int indent)
 	}
 }
 
+
+//non-member overloads:
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
 void RB_TREE::printTree()
 {

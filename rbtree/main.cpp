@@ -89,7 +89,24 @@ int main()
 	ft::vector<ft::pair<int, int> >::iterator it_vector = vector.begin();
 	ft::vector<ft::pair<int, int> >::iterator it_vector_end = vector.end();
 	tree_vector.insert(it_vector, it_vector_end);
+	ft::RedBlackTree<int, ft::pair<int, int>, pair_first<ft::pair<int, int> >, std::less<int> > tree_vector_copy(tree_vector);
 
 	//tree_vector.printTree();
+	std::cout << (tree_vector == tree_vector_copy) << std::endl;
+	std::cout << (tree == tree2) << std::endl;
+	tree2.erase(tree2.begin());
+	std::cout << (tree == tree2) << std::endl;
+	std::cout << (tree < tree2) << std::endl;
+	std::cout << (tree > tree2) << std::endl;
+	std::cout << (tree <= tree2) << std::endl;
+	std::cout << (tree >= tree2) << std::endl;
+	std::cout << (tree != tree2) << std::endl;
+	std::cout << "===========================" << std::endl;
+	tree.printTree();
+	ft::swap(tree, tree2);
+	std::cout << "===========================" << std::endl;
+	tree.printTree();
+	std::cout << "===========================" << std::endl;
+	
 	//while (1);
 }
