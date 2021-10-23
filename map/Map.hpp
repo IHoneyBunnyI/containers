@@ -69,7 +69,7 @@ public:
 	~map();
 
 
-	//OPERATOR OVERFLOW
+	//OPERATOR =
 	map& operator= (const map& x);
 
 	//Iterators
@@ -353,6 +353,19 @@ typename MAP::allocator_type MAP::get_allocator() const
 {
 	return this->rb_tree.get_allocator();
 }
+
+template <class Key, class T, class Compare, class Alloc>
+bool operator== (const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs);
+template <class Key, class T, class Compare, class Alloc>
+bool operator!= (const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs);
+template <class Key, class T, class Compare, class Alloc>
+bool operator<  (const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs);
+template <class Key, class T, class Compare, class Alloc>
+bool operator<= (const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs);
+template <class Key, class T, class Compare, class Alloc>
+bool operator>  (const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs);
+template <class Key, class T, class Compare, class Alloc>
+bool operator>= (const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs);
 
 }
 #endif

@@ -7,6 +7,8 @@
 #include "RedBlackTreeIterator.hpp"
 #include "ReverseIterator.hpp"
 #include "pair.hpp"
+#include "equal.hpp"
+#include "lexicographical_compare.hpp"
 #include <iomanip>
 
 #define RB_TREE RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>
@@ -376,6 +378,160 @@ void RB_TREE::_erase_aux(const_iterator position)
 	link_type y = _rebalance_for_erase(const_cast<link_type>(position.node));
 	_destroy_node(y);
 	--this->count_node;
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+typename RB_TREE::link_type RB_TREE::_rebalance_for_erase(link_type z)
+{
+	link_type& root = this->head.parent;
+	link_type& leftmost = this->head.left;
+	link_type& rightmost = this->head.right;
+	link_type y = z;
+	link_type x = 0;
+	link_type x_parent = 0;
+
+	if (y->left == 0)
+		x = y->right;
+	else
+	{
+		if (y->right == 0)
+			x = y->left;
+		else
+		{
+			y = y->right;
+			while (y->left != 0)
+				y = y->left;
+			x = y->right;
+		}
+	}
+	if (y != z)
+	{
+		z->left->parent = y;
+		y->left = z->left;
+		if (y != z->right)
+		{
+			x_parent = y->parent;
+			if (x) x->parent = y->parent;
+			y->parent->left = x;
+			y->right = z->right;
+			z->right->parent = y;
+		}
+		else
+			x_parent = y;
+		if (root == z)
+			root = y;
+		else if (z->parent->left == z)
+			z->parent->left = y;
+		else
+			z->parent->right = y;
+		y->parent = z->parent;
+		std::swap(y->color, z->color);
+		y = z;
+	}
+	else
+	{
+		x_parent = y->parent;
+		if (x)
+			x->parent = y->parent;
+		if (root == z)
+			root = x;
+		else
+		{
+			if (z->parent->left == z)
+				z->parent->left = x;
+			else
+				z->parent->right = x;
+		}
+		if (leftmost == z)
+		{
+			if (z->right == 0)
+				leftmost = z->parent;
+			else
+				leftmost = RedBlackTreeNode<value_type>::minimum(x);
+		}
+		if (rightmost == z)
+		{
+			if (z->left == 0)
+				rightmost = z->parent;
+			else
+				rightmost = RedBlackTreeNode<value_type>::maximum(x);
+		}
+	}
+	if (y->color != red)
+	{
+		while (x != root && (x == 0 || x->color == black))
+		{
+			if (x == x_parent->left)
+			{
+				link_type w = x_parent->right;
+				if (w->color == red)
+				{
+					w->color = black;
+					x_parent->color = red;
+					_rotate_left(x_parent);
+					w = x_parent->right;
+				}
+				if ((w->left == 0 || w->left->color == black) && (w->right == 0 || w->right->color == black))
+				{
+					w->color = red;
+					x = x_parent;
+					x_parent = x_parent->parent;
+				}
+				else
+				{
+					if (w->right == 0 || w->right->color == black)
+					{
+						w->left->color = black;
+						w->color = red;
+						_rotate_right(w);
+						w = x_parent->right;
+					}
+					w->color = x_parent->color;
+					x_parent->color = black;
+					if (w->right)
+						w->right->color = black;
+					_rotate_left(x_parent);
+					break;
+				}
+			}
+			else
+			{
+				link_type w = x_parent->left;
+				if (w->color == red)
+				{
+					w->color = black;
+					x_parent->color = red;
+					_rotate_right(x_parent);
+					w = x_parent->left;
+				}
+				if ((w->right == 0 || w->right->color == black) && (w->left == 0 || w->left->color == black))
+				{
+					w->color = red;
+					x = x_parent;
+					x_parent = x_parent->parent;
+				}
+				else
+				{
+					if (w->left == 0 || w->left->color == black)
+					{
+						w->right->color = black;
+						w->color = red;
+						_rotate_left(w);
+						w = x_parent->left;
+					}
+					w->color = x_parent->color;
+					x_parent->color = black;
+					if (w->left)
+						w->left->color = black;
+					_rotate_right(x_parent);
+					break;
+				}
+			}
+		}
+		if (x)
+			x->color = black;
+	}
+	return y;
 }
 
 //Constructors
@@ -816,158 +972,47 @@ void RB_TREE::printTree()
 }
 
 template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
-typename RB_TREE::link_type RB_TREE::_rebalance_for_erase(link_type z)
+bool operator == (const RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>& x, const RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>& y)
 {
-	link_type& root = this->head.parent;
-	link_type& leftmost = this->head.left;
-	link_type& rightmost = this->head.right;
-	link_type y = z;
-	link_type x = 0;
-	link_type x_parent = 0;
-
-	if (y->left == 0)
-		x = y->right;
-	else
-	{
-		if (y->right == 0)
-			x = y->left;
-		else
-		{
-			y = y->right;
-			while (y->left != 0)
-				y = y->left;
-			x = y->right;
-		}
-	}
-	if (y != z)
-	{
-		z->left->parent = y;
-		y->left = z->left;
-		if (y != z->right)
-		{
-			x_parent = y->parent;
-			if (x) x->parent = y->parent;
-			y->parent->left = x;
-			y->right = z->right;
-			z->right->parent = y;
-		}
-		else
-			x_parent = y;
-		if (root == z)
-			root = y;
-		else if (z->parent->left == z)
-			z->parent->left = y;
-		else
-			z->parent->right = y;
-		y->parent = z->parent;
-		std::swap(y->color, z->color);
-		y = z;
-	}
-	else
-	{
-		x_parent = y->parent;
-		if (x)
-			x->parent = y->parent;
-		if (root == z)
-			root = x;
-		else
-		{
-			if (z->parent->left == z)
-				z->parent->left = x;
-			else
-				z->parent->right = x;
-		}
-		if (leftmost == z)
-		{
-			if (z->right == 0)
-				leftmost = z->parent;
-			else
-				leftmost = RedBlackTreeNode<value_type>::minimum(x);
-		}
-		if (rightmost == z)
-		{
-			if (z->left == 0)
-				rightmost = z->parent;
-			else
-				rightmost = RedBlackTreeNode<value_type>::maximum(x);
-		}
-	}
-	if (y->color != red)
-	{
-		while (x != root && (x == 0 || x->color == black))
-		{
-			if (x == x_parent->left)
-			{
-				link_type w = x_parent->right;
-				if (w->color == red)
-				{
-					w->color = black;
-					x_parent->color = red;
-					_rotate_left(x_parent);
-					w = x_parent->right;
-				}
-				if ((w->left == 0 || w->left->color == black) && (w->right == 0 || w->right->color == black))
-				{
-					w->color = red;
-					x = x_parent;
-					x_parent = x_parent->parent;
-				}
-				else
-				{
-					if (w->right == 0 || w->right->color == black)
-					{
-						w->left->color = black;
-						w->color = red;
-						_rotate_right(w);
-						w = x_parent->right;
-					}
-					w->color = x_parent->color;
-					x_parent->color = black;
-					if (w->right)
-						w->right->color = black;
-					_rotate_left(x_parent);
-					break;
-				}
-			}
-			else
-			{
-				link_type w = x_parent->left;
-				if (w->color == red)
-				{
-					w->color = black;
-					x_parent->color = red;
-					_rotate_right(x_parent);
-					w = x_parent->left;
-				}
-				if ((w->right == 0 || w->right->color == black) && (w->left == 0 || w->left->color == black))
-				{
-					w->color = red;
-					x = x_parent;
-					x_parent = x_parent->parent;
-				}
-				else
-				{
-					if (w->left == 0 || w->left->color == black)
-					{
-						w->right->color = black;
-						w->color = red;
-						_rotate_left(w);
-						w = x_parent->left;
-					}
-					w->color = x_parent->color;
-					x_parent->color = black;
-					if (w->left)
-						w->left->color = black;
-					_rotate_right(x_parent);
-					break;
-				}
-			}
-		}
-		if (x)
-			x->color = black;
-	}
-	return y;
+	return x.size() == y.size() && ft::equal(x.begin(), x.end(), y.begin());
 }
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+bool operator < (const RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>& x, const RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>& y)
+{
+	return ft::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+bool operator != (const RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>& x, const RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>& y)
+{ 
+	return !(x == y);
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+bool operator > (const RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>& x, const RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>& y)
+{
+	return y < x;
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+bool operator <= (const RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>& x, const RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>& y)
+{
+	return !(y < x);
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+bool operator >= (const RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>& x, const RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>& y)
+{
+	return !(x < y);
+}
+
+template<typename Key, typename Val, typename KeyOfValue, typename Compare, typename Alloc>
+void swap(RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>& x, RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>& y)
+{
+	x.swap(y);
+}
+
 
 }
 #endif
