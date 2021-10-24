@@ -54,16 +54,107 @@ void test_constructors()
 	print_map(two);
 	std::cout << (one == two) << std::endl;
 	std::vector<ft::pair<int, int> > vector;
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 10000; i++)
 		vector.push_back(ft::pair<int, int>(i, i));
 	std::vector<ft::pair<int, int> >::iterator begin = vector.begin();
 	std::vector<ft::pair<int, int> >::iterator end = vector.end();
 	ft::map<int, int> three(begin, end);
 	print_map(three);
+
+	three = one;
+	print_map(three);
+}
+
+void test_iterators()
+{
+	ft::map<int, int> a;
+	a[0] = 20;
+	a[10] = 40;
+	a[1] = 60;
+	a[2] = 80;
+	a[5] = 100;
+	ft::map<int, int>::iterator begin = a.begin();
+	ft::map<int, int>::iterator end = a.end();
+	ft::map<int, int>::const_iterator cbegin = a.begin();
+	ft::map<int, int>::const_iterator cend = a.end();
+	begin++;
+	cbegin++;
+	end--;
+	cend--;
+	++begin;
+	++cbegin;
+	std::cout << begin->first << "->" << begin->second << std::endl;
+	std::cout << cbegin->first << "->" << begin->second << std::endl;
+	std::cout << end->first << "->" << end->second << std::endl;
+	std::cout << cend->first << "->" << cend->second << std::endl;
+	++end;
+	++cend;
+	--begin;
+	--cbegin;
+	--end;
+	--cend;
+	begin--;
+	cbegin--;
+	end--;
+	cend--;
+	std::cout << begin->first << "->" << begin->second << std::endl;
+	std::cout << cbegin->first << "->" << begin->second << std::endl;
+	std::cout << end->first << "->" << end->second << std::endl;
+	std::cout << cend->first << "->" << cend->second << std::endl;
+	std::cout << (begin != cbegin) << std::endl;
+	std::cout << (begin != begin) << std::endl;
+	std::cout << (begin == cbegin) << std::endl;
+	std::cout << (begin == begin) << std::endl;
+}
+
+void test_reverse_iterators()
+{
+	ft::map<int, int> a;
+	a[0] = 20;
+	a[10] = 40;
+	a[1] = 60;
+	a[2] = 80;
+	a[5] = 100;
+	ft::map<int, int>::reverse_iterator begin = a.rbegin();
+	ft::map<int, int>::reverse_iterator end = a.rend();
+	ft::map<int, int>::const_reverse_iterator cbegin = a.rbegin();
+	ft::map<int, int>::const_reverse_iterator cend = a.rend();
+	begin++;
+	cbegin++;
+	end--;
+	cend--;
+	++begin;
+	++cbegin;
+	std::cout << begin->first << "->" << begin->second << std::endl;
+	std::cout << cbegin->first << "->" << cbegin->second << std::endl;
+	std::cout << end->first << "->" << end->second << std::endl;
+	std::cout << cend->first << "->" << cend->second << std::endl;
+	++end;
+	++cend;
+	--begin;
+	--cbegin;
+	--end;
+	--cend;
+	begin--;
+	cbegin--;
+	end--;
+	cend--;
+
+	std::cout << begin->first << "->" << begin->second << std::endl;
+	std::cout << cbegin->first << "->" << cbegin->second << std::endl;
+	std::cout << end->first << "->" << end->second << std::endl;
+	std::cout << cend->first << "->" << cend->second << std::endl;
+
+	std::cout << (begin != cbegin) << std::endl;
+	std::cout << (begin != begin) << std::endl;
+	std::cout << (begin == cbegin) << std::endl;
+	std::cout << (begin == begin) << std::endl;
 }
 
 int main()
 {
-	std::vector<int> a;
-	test_constructors();
+	//test_constructors();
+	test_iterators();
+	test_reverse_iterators();
+	//while (1);
 }
