@@ -4,14 +4,14 @@
 #include <iostream>
 #include <memory>
 #include <stdexcept>
-#include "RandomAccessIterator.hpp"
-#include "ConstRandomAccessIterator.hpp"
-#include "ReverseIterator.hpp"
-#include "enable_if.hpp"
-#include "equal.hpp"
-#include "is_integral.hpp"
-#include "remove_const.hpp"
-#include "lexicographical_compare.hpp"
+#include "iterators/RandomAccessIterator.hpp"
+#include "iterators/ConstRandomAccessIterator.hpp"
+#include "../utils/ReverseIterator.hpp"
+#include "../utils/enable_if.hpp"
+#include "../utils/equal.hpp"
+#include "../utils/is_integral.hpp"
+#include "../utils/remove_const.hpp"
+#include "../utils/lexicographical_compare.hpp"
 
 
 namespace ft
@@ -342,7 +342,7 @@ typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::insert (it
 		allocator.deallocate(this->first, this->length - 1);
 		this->first = tmp;
 		allocator.construct(this->first + pos, val);
-		return position;
+		return (iterator(this->first + pos));
 	}
 	else
 	{
@@ -351,7 +351,7 @@ typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::insert (it
 		size_type i = std::distance(this->begin(), iterator(this->first + pos));
 		allocator.destroy(this->first + i);
 		allocator.construct(this->first + i, val);
-		return position;
+		return (iterator(this->first + pos));
 	}
 }
 
@@ -479,12 +479,12 @@ ft::vector<T, Allocator>& ft::vector<T, Allocator>::operator = (const ft::vector
 		for (size_type i = 0; i < this->length; i++)
 			allocator.destroy(this->first + i);
 		allocator = x.allocator;
-		allocator.deallocate(this->capacityAllocated);
+		allocator.deallocate(this->first, this->capacityAllocated);
 		this->length = x.length;
 		this->capacityAllocated = x.capacityAllocated;
 		this->first = this->allocator.allocate(this->capacityAllocated);
 		for (size_type i = 0; i < this->length; i++)
-			allocator.allocate(this->first + i, *(x.first + i));
+			allocator.construct(this->first + i, *(x.first + i));
 	}
 	return *this;
 }

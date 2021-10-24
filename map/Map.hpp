@@ -2,7 +2,6 @@
 #define MAP_HPP
 
 #include <iostream>
-#include "pair.hpp"
 #include "RedBlackTree.hpp"
 #include "pair_first.hpp"
 
