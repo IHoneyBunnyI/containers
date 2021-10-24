@@ -2,8 +2,8 @@
 #include <utility>
 #include "RedBlackTree.hpp"
 #include "pair.hpp"
-#include "pair_first.hpp"
-#include "Vector.hpp"
+#include "../utils/pair_first.hpp"
+#include "../vector/Vector.hpp"
 
 void test_pair_and_make_pair()
 {

@@ -2,7 +2,7 @@
 #include <vector>
 #include <map>
 #include "Map.hpp"
-#include "Vector.hpp"
+#include "../vector/Vector.hpp"
 
 class B
 {

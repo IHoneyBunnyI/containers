@@ -631,28 +631,28 @@ void test_non_member()
 
 int main()
 {
-	//test_reverse_iterators();
-	//test_non_member();
-	//test_insert3();
-	//test_reserve();
-	//test_resize();
-	//test_iterators();
-	//test_clear();
-	//test_million_push_back();
-	//test_push_back();
-	//test_assign();
-	//test_at();
-	//test_back();
-	//test_erase();
-	//test_front();
-	//test_get_allocator();
-	//test_pop_back();
-	//test_insert();
-	//test_swap();
+	test_reverse_iterators();
+	test_non_member();
+	test_insert3();
+	test_reserve();
+	test_resize();
+	test_iterators();
+	test_clear();
+	test_million_push_back();
+	test_push_back();
+	test_assign();
+	test_at();
+	test_back();
+	test_erase();
+	test_front();
+	test_get_allocator();
+	test_pop_back();
+	test_insert();
+	test_swap();
 
-	//std::vector<int> a;
+	//ft::vector<int> a;
 	//for (int i = 0; i < 100; i++)
 		//a.push_back(i);
-	//std::vector<int>::iterator rit = a.begin();
+	//ft::vector<int>::iterator rit = a.begin();
 	//rit = a.rbegin();
 }

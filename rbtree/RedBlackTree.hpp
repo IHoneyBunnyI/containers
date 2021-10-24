@@ -2,13 +2,13 @@
 #define REDBLACKTREE_HPP
 
 #include <iostream>
-#include "RedBlackTreeNode.hpp"
-#include "RedBlackTreeConstIterator.hpp"
-#include "RedBlackTreeIterator.hpp"
-#include "ReverseIterator.hpp"
-#include "pair.hpp"
-#include "equal.hpp"
-#include "lexicographical_compare.hpp"
+#include "../utils/RedBlackTreeNode.hpp"
+#include "iterators/RedBlackTreeConstIterator.hpp"
+#include "iterators/RedBlackTreeIterator.hpp"
+#include "../utils/ReverseIterator.hpp"
+#include "../utils/pair.hpp"
+#include "../utils/equal.hpp"
+#include "../utils/lexicographical_compare.hpp"
 #include <iomanip>
 
 #define RB_TREE RedBlackTree<Key, Val, KeyOfValue, Compare, Alloc>

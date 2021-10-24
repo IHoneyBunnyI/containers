@@ -2,11 +2,11 @@
 
 if [ '0' = "$#" ]
 then
-	clang++ -Wall -Wextra -Werror -Iiterators/ -I../utils main.cpp -o vector
+	clang++ -Wall -Wextra -Werror main.cpp -o vector
 fi
 if [ '-g' = "$1" ]
 then
-	clang++ -g -fsanitize=address -Iiterators/ -I../utils main.cpp -o vector
+	clang++ -g -fsanitize=address main.cpp -o vector
 fi
 
 

@@ -30,17 +30,17 @@ fi
 clear
 if grep "ft::stack" ./main.cpp > /dev/null
 then
-	clang++ -Wall -Wextra -Werror -I../vector/iterators/ -I../utils/ -I../vector/ main.cpp -o ft_stack -Ofast
+	clang++ -Wall -Wextra -Werror main.cpp -o ft_stack -Ofast
 	time ./ft_stack > ft_output
 	sed -i '' "s/ft::stack/std::stack/g" ./main.cpp
-	clang++ -Wall -Wextra -Werror -I../vector/iterators/ -I../utils/ -I../vector/ main.cpp -o std_stack -Ofast
+	clang++ -Wall -Wextra -Werror main.cpp -o std_stack -Ofast
 	time ./std_stack > std_output
 	sed -i '' "s/std::stack/ft::stack/g" ./main.cpp
 else
-	clang++ -Wall -Wextra -Werror -I../vector/iterators/ -I../utils/ -I../vector/ main.cpp -o std_stack -Ofast
+	clang++ -Wall -Wextra -Werror main.cpp -o std_stack -Ofast
 	time ./std_stack > std_output
 	sed -i '' "s/std::stack/ft::stack/g" ./main.cpp
-	clang++ -Wall -Wextra -Werror -I../vector/iterators/ -I../utils/ -I../vector/ main.cpp -o ft_stack -Ofast
+	clang++ -Wall -Wextra -Werror main.cpp -o ft_stack -Ofast
 	time ./ft_stack > ft_output
 	sed -i '' "s/ft::stack/std::stack/g" ./main.cpp
 fi

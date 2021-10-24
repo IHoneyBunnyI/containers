@@ -1,7 +1,7 @@
 #ifndef RED_BLACK_TREE_ITERATOR
 #define RED_BLACK_TREE_ITERATOR
 #include <iostream>
-#include "../RedBlackTreeNode.hpp"
+#include "../../utils/RedBlackTreeNode.hpp"
 
 namespace ft
 {

@@ -2,8 +2,8 @@
 #define MAP_HPP
 
 #include <iostream>
-#include "RedBlackTree.hpp"
-#include "pair_first.hpp"
+#include "../rbtree/RedBlackTree.hpp"
+#include "../utils/pair_first.hpp"
 
 #define MAP map<Key, T, Compare, Allocator>
 
