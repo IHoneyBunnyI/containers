@@ -100,16 +100,6 @@ class vector
 		//Allocator:
 		allocator_type get_allocator() const;
 
-
-
-
-
-
-
-
-
-
-
 };
 
 //=========================Constructors=================================
@@ -156,8 +146,8 @@ ft::vector<T, Allocator>::~vector()
 {
 	if (this->first != 0)
 	{
-		for (size_type i = 0; first + i != (this->first + this->length); i++)
-			allocator.destroy(first + i);
+		//for (size_type i = 0; first + i != (this->first + this->length); i++)
+			//allocator.destroy(first + i);
 		allocator.deallocate(first, this->capacityAllocated);
 	}
 }
@@ -565,6 +555,8 @@ typename ft::vector<T, Allocator>::const_reverse_iterator ft::vector<T, Allocato
 template <class T, class Allocator>
 void ft::vector<T, Allocator>::resize(size_type n, value_type val)
 {
+	if (n > max_size())
+		throw std::length_error("vector");
 	size_type old_len = this->length;
 	size_type old_capacity = this->capacityAllocated;
 	this->length = n;
@@ -576,6 +568,8 @@ void ft::vector<T, Allocator>::resize(size_type n, value_type val)
 	if (n > this->capacityAllocated)
 	{
 		this->capacityAllocated *= 2;
+		if (n > this->capacityAllocated)
+			this->capacityAllocated = n;
 		pointer tmp = allocator.allocate(this->capacityAllocated);
 		for (size_type i = 0; i < old_len; i++)
 			allocator.construct(tmp + i, *(this->first + i));
