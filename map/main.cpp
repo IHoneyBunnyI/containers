@@ -21,12 +21,12 @@ template <class T1, class T2>
 void print_map(ft::map<T1, T2> &v)
 {
 	(void)v;
-	//typename ft::map<T1, T2>::iterator begin = v.begin();
-	//typename ft::map<T1, T2>::iterator end = v.end();
-	//std::cout << "size=\t\t" << v.size() << std::endl;
-	//for (; begin != end; begin++)
-		//std::cout << "\033[38;5;46m" << begin->first << "->" << begin->second << "\033[0m ";
-	//std::cout << std::endl;
+	typename ft::map<T1, T2>::iterator begin = v.begin();
+	typename ft::map<T1, T2>::iterator end = v.end();
+	std::cout << "size=\t\t" << v.size() << std::endl;
+	for (; begin != end; begin++)
+		std::cout << "\033[38;5;46m" << begin->first << "->" << begin->second << "\033[0m ";
+	std::cout << std::endl;
 }
 
 template <class T1, class T2>

@@ -1,8 +1,8 @@
 #ifndef SET_HPP
 #define SET_HPP
 #include <iostream>
-#include "RedBlackTree.hpp"
-#include "get_value.hpp"
+#include "../rbtree/RedBlackTree.hpp"
+#include "../../utils/get_value.hpp"
 #define SET set<T, Compare, Allocator>
 
 namespace ft
