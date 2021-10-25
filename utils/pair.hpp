@@ -16,8 +16,10 @@ struct pair
 	//Constructors
 	pair();
 	pair(const T1& x, const T2& y);
+
 	template<class U1, class U2>
 	pair(const pair<U1, U2>& p);
+
 
 	//Overloads
 	pair& operator=(pair const& p);

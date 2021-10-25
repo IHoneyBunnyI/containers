@@ -670,18 +670,18 @@ typename RB_TREE::iterator RB_TREE::insert(const_iterator position, const Val& v
 {
 	if (position.node == &head)
 	{
-		if (this->size() > 0 && compare(head.right->val.first, keyOfvalue(v)))
+		if (this->size() > 0 && compare(keyOfvalue(head.right->val), keyOfvalue(v)))
 			return _insert(0, head.right, v);
 		else
 			return insert(v).first;
 	}
-	else if (compare(keyOfvalue(v), position->first))
+	else if (compare(keyOfvalue(v), keyOfvalue(position.node->val)))
 	{
 		const_iterator before = position;
 		--before;
 		if (position.node == head.left)
 			return _insert(head.left, head.left, v);
-		else if (compare(before->first, keyOfvalue(v)))
+		else if (compare(keyOfvalue(before.node->val), keyOfvalue(v)))
 		{
 			if (before.node->right == 0)
 				return _insert(0, before.node, v);
@@ -692,13 +692,13 @@ typename RB_TREE::iterator RB_TREE::insert(const_iterator position, const Val& v
 			return insert(v).first;
 
 	}
-	else if (compare(position->first, keyOfvalue(v)))
+	else if (compare(keyOfvalue(position.node->val), keyOfvalue(v)))
 	{
 		const_iterator after = position;
 		++after;
 		if (position.node == head.right)
 			return _insert(0, head.right, v);
-		else if (compare(keyOfvalue(v), after->first))
+		else if (compare(keyOfvalue(v), keyOfvalue(after.node->val)))
 		{
 			if (position.node->right == 0)
 				return _insert(0, position.node, v);

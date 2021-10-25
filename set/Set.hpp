@@ -2,7 +2,7 @@
 #define SET_HPP
 #include <iostream>
 #include "../rbtree/RedBlackTree.hpp"
-#include "../../utils/get_value.hpp"
+#include "../utils/get_value.hpp"
 #define SET set<T, Compare, Allocator>
 
 namespace ft
@@ -78,11 +78,15 @@ public:
 	value_compare value_comp() const;
 
 	//Operations:
-	iterator find(const value_type& val) const;
+	iterator find(const value_type& val);
+	const_iterator find(const value_type& val) const;
 	size_type count(const value_type& val) const;
-	iterator lower_bound(const value_type& val) const;
-	iterator upper_bound(const value_type& val) const;
-	pair<iterator,iterator> equal_range(const value_type& val) const;
+	iterator lower_bound(const value_type& val);
+	const_iterator lower_bound(const value_type& val) const;
+	iterator upper_bound(const value_type& val);
+	const_iterator upper_bound(const value_type& val) const;
+	pair<iterator,iterator> equal_range(const value_type& val);
+	pair<const_iterator, const_iterator> equal_range(const value_type& val) const;
 
 	//Allocator:
 	allocator_type get_allocator() const;
@@ -113,7 +117,7 @@ SET::set(const set& x) : rb_tree(x.rb_tree) {}
 template <class T, class Compare, class Allocator>
 SET::~set()
 {
-	~rb_tree;
+	//~rb_tree;
 }
 
 //OPERATOR =
@@ -228,7 +232,7 @@ void SET::erase(iterator first, iterator last)
 template <class T, class Compare, class Allocator>
 void SET::swap(set& x)
 {
-	this->rb_tree.swap(x);
+	this->rb_tree.swap(x.rb_tree);
 }
 
 template <class T, class Compare, class Allocator>
@@ -253,30 +257,55 @@ typename SET::value_compare SET::value_comp() const
 
 //Operations:
 template <class T, class Compare, class Allocator>
-typename SET::iterator SET::find(const value_type& val) const
+typename SET::iterator SET::find(const value_type& val)
 {
 	return this->rb_tree.find(val);
 }
+
+template <class T, class Compare, class Allocator>
+typename SET::const_iterator SET::find(const value_type& val) const
+{
+	return this->rb_tree.find(val);
+}
+
 template <class T, class Compare, class Allocator>
 typename SET::size_type SET::count(const value_type& val) const
 {
 	return this->rb_tree.count(val);
 }
 template <class T, class Compare, class Allocator>
-typename SET::iterator SET::lower_bound(const value_type& val) const
+typename SET::iterator SET::lower_bound(const value_type& val)
+{
+	return this->rb_tree.lower_bound(val);
+}
+
+template <class T, class Compare, class Allocator>
+typename SET::const_iterator SET::lower_bound(const value_type& val) const
 {
 	return this->rb_tree.lower_bound(val);
 }
 template <class T, class Compare, class Allocator>
-typename SET::iterator SET::upper_bound(const value_type& val) const
+typename SET::iterator SET::upper_bound(const value_type& val)
 {
 	return this->rb_tree.upper_bound(val);
 }
 template <class T, class Compare, class Allocator>
-typename ft::pair<typename SET::iterator, typename SET::iterator> SET::equal_range(const value_type& val) const
+typename SET::const_iterator SET::upper_bound(const value_type& val) const
+{
+	return this->rb_tree.upper_bound(val);
+}
+template <class T, class Compare, class Allocator>
+typename ft::pair<typename SET::iterator, typename SET::iterator> SET::equal_range(const value_type& val)
 {
 	return this->rb_tree.equal_range(val);
 }
+
+template <class T, class Compare, class Allocator>
+typename ft::pair<typename SET::const_iterator, typename SET::const_iterator> SET::equal_range(const value_type& val) const
+{
+	return this->rb_tree.equal_range(val);
+}
+
 template <class T, class Compare, class Allocator>
 typename SET::allocator_type SET::get_allocator() const
 {
