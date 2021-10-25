@@ -27,14 +27,10 @@ public:
 
 };
 
-//std::ostream & operator<<(std::ostream & os, B const & bb) {
-	//std::cout << bb.a << " " << bb.b << bb.hehe[3] << std::endl;
-	//return os;
-//}
-
 template <class T>
 void print_vector(ft::vector<T> &v)
 {
+	(void)v;
 	typename ft::vector<T>::iterator begin = v.begin();
 	typename ft::vector<T>::iterator end = v.end();
 	std::cout << "capacity=\t" << v.capacity() << std::endl;
@@ -47,6 +43,7 @@ void print_vector(ft::vector<T> &v)
 template <class T>
 void print_vector(const ft::vector<T> &v)
 {
+	(void)v;
 	typename ft::vector<T>::const_iterator begin = v.begin();
 	typename ft::vector<T>::const_iterator end = v.end();
 	std::cout << "capacity=\t" << v.capacity() << std::endl;
@@ -649,10 +646,5 @@ int main()
 	test_pop_back();
 	test_insert();
 	test_swap();
-
-	//ft::vector<int> a;
-	//for (int i = 0; i < 100; i++)
-		//a.push_back(i);
-	//ft::vector<int>::iterator rit = a.begin();
-	//rit = a.rbegin();
+	//while (1);
 }

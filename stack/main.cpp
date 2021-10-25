@@ -65,4 +65,5 @@ int main()
 	std::cout << ">= " <<  (stack2 >= stack3) << std::endl;
 	std::cout << ">= " <<  (stack >= stack3) << std::endl;
 	std::cout << ">= " <<  (stack >= stack3) << std::endl;
+	//while(1);
 }
