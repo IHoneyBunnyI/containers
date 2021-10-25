@@ -278,7 +278,7 @@ void MAP::erase(iterator first, iterator last)
 template <class Key, class T, class Compare, class Allocator>
 void MAP::swap(map& x)
 {
-	this->rb_tree.swap(x);
+	this->rb_tree.swap(x.rb_tree);
 }
 
 template <class Key, class T, class Compare, class Allocator>
