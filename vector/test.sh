@@ -47,8 +47,6 @@ fi
 if diff -E ft_output std_output
 then
 	echo "\033[32mDiff 0 OK!\033[0m"
-	#rm std_output
-	#rm ft_output
 else
 	echo "\033[31mDiff != 0 ERROR\033[0m"
 fi
